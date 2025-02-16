@@ -1,0 +1,24 @@
+{
+  "name": "editor",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.0.8"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dom-to-image-more": "^3.5.0",
+    "grapesjs": "^0.22.5",
+    "grapesjs-custom-code": "^1.0.2",
+    "grapesjs-parser-postcss": "^1.0.3",
+    "grapesjs-style-bg": "^2.0.2",
+    "grapesjs-tooltip": "^0.1.8",
+    "grapesjs-touch": "^0.1.1",
+    "grapesjs-typed": "^2.0.1",
+    "monaco-editor": "^0.52.2",
+    "react": "^19.0.0"
+  }
+}

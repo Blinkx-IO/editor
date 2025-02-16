@@ -1,0 +1,214 @@
+/* ./src/styles.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+    @apply bg-white; 
+    @apply text-primary-dark-blue;
+}
+
+.card-body{
+    @apply flex-auto p-5
+}
+
+@layer base {
+    @font-face {
+        font-family: Montserrat;
+        font-weight: 100;
+        src: url(./fonts/montserrat/Montserrat-Thin.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Montserrat;
+        font-weight: 300;
+        src: url(./fonts/montserrat/Montserrat-Light.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Montserrat;
+      font-weight: 400;
+      src: url(./fonts/montserrat/Montserrat-Regular.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Montserrat;
+      font-weight: 500;
+      src: url(./fonts/montserrat/Montserrat-Medium.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Montserrat;
+        font-weight: 600;
+        src: url(./fonts/montserrat/Montserrat-SemiBold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Montserrat;
+        font-weight: 700;
+        src: url(./fonts/montserrat/Montserrat-Bold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Montserrat;
+        font-weight: 900;
+        src: url(./fonts/montserrat/Montserrat-Black.ttf) format("ttf");
+    }
+
+    @font-face {
+        font-family: Roboto;
+        font-weight: 100;
+        src: url(./fonts/roboto/Roboto-Thin.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Roboto;
+        font-weight: 300;
+        src: url(./fonts/roboto/Roboto-Light.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Roboto;
+      font-weight: 400;
+      src: url(./fonts/roboto/Roboto-Regular.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Roboto;
+      font-weight: 500;
+      src: url(./fonts/roboto/Roboto-Medium.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Roboto;
+        font-weight: 700;
+        src: url(./fonts/roboto/Roboto-Bold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Roboto;
+        font-weight: 900;
+        src: url(./fonts/roboto/Roboto-Black.ttf) format("ttf");
+    }
+
+    @font-face {
+        font-family: Open Sans;
+        font-weight: 300;
+        src: url(./fonts/open-sans/OpenSans-Light.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Open Sans;
+      font-weight: 400;
+      src: url(./fonts/open-sans/OpenSans-Regular.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Open Sans;
+      font-weight: 600;
+      src: url(./fonts/open-sans/OpenSans-SemiBold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Open Sans;
+        font-weight: 700;
+        src: url(./fonts/open-sans/OpenSans-Bold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Open Sans;
+        font-weight: 800;
+        src: url(./fonts/open-sans/OpenSans-Bold.ttf) format("ttf");
+    }
+
+    @font-face {
+        font-family: Raleway;
+        font-weight: 100;
+        src: url(./fonts/raleway/Raleway-Thin.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Raleway;
+        font-weight: 200;
+        src: url(./fonts/raleway/Raleway-ExtraLight.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Raleway;
+        font-weight: 300;
+        src: url(./fonts/raleway/Raleway-Light.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Raleway;
+      font-weight: 400;
+      src: url(./fonts/raleway/Raleway-Regular.ttf) format("ttf");
+    }
+    @font-face {
+      font-family: Raleway;
+      font-weight: 500;
+      src: url(./fonts/raleway/Raleway-Medium.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Raleway;
+        font-weight: 600;
+        src: url(./fonts/raleway/SemiBold.ttf) format("ttf");
+      }
+    @font-face {
+        font-family: Raleway;
+        font-weight: 700;
+        src: url(./fonts/raleway/Raleway-Bold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Raleway;
+        font-weight: 800;
+        src: url(./fonts/raleway/Raleway-ExtraBold.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Raleway;
+        font-weight: 900;
+        src: url(./fonts/raleway/Raleway-Black.ttf) format("ttf");
+    }
+    @font-face {
+        font-family: Cabin;
+        font-weight: 400;
+        src: url(./fonts/cabin/Cabin-Regular.ttf) format("ttf");
+      }
+    @font-face {
+        font-family: Cabin;
+        font-weight: 500;
+        src: url(./fonts/cabin/Cabin-Medium.ttf) format("ttf");
+    }
+    @font-face {
+          font-family: Cabin;
+          font-weight: 600;
+          src: url(./fonts/cabin/Cabin-SemiBold.ttf) format("ttf");
+    }
+    @font-face {
+          font-family: Cabin;
+          font-weight: 700;
+          src: url(./fonts/cabin/Cabin-Bold.ttf) format("ttf");
+    }
+}
+
+.modal-inputs{
+    border: 1px solid #0094FA;
+}
+
+.modal-button {
+    border: 1px solid #0094FA;
+    background: #0094FA;
+    color: white;
+}
+
+.innerModal > p {
+    font-size: 12px;
+}
+
+.innerModal > input {
+    font-size: 14px;
+}
+
+.min-h-200 {
+    min-height: 200px;
+}
+
+#locked-block, .locked-block{
+    position: absolute;
+    margin-left: 17px;
+    margin-top: -6px;
+}
+
+.card-box-shadow {
+    box-shadow: 0px 1px 5px 0px rgb(0 0 0 / 20%), 
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 
+    0px 3px 1px -2px rgb(0 0 0 / 12%);
+}
+
+@media (min-width: 640px) {
+    .sm\:w-28\% {
+        width: 28%;
+    }
+  }
