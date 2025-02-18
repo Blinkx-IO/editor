@@ -1,3 +1,4 @@
+/// <reference types="solid-js" />
 import /* grapesjs, */ { type Components } from 'grapesjs';
 import { BlinkJS } from './editorConfig';
 import type {

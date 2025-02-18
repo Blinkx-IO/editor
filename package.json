@@ -2,9 +2,15 @@
   "name": "editor",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^19.0.8"
+    "@types/react": "^19.0.10",
+    "react": "^19.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -19,6 +25,8 @@
     "grapesjs-touch": "^0.1.1",
     "grapesjs-typed": "^2.0.1",
     "monaco-editor": "^0.52.2",
-    "react": "^19.0.0"
+    "solid-js": "^1.9.4",
+    "vite": "^6.1.0",
+    "vite-plugin-solid": "^2.11.1"
   }
 }

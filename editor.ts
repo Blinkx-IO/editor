@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 //import type { BlinkJS } from './editorTypes';
 import type { Plugin } from "grapesjs";
 import { defaultStyles } from './design/styles/styles';
@@ -17,7 +14,7 @@ import { addDomComponents } from './blocks/blinkcontentmodel';
 import breadCrumbs from './panels/breadcrumbs';
 import ToggleClassSelectors from './panels/selectors';
 import { defaultSelectorTemplate } from './panels/selectorManager';
-import { testComponent } from './plugins/codeParsers/test';
+// import { testComponent } from './plugins/codeParsers/test';
 import { createElement } from 'react';
 import { transformJSX, type JSXObject } from './plugins/codeParsers/jsxParserLegacy';
 import { BlinkJS } from './editorConfig';
@@ -26,12 +23,16 @@ import { blockCategories } from './blocks/interfaces';
 // import { html, render } from 'lit-html';
 //import { bindStatusUpdates } from './panels/status';
 import { pageSettings, /*setProjectLinks*/ } from './panels/pageSettings';
-import { itemMappingState } from "$editorItem/stores.client";
-import { get, writable, type Writable } from 'svelte/store';
+import type { ItemMappingStatus } from "./global";
+// import { itemMappingState } from "$editorItem/stores.client";
+// import { get, writable, type Writable } from 'svelte/store';
 
 const blinkStylePrefix = 'blink-';
-export const contentStatus: Writable<VisualEditor.status> = writable();
-export const contentTitle: Writable<string> = writable();
+// export const contentStatus: Writable<VisualEditor.status> = writable();
+// export const contentTitle: Writable<string> = writable();
+export let contentStatus: VisualEditor.status = "draft";
+export let contentTitle = '';
+let itemMappingState: ItemMappingStatus = "active";
 export type editorConfig = {
 	projectData?: Record<string, unknown>;
 	projectId: string;
@@ -42,22 +43,23 @@ export type editorConfig = {
 	itemStatus: VisualEditor.status;
 	dev?: boolean;
 	browser?: boolean;
+	itemMappingState: ItemMappingStatus
 }
 
-interface installedApps {
-	valid: boolean;
-	message: string;
-	meta?: { apps: apps };
-}
+// interface installedApps {
+// 	valid: boolean;
+// 	message: string;
+// 	meta?: { apps: apps };
+// }
 
-interface appDetails {
-	enabled: boolean;
-	activated: boolean;
-}
-interface apps {
-	contacts: appDetails;
-	'e-commerce': appDetails;
-}
+// interface appDetails {
+// 	enabled: boolean;
+// 	activated: boolean;
+// }
+// interface apps {
+// 	contacts: appDetails;
+// 	'e-commerce': appDetails;
+// }
 
 //TODO: Add more option to config
 export const configureEditor = async (config: editorConfig) => {
@@ -67,8 +69,9 @@ export const configureEditor = async (config: editorConfig) => {
 	let defaultProjectData;
 	if (projectData) {
 		defaultProjectData = projectData;
-		contentStatus.set(config.itemStatus);
-		contentTitle.set(config.itemTitle);
+		//TODO: check proj data to set these
+		// contentStatus.set(config.itemStatus);
+		// contentTitle.set(config.itemTitle);
 	} else {
 		defaultProjectData = {
 			pages: [
@@ -79,8 +82,9 @@ export const configureEditor = async (config: editorConfig) => {
 				}
 			]
 		};
-		contentStatus.set(config.itemStatus);
-		contentTitle.set(config.itemTitle);
+		//TODO: if using frameworks this needs to be store/signals etd	
+		contentStatus = config.itemStatus;
+		contentTitle = config.itemTitle;
 		//contentTitle.set(`New Content Item ${config.itemId}`);
 	}
 
@@ -284,11 +288,11 @@ export const configureEditor = async (config: editorConfig) => {
 							}
 
 
-							const status = get(contentStatus);
-							const title = get(contentTitle);
-							const getMappingState = get(itemMappingState);
+							const status = contentStatus;
+							const title = contentTitle;
+							const getMappingState = itemMappingState;
 							if (["inactive", "active"].includes(getMappingState)) {
-								itemMappingState.set("pending");
+								itemMappingState = "pending";
 							}
 
 							//!check for status here
@@ -306,7 +310,7 @@ export const configureEditor = async (config: editorConfig) => {
 								item_preview,
 								status: status ?? null,
 								title,
-								itemMappingState: get(itemMappingState)
+								itemMappingState: itemMappingState
 							};
 						}
 					}
@@ -354,7 +358,7 @@ export const configureEditor = async (config: editorConfig) => {
 
 	if (dev && browser) {
 		window.BlinkJS = BlinkJS;
-		window.JSXComponents = [testComponent()];
+		// window.JSXComponents = [testComponent()];
 	}
 	if (browser) {
 		window.editor = editor;
@@ -487,15 +491,15 @@ export const configureEditor = async (config: editorConfig) => {
 		//const activePanel = editorPanels().leftPanelContainer.querySelector(".blink-pn-active") as HTMLElement;
 		//if(activePanel)activePanel.click();
 
-		const iframe = document.querySelector('.blink-frame') as HTMLIFrameElement;
-		const innerDoc = iframe.contentDocument || iframe.contentWindow!.document;
+		// const iframe = document.querySelector('.blink-frame') as HTMLIFrameElement;
+		// const innerDoc = iframe.contentDocument || iframe.contentWindow!.document;
 
-		interface MenuCommand {
-			name: string;
-			key: string;
-			command: string;
-			toggleable: boolean;
-		}
+		// interface MenuCommand {
+		// 	name: string;
+		// 	key: string;
+		// 	command: string;
+		// 	toggleable: boolean;
+		// }
 
 		/*function runCommand(command: MenuCommand) {
 			//editor.Commands.isActive
@@ -508,27 +512,27 @@ export const configureEditor = async (config: editorConfig) => {
 			document.removeEventListener('click', closeMenu);
 			innerDoc.body.removeEventListener('click', closeMenu);
 		}*/
-		const menuItem: MenuCommand[] = [
-			{
-				name: 'Select Parent',
-				key: 'A',
-				command: 'core:component-exit',
-				toggleable: false
-			},
-			{ name: 'Copy', key: '⌘+c', command: 'core:copy', toggleable: false },
-			{ name: 'Paste', key: '⌘+v', command: 'core:paste', toggleable: false },
-			{ name: 'Undo', key: '⌘+z', command: 'core:undo', toggleable: false },
-			{ name: 'Redo', key: '⌘+shift+z', command: 'core:redo', toggleable: false },
-			//{name:"Edit Code",key:"⌘+shift+e",command:"html-edit",toggleable:false},
-			{ name: 'Toggle Fullscreen', key: '', command: 'expand-screen', toggleable: true },
-			{ name: 'Toggle Grid', key: 'alt+g', command: 'sw-visibility', toggleable: true },
-			{
-				name: 'Toggle Active Classes',
-				key: '',
-				command: 'toggle-classes',
-				toggleable: false
-			}
-		];
+		// const menuItem: MenuCommand[] = [
+		// 	{
+		// 		name: 'Select Parent',
+		// 		key: 'A',
+		// 		command: 'core:component-exit',
+		// 		toggleable: false
+		// 	},
+		// 	{ name: 'Copy', key: '⌘+c', command: 'core:copy', toggleable: false },
+		// 	{ name: 'Paste', key: '⌘+v', command: 'core:paste', toggleable: false },
+		// 	{ name: 'Undo', key: '⌘+z', command: 'core:undo', toggleable: false },
+		// 	{ name: 'Redo', key: '⌘+shift+z', command: 'core:redo', toggleable: false },
+		// 	//{name:"Edit Code",key:"⌘+shift+e",command:"html-edit",toggleable:false},
+		// 	{ name: 'Toggle Fullscreen', key: '', command: 'expand-screen', toggleable: true },
+		// 	{ name: 'Toggle Grid', key: 'alt+g', command: 'sw-visibility', toggleable: true },
+		// 	{
+		// 		name: 'Toggle Active Classes',
+		// 		key: '',
+		// 		command: 'toggle-classes',
+		// 		toggleable: false
+		// 	}
+		// ];
 
 		//move this to a separte module
 
@@ -537,7 +541,7 @@ export const configureEditor = async (config: editorConfig) => {
 
 			//TODO check if panel has other buttons, then check if they are active, if they are active close them
 
-			editor.Keymaps.add(`bx:${panelCommand}`, hotKey, (e) => {
+			editor.Keymaps.add(`bx:${panelCommand}`, hotKey, (_) => {
 				const panelButton = editor.Panels.getButton(panelId, panelCommand);
 				if (editor.Commands.isActive(panelCommand)) {
 					editor.stopCommand(panelCommand);
