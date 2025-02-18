@@ -21,9 +21,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "./index.tsx",
-    "./**/*.ts",
-    "./**/*.tsx"
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ],
   "references": [
     {

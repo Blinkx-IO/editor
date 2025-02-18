@@ -1,7 +1,7 @@
 /** @jsxImportSource solid-js */
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import { configureEditor } from './editor';
+import { configureEditor } from './src/editor';
 import { onMount } from 'solid-js';
 // import type {JSX} from 'solid-js/jsx-runtime';
 // import './index.css';
