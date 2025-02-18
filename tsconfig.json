@@ -18,15 +18,54 @@
       "DOM.Iterable",
       "ESNext"
     ],
-    "skipLibCheck": true
-  },
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@blocks/*": [
+        "src/blocks/*"
+      ],
+      "@commands/*": [
+        "src/commands/*"
+      ],
+      "@css/*": [
+        "src/css/*"
+      ],
+      "@design/*": [
+        "src/design/*"
+      ],
+      "@ecommerce/*": [
+        "src/ecommerce/*"
+      ],
+      "@events/*": [
+        "src/events/*"
+      ],
+      "@multiplayer/*": [
+        "src/multiplayer/*"
+      ],
+      "@panels/*": [
+        "src/panels/*"
+      ],
+      "@plugins/*": [
+        "src/plugins/*"
+      ],
+      "@server/*": [
+        "src/server/*"
+      ],
+      "@toolbar/*": [
+        "src/toolbar/*"
+      ],
+      "@traits/*": [
+        "src/traits/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@utilities/*": [
+        "src/utilities/*"
+      ]
     }
-  ]
+  }
 }
