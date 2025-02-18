@@ -26,7 +26,10 @@ export default defineConfig({
 			'@toolbar': path.resolve(__dirname, './src/toolbar'),
 			'@traits': path.resolve(__dirname, './src/traits'),
 			'@types': path.resolve(__dirname, './src/types'),
-			'@utilities': path.resolve(__dirname, './src/utilities')
+			'@utilities': path.resolve(__dirname, './src/utilities'),
+			'$components': path.resolve(__dirname, './src/components/')
+
 		}
 	}
 });
+

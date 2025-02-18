@@ -9,7 +9,8 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": [
-      "vite/client"
+      "vite/client",
+      "globals.ts"
     ],
     "noEmit": true,
     "isolatedModules": true,
@@ -22,50 +23,59 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ],
       "@blocks/*": [
-        "src/blocks/*"
+        "./src/blocks/*"
       ],
       "@commands/*": [
-        "src/commands/*"
+        "./src/commands/*"
       ],
       "@css/*": [
-        "src/css/*"
+        "./src/css/*"
       ],
       "@design/*": [
-        "src/design/*"
+        "./src/design/*"
       ],
       "@ecommerce/*": [
-        "src/ecommerce/*"
+        "./src/ecommerce/*"
       ],
       "@events/*": [
-        "src/events/*"
+        "./src/events/*"
       ],
       "@multiplayer/*": [
-        "src/multiplayer/*"
+        "./src/multiplayer/*"
       ],
       "@panels/*": [
-        "src/panels/*"
+        "./src/panels/*"
       ],
       "@plugins/*": [
-        "src/plugins/*"
+        "./src/plugins/*"
       ],
       "@server/*": [
-        "src/server/*"
+        "./src/server/*"
       ],
       "@toolbar/*": [
-        "src/toolbar/*"
+        "./src/toolbar/*"
       ],
       "@traits/*": [
-        "src/traits/*"
+        "./src/traits/*"
       ],
       "@types/*": [
-        "src/types/*"
+        "./src/types/*"
       ],
       "@utilities/*": [
-        "src/utilities/*"
+        "./src/utilities/*"
+      ],
+      "$components/*": [
+        "./src/components/*"
       ]
     }
-  }
+  },
+  "include": [
+    "./index.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js"
+  ]
 }

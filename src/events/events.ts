@@ -1,29 +1,16 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Papa from "papaparse";
-
-
-//import {popUpTraits} from "./magnetpanels";
-//import {updateDynamicBlocks} from "../blocks/dynamicBlocks";
-//import {Component, Editor} from "grapesjs";
-import { fetchImages } from "$plugins/pexel";
-import { addImage } from "../plugins/imagePlugins/addAsset";
-//import {collectionID} from "./templates";
+import { fetchImages } from "@plugins/pexel";
+import { addImage } from "@plugins/imagePlugins/addAsset";
 import { html, render } from "lit";
-//import "../model/custom/assetSearch";
-import type { PexelImage } from "$plugins/pexel/types";
-import { editorWidths, editorPanels, closeLeftPanel, wrapper, /*toggledLayer, state, pinnedWidths,*/ resizeCanvas, canvasGutterClasses, toggleRightPanel } from "../panels/state";
-import { modalSmall } from "../panels/modalTemplates";
-import { getStatus, updateStatus } from "../panels/status";
-import { getPageUrl, getSeoFields, setPageUrl, setSeoFields } from "../panels/pageSettings";
-//import {notification} from "../view/notification";
-//const editorContainer = document.querySelector("#editor-container") as HTMLElement;
-//const editorBody = document.querySelector("#editorBody") as HTMLElement;
+import type { PexelImage } from "@plugins/pexel/types";
+import { editorWidths, editorPanels, closeLeftPanel, wrapper, /*toggledLayer, state, pinnedWidths,*/ resizeCanvas, canvasGutterClasses, toggleRightPanel } from "@panels/state";
+import { modalSmall } from "@panels/modalTemplates";
+import { getStatus, updateStatus } from "@panels/status";
+import { getPageUrl, getSeoFields, setPageUrl, setSeoFields } from "@panels/pageSettings";
 import NProgress from "nprogress";
-import { browser } from "$app/environment";
-//import {contentTitle} from '$visualeditor/editor';
-//import type {BlinkEditor, editorStorageObject} from "../editorTypes";
-//NProgress.configure({ parent: '#editor-wrapper' });
+// import { browser } from "$app/environment";
+//NOTE: This is a hack to get around the fact that the editor is not running in a browser environment
+const browser = true;
 let data: Array<any>;
 interface pexelGridRequest {
     container: HTMLElement;
@@ -180,7 +167,7 @@ function parseDataFiles() {
     const csvObj = file.files![0];
     if (file.files!.length > 0) {
         Papa.parse(csvObj, {
-            complete: function (results: any) {
+            complete: function(results: any) {
                 console.log("File parsed");
                 data = results;
             },

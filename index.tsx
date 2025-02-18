@@ -1,11 +1,7 @@
-/** @jsxImportSource solid-js */
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import { configureEditor } from './src/editor';
+import { configureEditor } from "@/editor";
 import { onMount } from 'solid-js';
-// import type {JSX} from 'solid-js/jsx-runtime';
-// import './index.css';
-// import App from './App';
 
 
 function App() {
@@ -18,8 +14,6 @@ function App() {
 			themePreference: 'dark',
 			itemStatus: 'draft',
 			itemMappingState: 'active',
-
-			// config
 		});
 	});
 	return (

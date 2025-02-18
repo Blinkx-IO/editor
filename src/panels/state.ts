@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { browser } from '$app/environment';
+// import { browser } from '$app/environment';
+// NOTE: This is a hack to get around the fact that the editor is not running in a browser environment
+const browser = true;
 //import type { VisualEditor.BlinkEditor } from '../editorTypes';
 
 const toggledLayer = () => document.getElementById('toggledEditorLayer') as HTMLElement;
