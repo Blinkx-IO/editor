@@ -136,18 +136,18 @@ function Editor(props: EditorProps) {
 				</div>
 				<div
 					id="top-panel"
-					class="panel__top min-h-[60px] border-b {setThemeClass(
-				'border-gray-300 bg-primary-light-gray',
-				'dark:border-muted dark:bg-nav-darkmode',
-				$themePreference,
-			)}  fixed w-full right-0 z-10"
+					class={`panel__top min-h-[60px] border-b ${setThemeClass(
+						'border-gray-300 bg-primary-light-gray',
+						'dark:border-muted dark:bg-nav-darkmode',
+						themePreference(),
+					)}  fixed w-full right-0 z-10`}
 				>
 					<div
-						class="panel__basic-actions {setThemeClass(
-					'',
-					'dark:bg-nav-darkmode',
-					$themePreference,
-				)}"
+						class={`panel__basic-actions ${setThemeClass(
+							'',
+							'dark:bg-nav-darkmode',
+							themePreference(),
+						)}`}
 					>
 						<Title
 							editor={editor()}
@@ -156,41 +156,41 @@ function Editor(props: EditorProps) {
 						/>
 					</div>
 					<div
-						class="panel__devices {setThemeClass(
-					'',
-					'dark:bg-nav-darkmode',
-					$themePreference,
-				)}"
+						class={`panel__devices ${setThemeClass(
+							'',
+							'dark:bg-nav-darkmode',
+							themePreference(),
+						)}`}
 					></div>
 					<div
-						class="flex items-center {setThemeClass(
-					'',
-					'dark:bg-nav-darkmode',
-					$themePreference,
-				)}"
+						class={`flex items-center ${setThemeClass(
+							'',
+							'dark:bg-nav-darkmode',
+							themePreference(),
+						)}`}
 						id="rightPanelIcons"
 					>
 						<div id="undo-manager"></div>
 						<div
-							class="panel__edit-actions {setThemeClass(
-						'',
-						'dark:bg-nav-darkmode',
-						$themePreference,
-					)}"
+							class={`panel__edit-actions ${setThemeClass(
+								'',
+								'dark:bg-nav-darkmode',
+								themePreference(),
+							)}`}
 						></div>
 						<div
-							class="panel__switcher {setThemeClass(
-						'',
-						'dark:bg-nav-darkmode',
-						$themePreference,
-					)}"
+							class={`panel__switcher ${setThemeClass(
+								'',
+								'dark:bg-nav-darkmode',
+								themePreference(),
+							)}`}
 						></div>
 						<div
-							class="panel__status {setThemeClass(
-						'',
-						'dark:bg-nav-darkmode',
-						$themePreference,
-					)}"
+							class={`panel__status ${setThemeClass(
+								'',
+								'dark:bg-nav-darkmode',
+								themePreference(),
+							)}`}
 						>
 							<Status itemId={data.item.id} />
 						</div>
@@ -205,41 +205,41 @@ function Editor(props: EditorProps) {
 					<div id="left-panel">
 						<div
 							style="width: 2.5%;"
-							class="panel__left
-					{setThemeClass(
-						'border-gray-300 bg-primary-light-gray',
-						'dark:border-muted dark:bg-nav-darkmode',
-						$themePreference,
-					)}
-					 fixed h-screen z-10 left-0"
+							class={`panel__left
+					${setThemeClass(
+								'border-gray-300 bg-primary-light-gray',
+								'dark:border-muted dark:bg-nav-darkmode',
+								themePreference(),
+							)}
+					 fixed h-screen z-10 left-0`}
 						></div>
 
 						<div
 							style="left:2.5%;"
-							class="{setThemeClass(
-						'border-gray-300',
-						'dark:border-muted',
-						$themePreference,
-					)} border-r border-t z-10 h-screen fixed flex"
+							class={`${setThemeClass(
+								'border-gray-300',
+								'dark:border-muted',
+								themePreference(),
+							)} border-r border-t z-10 h-screen fixed flex`}
 							id="leftSlideOutMenu"
 						>
 							<div
-								class="h-screen pl-1 {setThemeClass(
-							'bg-[#e0e5ee]',
-							'dark:bg-nav-darkmode',
-							$themePreference,
-						)}"
+								class={`h-screen pl-1 ${setThemeClass(
+									'bg-[#e0e5ee]',
+									'dark:bg-nav-darkmode',
+									themePreference(),
+								)}`}
 							></div>
 							<div
 								id="toggledEditorLayer"
 								data-current-panel="blocks"
 								data-toggled-state="off"
 								data-pinned-state="false"
-								class="hidden h-screen border-l {setThemeClass(
-							'border-gray-300 bg-primary-light-gray',
-							'dark:border-muted dark:bg-nav-darkmode',
-							$themePreference,
-						)}"
+								class={`hidden h-screen border-l ${setThemeClass(
+									'border-gray-300 bg-primary-light-gray',
+									'dark:border-muted dark:bg-nav-darkmode',
+									themePreference(),
+								)}`}
 							>
 								{/*TODO replace with transition*/}
 								<div
@@ -263,11 +263,11 @@ function Editor(props: EditorProps) {
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
-												class="{setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all"
+												class={`${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
 												viewBox="0 0 24 24"
 												stroke="currentColor"
@@ -282,11 +282,11 @@ function Editor(props: EditorProps) {
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												data-command="show-blocks"
-												class="{setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all"
+												class={`${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
 												viewBox="0 0 24 24"
 												stroke="currentColor"
@@ -322,11 +322,11 @@ function Editor(props: EditorProps) {
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
-												class="{setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all"
+												class={`${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
 												viewBox="0 0 24 24"
 												stroke="currentColor"
@@ -341,11 +341,11 @@ function Editor(props: EditorProps) {
 											<svg
 												data-command="show-layers"
 												xmlns="http://www.w3.org/2000/svg"
-												class="{setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all"
+												class={`${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
 												viewBox="0 0 24 24"
 												stroke="currentColor"
@@ -365,11 +365,11 @@ function Editor(props: EditorProps) {
 									id="pages-container"
 								>
 									<div
-										class="flex justify-between p-1 items-center border-b {setThemeClass(
-									'border-gray-300',
-									'dark:border-muted',
-									$themePreference,
-								)}   pb-1"
+										class={`flex justify-between p-1 items-center border-b ${setThemeClass(
+											'border-gray-300',
+											'dark:border-muted',
+											themePreference(),
+										)}   pb-1`}
 									>
 										<h1
 											class={setThemeClass(
@@ -386,11 +386,11 @@ function Editor(props: EditorProps) {
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
-												class="{setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all"
+												class={`${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
 												viewBox="0 0 24 24"
 												stroke="currentColor"
@@ -405,11 +405,11 @@ function Editor(props: EditorProps) {
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												data-command="show-blocks"
-												class="{setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all"
+												class={`${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
 												viewBox="0 0 24 24"
 												stroke="currentColor"
@@ -428,21 +428,21 @@ function Editor(props: EditorProps) {
 										style="height: 90vh;"
 									>
 										<div
-											class="bg-gray-two-tone pb-3 pt-3 mx-3 my-5 rounded shadow-sm border {setThemeClass(
-										'border-gray-300',
-										'dark:border-muted',
-										$themePreference,
-									)}  "
+											class={`bg-gray-two-tone pb-3 pt-3 mx-3 my-5 rounded shadow-sm border ${setThemeClass(
+												'border-gray-300',
+												'dark:border-muted',
+												themePreference(),
+											)}  `}
 										>
 											<div
 												class="ml-2 mb-5 px-3 items-center justify-between"
 											>
 												<p
-													class="font-semibold {setThemeClass(
-												'',
-												'dark:text-white',
-												$themePreference,
-											)}"
+													class={`font-semibold ${setThemeClass(
+														'',
+														'dark:text-white',
+														themePreference(),
+													)}`}
 												>
 													Page
 													Fields
@@ -453,19 +453,19 @@ function Editor(props: EditorProps) {
 												class="grid grid-cols-1 my-1 p-3 mx-1 gap-y-5"
 											>
 												<div
-													class="{setThemeClass(
-												'bg-white border-gray-300',
-												'dark:bg-formfields-darkmode dark:border-muted',
-												$themePreference,
-											)}   relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue"
+													class={`${setThemeClass(
+														'bg-white border-gray-300',
+														'dark:bg-formfields-darkmode dark:border-muted',
+														themePreference(),
+													)}   relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
 													<label
 														for="page-url"
-														class="{setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium"
+														class={`${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium`}
 													>Page
 														Url</label
 													>
@@ -477,14 +477,14 @@ function Editor(props: EditorProps) {
 															.item
 															.urlPath ??
 															""}
-														class="
-											block w-full border-0 p-0 {setThemeClass(
-													'text-gray-900 placeholder-gray-500',
-													'dark:text-white dark:placeholder-gray-400 dark:bg-formfields-darkmode',
-													$themePreference,
-												)} 
+														class={`
+											block w-full border-0 p-0 ${setThemeClass(
+															'text-gray-900 placeholder-gray-500',
+															'dark:text-white dark:placeholder-gray-400 dark:bg-formfields-darkmode',
+															themePreference(),
+														)} 
 											sm:text-sm
-											focus:outline-none focus:ring-0 focus"
+											focus:outline-none focus:ring-0 focus`}
 														placeholder="e.g. /new-page"
 													/>
 												</div>
@@ -495,18 +495,18 @@ function Editor(props: EditorProps) {
 											</div>
 										</div>
 										<div
-											class="bg-gray-two-tone mx-3 pt-5 pb-3 rounded shadow-sm border {setThemeClass(
-										'border-gray-300',
-										'dark:border-muted',
-										$themePreference,
-									)}"
+											class={`bg-gray-two-tone mx-3 pt-5 pb-3 rounded shadow-sm border ${setThemeClass(
+												'border-gray-300',
+												'dark:border-muted',
+												themePreference(),
+											)}`}
 										>
 											<p
-												class="ml-2 mb-5 pl-3 font-semibold {setThemeClass(
-											'',
-											'dark:text-white',
-											$themePreference,
-										)}"
+												class={`ml-2 mb-5 pl-3 font-semibold ${setThemeClass(
+													'',
+													'dark:text-white',
+													themePreference(),
+												)}`}
 											>
 												Seo
 												Toolkit
@@ -516,19 +516,19 @@ function Editor(props: EditorProps) {
 												class="grid grid-cols-1 my-1 p-3 mx-1 gap-y-7"
 											>
 												<div
-													class="{setThemeClass(
-												'bg-white border-gray-300',
-												'dark:bg-formfields-darkmode dark:border-muted',
-												$themePreference,
-											)}  relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue"
+													class={`${setThemeClass(
+														'bg-white border-gray-300',
+														'dark:bg-formfields-darkmode dark:border-muted',
+														themePreference(),
+													)}  relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
 													<label
 														for="site-title"
-														class="{setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium"
+														class={`${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium`}
 													>Title</label
 													>
 													<input
@@ -539,14 +539,14 @@ function Editor(props: EditorProps) {
 															.item
 															.title ??
 															`New Content Item${data.item.id}`}
-														class="
-											block w-full border-0 p-0 {setThemeClass(
-													'text-gray-900 placeholder-gray-500',
-													'dark:text-white dark:bg-formfields-darkmode dark:placeholder-gray-400',
-													$themePreference,
-												)} 
+														class={`
+											block w-full border-0 p-0 ${setThemeClass(
+															'text-gray-900 placeholder-gray-500',
+															'dark:text-white dark:bg-formfields-darkmode dark:placeholder-gray-400',
+															themePreference(),
+														)} 
 											 sm:text-sm
-											focus:outline-none focus:ring-0 focus"
+											focus:outline-none focus:ring-0 focus`}
 														placeholder="Site Title"
 													/>
 												</div>
@@ -555,11 +555,11 @@ function Editor(props: EditorProps) {
 												>
 													<label
 														for="site-description"
-														class="block text-sm font-medium {setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)}"
+														class={`block text-sm font-medium ${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)}`}
 													>Site
 														Description</label
 													>
@@ -577,15 +577,15 @@ function Editor(props: EditorProps) {
 																	.item
 																	.seoToolkit
 																	?.siteDescription}
-																class="{setThemeClass(
-															'border-gray-300',
-															'dark:border-muted dark:bg-formfields-darkmode dark:text-white',
-															$themePreference,
-														)} \
+																class={`${setThemeClass(
+																	'border-gray-300',
+																	'dark:border-muted dark:bg-formfields-darkmode dark:text-white',
+																	themePreference(),
+																)} 
 														shadow-sm focus:outline-none focus:ring-0 focus
 														block w-full sm:text-sm border rounded-md
 														p-2
-														"
+														`}
 
 															></textarea>
 														</div>
@@ -593,19 +593,19 @@ function Editor(props: EditorProps) {
 												</div>
 
 												<div
-													class="{setThemeClass(
-												'bg-white border-gray-300',
-												'dark:bg-formfields-darkmode dark:border-muted',
-												$themePreference,
-											)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue"
+													class={`${setThemeClass(
+														'bg-white border-gray-300',
+														'dark:bg-formfields-darkmode dark:border-muted',
+														themePreference(),
+													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
 													<label
 														for="favicon"
-														class="absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium {setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)}"
+														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)}`}
 													>Favicon</label
 													>
 													<input
@@ -616,111 +616,111 @@ function Editor(props: EditorProps) {
 															.item
 															.seoToolkit
 															?.favicon}
-														class="
-											{setThemeClass(
-													'text-gray-900 placeholder-gray-500',
-													'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
-													$themePreference,
-												)}
+														class={`
+											${setThemeClass(
+															'text-gray-900 placeholder-gray-500',
+															'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
+															themePreference(),
+														)}
 											block w-full border-0 p-0
 										    sm:text-sm
-											focus:outline-none focus:ring-0 focus"
+											focus:outline-none focus:ring-0 focus`}
 														placeholder="Favicon"
 													/>
 												</div>
 
 												<div
-													class="{setThemeClass(
-												'bg-white border-gray-300',
-												'dark:bg-formfields-darkmode dark:border-muted',
-												$themePreference,
-											)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue"
+													class={`${setThemeClass(
+														'bg-white border-gray-300',
+														'dark:bg-formfields-darkmode dark:border-muted',
+														themePreference(),
+													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
 													<label
 														for="meta-image"
-														class="absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium {setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)}"
+														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)}`}
 													>OG:Image</label
 													>
 													<input
 														type="text"
 														name="meta-image"
 														id="meta-image"
-														class="
-												{setThemeClass(
-													'text-gray-900 placeholder-gray-500',
-													'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
-													$themePreference,
-												)}
+														class={`
+												${setThemeClass(
+															'text-gray-900 placeholder-gray-500',
+															'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
+															themePreference(),
+														)}
 											block w-full border-0 p-0
-											focus:outline-none focus:ring-0 focus"
+											focus:outline-none focus:ring-0 focus`}
 														placeholder="eg https://logo.png"
 													/>
 												</div>
 
 												<div
-													class="{setThemeClass(
-												'bg-white border-gray-300',
-												'dark:bg-formfields-darkmode dark:border-muted',
-												$themePreference,
-											)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue"
+													class={`${setThemeClass(
+														'bg-white border-gray-300',
+														'dark:bg-formfields-darkmode dark:border-muted',
+														themePreference(),
+													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
 													<label
 														for="keywords"
-														class="absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium {setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)}"
+														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)}`}
 													>Keywords</label
 													>
 													<input
 														type="text"
 														name="keywords"
 														id="keywords"
-														class="
-												{setThemeClass(
-													'text-gray-900 placeholder-gray-500',
-													'dark:text-white dark:bg-formfields-darkmode dark:placeholder-gray-400',
-													$themePreference,
-												)}
+														class={`
+												${setThemeClass(
+															'text-gray-900 placeholder-gray-500',
+															'dark:text-white dark:bg-formfields-darkmode dark:placeholder-gray-400',
+															themePreference(),
+														)}
 											block w-full border-0 p-0 sm:text-sm
-											focus:outline-none focus:ring-0 focus"
+											focus:outline-none focus:ring-0 focus`}
 														placeholder="eg Blink, Headless, CMS"
 													/>
 												</div>
 
 												<div
-													class="{setThemeClass(
-												'bg-white border-gray-300',
-												'dark:bg-formfields-darkmode dark:border-muted',
-												$themePreference,
-											)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue"
+													class={`${setThemeClass(
+														'bg-white border-gray-300',
+														'dark:bg-formfields-darkmode dark:border-muted',
+														themePreference(),
+													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
 													<label
 														for="author"
-														class="absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium {setThemeClass(
-													'text-gray-900 ',
-													'dark:text-white',
-													$themePreference,
-												)}"
+														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
+															'text-gray-900 ',
+															'dark:text-white',
+															themePreference(),
+														)}`}
 													>Author</label
 													>
 													<input
 														type="text"
 														name="author"
 														id="author"
-														class="
-												{setThemeClass(
-													'text-gray-900 placeholder-gray-500',
-													'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
-													$themePreference,
-												)}
+														class={`
+												${setThemeClass(
+															'text-gray-900 placeholder-gray-500',
+															'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
+															themePreference(),
+														)}
 											block w-full border-0 p-0 sm:text-sm
-											focus:outline-none focus:ring-0 focus"
+											focus:outline-none focus:ring-0 focus`}
 														placeholder="eg Blink Admin"
 													/>
 												</div>
@@ -733,11 +733,11 @@ function Editor(props: EditorProps) {
 									id="configEditor"
 								>
 									<div
-										class="{setThemeClass(
-									'border-gray-300',
-									'border-muted',
-									$themePreference,
-								)} flex justify-between p-1 items-center border-b mb-4"
+										class={`${setThemeClass(
+											'border-gray-300',
+											'border-muted',
+											themePreference(),
+										)} flex justify-between p-1 items-center border-b mb-4`}
 									>
 										<h1
 											class={setThemeClass(
@@ -751,11 +751,11 @@ function Editor(props: EditorProps) {
 										<svg
 											data-command="show-data-parser"
 											xmlns="http://www.w3.org/2000/svg"
-											class="h-4 w-4 closeLayer cursor-pointer {setThemeClass(
-										'',
-										'dark:text-white',
-										$themePreference,
-									)}"
+											class={`h-4 w-4 closeLayer cursor-pointer ${setThemeClass(
+												'',
+												'dark:text-white',
+												themePreference(),
+											)}`}
 											fill="none"
 											viewBox="0 0 24 24"
 											stroke="currentColor"
@@ -771,11 +771,11 @@ function Editor(props: EditorProps) {
 
 									<div class="flex ml-1">
 										<p
-											class="ml-2 pl-3 {setThemeClass(
-										'',
-										'dark:text-white',
-										$themePreference,
-									)}"
+											class={`ml-2 pl-3 ${setThemeClass(
+												'',
+												'dark:text-white',
+												themePreference(),
+											)}`}
 										>
 											Design
 											Mode
@@ -805,11 +805,11 @@ function Editor(props: EditorProps) {
 						class="fixed pl-1 pr-[15px] transition-all duration-[200ms]"
 					>
 						<div
-							class="border {setThemeClass(
-						'border-gray-300',
-						'dark:border-muted',
-						$themePreference,
-					)}"
+							class={`border ${setThemeClass(
+								'border-gray-300',
+								'dark:border-muted',
+								themePreference(),
+							)}`}
 							style="padding-bottom:78px;"
 							id="editorCanvas"
 						></div>
@@ -819,27 +819,27 @@ function Editor(props: EditorProps) {
 					<div data-toggled-state="off" class="panel__right flex">
 						<div
 							style="transform: translateX(20vw);"
-							class="right_tab_left {setThemeClass(
-						'bg-primary-light-gray border-gray-300',
-						'dark:bg-nav-darkmode dark:border-muted',
-						$themePreference,
-					)} w-1/5 border-l fixed transition-all duration-[200ms] right-[50px] h-full"
+							class={`right_tab_left ${setThemeClass(
+								'bg-primary-light-gray border-gray-300',
+								'dark:bg-nav-darkmode dark:border-muted',
+								themePreference(),
+							)} w-1/5 border-l fixed transition-all duration-[200ms] right-[50px] h-full`}
 						>
 							<div
 								style="display: none;"
-								class="border {setThemeClass(
-							'border-gray-300',
-							'dark:border-muted',
-							$themePreference,
-						)} shadow-md"
+								class={`border ${setThemeClass(
+									'border-gray-300',
+									'dark:border-muted',
+									themePreference(),
+								)} shadow-md`}
 								id="stlyeSelectorContainer"
 							>
 								<div
-									class="selector-container shadow border-b {setThemeClass(
-								'border-gray-300',
-								'dark:border-muted',
-								$themePreference,
-							)}"
+									class={`selector-container shadow border-b ${setThemeClass(
+										'border-gray-300',
+										'dark:border-muted',
+										themePreference(),
+									)}`}
 								></div>
 								<div
 									id="styles"
@@ -850,18 +850,18 @@ function Editor(props: EditorProps) {
 							<div
 								style="display: none;"
 								id="traits"
-								class="traits-container {setThemeClass(
-							'bg-monochromatic-gray border-gray-300',
-							'dark:bg-primary-bg-darkmode dark:border-muted',
-							$themePreference,
-						)}  pb-6 border shadow-md"
+								class={`traits-container ${setThemeClass(
+									'bg-monochromatic-gray border-gray-300',
+									'dark:bg-primary-bg-darkmode dark:border-muted',
+									themePreference(),
+								)}  pb-6 border shadow-md`}
 							>
 								<div
-									class=" {setThemeClass(
-								'bg-monochromatic-gray border-gray-300',
-								'dark:bg-primary-bg-darkmode dark:border-muted',
-								$themePreference,
-							)} mt-0 border-b border-t px-1 py-3"
+									class={`${setThemeClass(
+										'bg-monochromatic-gray border-gray-300',
+										'dark:bg-primary-bg-darkmode dark:border-muted',
+										themePreference(),
+									)} mt-0 border-b border-t px-1 py-3`}
 								>
 									<h1
 										class={setThemeClass(
@@ -877,11 +877,11 @@ function Editor(props: EditorProps) {
 							<div
 								style="display:none;"
 								id="ai-prompt"
-								class="flex flex-col gap-20 h-100 ai-prompt-container {setThemeClass(
-							'bg-monochromatic-gray border-gray-300',
-							'dark:bg-primary-bg-darkmode dark:border-muted',
-							$themePreference,
-						)}  pb-6 border shadow-md"
+								class={`flex flex-col gap-20 h-100 ai-prompt-container ${setThemeClass(
+									'bg-monochromatic-gray border-gray-300',
+									'dark:bg-primary-bg-darkmode dark:border-muted',
+									themePreference(),
+								)}  pb-6 border shadow-md`}
 							>
 								{/* <CodeComplete {editor} /> */}
 								{/*<AiCompletion editor={editor} />*/}
@@ -891,20 +891,20 @@ function Editor(props: EditorProps) {
 							<div
 								style="display: none;"
 								id="component-css"
-								class="{setThemeClass(
-							'bg-monochromatic-gray border-gray-300',
-							'dark:bg-formfields-darkmode dark:border-muted',
-							$themePreference,
-						)}  pb-6 border shadow-md"
+								class={`${setThemeClass(
+									'bg-monochromatic-gray border-gray-300',
+									'dark:bg-formfields-darkmode dark:border-muted',
+									themePreference(),
+								)}  pb-6 border shadow-md`}
 							></div>
 							<div
 								style="display: none;"
 								id="block-components edit-script"
-								class="{setThemeClass(
-							'bg-monochromatic-gray border-gray-300',
-							'dark:bg-formfields-darkmode dark:border-muted',
-							$themePreference,
-						)}  pb-6 border shadow-md"
+								class={`${setThemeClass(
+									'bg-monochromatic-gray border-gray-300',
+									'dark:bg-formfields-darkmode dark:border-muted',
+									themePreference(),
+								)}  pb-6 border shadow-md`}
 							></div>
 
 							{/* TODO: add conditons for showing the data parser*/}
@@ -933,11 +933,11 @@ function Editor(props: EditorProps) {
 							</div>
 						</div>
 						<div
-							class="{setThemeClass(
-						'border-gray-300 bg-primary-light-gray',
-						'dark:border-muted dark:bg-nav-darkmode',
-						$themePreference,
-					)} right_tab_right w-[50px] border-l fixed h-full right-0"
+							class={`${setThemeClass(
+								'border-gray-300 bg-primary-light-gray',
+								'dark:border-muted dark:bg-nav-darkmode',
+								themePreference(),
+							)} right_tab_right w-[50px] border-l fixed h-full right-0`}
 						>
 							<div
 								class="panel__utilities space-y-2"
@@ -974,11 +974,11 @@ function Editor(props: EditorProps) {
 				id="breadcrumbsContainer"
 			>
 				<div
-					class="flex {setThemeClass(
-				'bg-white',
-				'dark:bg-primary-bg-darkmode dark:text-white',
-				$themePreference,
-			)}"
+					class={`flex ${setThemeClass(
+						'bg-white',
+						'dark:bg-primary-bg-darkmode dark:text-white',
+						themePreference(),
+					)}`}
 					id="breadcrumbs"
 				></div>
 			</div>
