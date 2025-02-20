@@ -92,7 +92,7 @@ const seoToolKitDefault = {
 	author: ""
 }
 
-export type seoToolKit = typeof seoToolKitDefault;
+// export type seoToolKit = typeof seoToolKitDefault;
 /*interface BlinkSession extends Omit<Session, 'user'> {
 	user: BlinkUser;
 }*/
@@ -114,6 +114,21 @@ declare global {
 
 
 	namespace VisualEditor {
+		type ProjectData = {
+			id: string;
+			project: string;
+			projectName: string;
+			title: string;
+			status: VisualEditor.status;
+			urlPath: string;
+			seoToolkit: VisualEditor.seoToolKit;
+			body: {
+				"blink-components": "";
+				"blink-styles": [];
+				"blink-assets": [];
+			};
+			itemEditorStatus?: ItemMappingStatus;
+		}
 		type editorStorageObject = {
 			pages: Record<any, any>[];
 			customHtml: string;
@@ -133,6 +148,8 @@ declare global {
 			itemMappingState?: ItemMappingStatus;
 			styles: Record<string, any>[];
 		}
+		type seoToolKit = typeof seoToolKitDefault;
+
 		type status = typeof itemStatus[number] | null;  //'draft' | 'published' | 'inactive' | 'archived' |'deleted';
 
 		//!Fix this

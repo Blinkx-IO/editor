@@ -1,0 +1,272 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://use.typekit.net/shu1qif.css");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@theme {
+	/* Spacing */
+	--spacing-2: 0.5rem;
+	--spacing-6: 1.5rem;
+
+	/* Border Radius */
+	--rounded-md: 0.375rem;
+	--rounded-lg: 0.5rem;
+
+	/* Shadows */
+	--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+	/* Ring Shadows */
+	--tw-ring-offset-shadow: 0 0 #0000;
+	--tw-ring-shadow: 0 0 #0000;
+	--tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+	/* Primary Colors */
+	--color-primary-dark-blue: #212C3E;
+	--color-primary-bg-darkmode: #202224;
+	--color-primary-mid-gray: #454a4d;
+	--color-primary-dark-navpanel: #202224;
+	--color-primary-light-gray: #edf0f5;
+	--color-primary-accent-silver: #f2f4f8;
+
+	/* Secondary Colors */
+	--color-secondary-accent-blue: #0094FA;
+	--color-secondary-accent-blue-100: #bdddf4;
+	--color-secondary-accent-blue-200: #90caf9;
+	--color-secondary-accent-blue-300: #64b5f6;
+	--color-secondary-accent-blue-400: #2196f3;
+	--color-secondary-accent-blue-500: #1e88e5;
+	--color-secondary-accent-blue-600: #1976d2;
+
+	/* Dark Reader Colors */
+	--color-darkreader-neutral-background: #131516;
+	--color-darkreader-neutral-text: #d8d4cf;
+	--color-darkreader-selection-background: #004daa;
+	--color-darkreader-selection-text: #e8e6e3;
+
+	/* Navigation Colors */
+	--color-nav-darkmode: #17191a;
+	--color-secondary-bg-darkmode: #454a4d;
+	--color-formfields-darkmode: #303436;
+
+	/* Gray Scales */
+	--color-primary-light-gray-100: #f1f5fa;
+	--color-primary-light-gray-300: #d3d6da;
+	--color-primary-light-gray-400: #c9c9ca;
+	--color-primary-light-gray-500: #adadad;
+	--color-monochromatic-gray: #dde2ec;
+
+	/* Special Colors */
+	--color-avatar-bg-color: rgba(109, 129, 245, 0.08);
+	--color-avatar-text-color: #6d81f5;
+	--color-sidebar-text-hover: #6d81f5;
+	--color-muted: #6c757d;
+	--color-navy-blue-500: #2563EB;
+
+	/* Semantic Colors */
+	--color-green-50: rgb(240 253 244);
+	--color-green-100: rgb(220 252 231);
+	--color-green-200: rgb(187 247 208);
+	--color-green-300: rgb(134 239 172);
+	--color-green-400: rgb(74 222 128);
+	--color-green-500: rgb(34 197 94);
+	--color-green-600: rgb(22 163 74);
+	--color-green-700: rgb(21 128 61);
+	--color-green-800: rgb(22 101 52);
+	--color-green-900: rgb(20 83 45);
+
+	/* Yellow Colors */
+	--color-yellow-50: rgb(255 251 235);
+	--color-yellow-100: rgb(254 243 199);
+	--color-yellow-200: rgb(253 230 138);
+	--color-yellow-300: rgb(252 211 77);
+	--color-yellow-400: rgb(251 191 36);
+	--color-yellow-500: rgb(245 158 11);
+	--color-yellow-600: rgb(217 119 6);
+	--color-yellow-700: rgb(180 83 9);
+	--color-yellow-800: rgb(146 64 14);
+	--color-yellow-900: rgb(120 53 15);
+
+	/* Purple Colors */
+	--color-purple-50: rgb(245 243 255);
+	--color-purple-100: rgb(237 233 254);
+	--color-purple-200: rgb(221 214 254);
+	--color-purple-300: rgb(196 181 253);
+	--color-purple-400: rgb(167 139 250);
+	--color-purple-500: rgb(139 92 246);
+	--color-purple-600: rgb(124 58 237);
+	--color-purple-700: rgb(109 40 217);
+	--color-purple-800: rgb(91 33 182);
+	--color-purple-900: rgb(76 29 149);
+}
+
+@layer theme, base, components, utilities;
+
+@layer base {
+	html {
+		font-family: "proxima-nova", sans-serif;
+	}
+
+	input {
+		@apply focus:ring-2 focus-within:outline-none focus:ring-secondary-accent-blue;
+	}
+
+	[type='radio']:focus {
+		@apply ring-2
+	}
+
+	[type='radio']:active {
+		@apply ring-2 ring-offset-2 shadow-none border-none rounded-lg
+	}
+
+	[type='radio']:checked {
+		@apply border-0 outline-none shadow-none rounded-lg ring-2
+	}
+
+	[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+
+		@apply ring-2 outline-none ring-secondary-accent-blue border-secondary-accent-blue;
+
+	}
+}
+
+@layer components {
+
+	/* Buttons */
+	.btn {
+		padding: var(--spacing-2) 0;
+		border-radius: var(--rounded-md);
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		cursor: pointer;
+		outline: none;
+	}
+
+	.btn:focus {
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+	}
+
+	.btn-square {
+		padding: var(--spacing-2) 0;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		cursor: pointer;
+		outline: none;
+	}
+
+	.btn-square:focus {
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+	}
+
+	.btn-blue {
+		background-color: var(--color-secondary-accent-blue);
+		color: #fff;
+	}
+
+	.btn-blue:hover {
+		background-color: var(--color-secondary-accent-blue-500);
+	}
+
+	.btn-blue:active {
+		background-color: var(--color-secondary-accent-blue-600);
+	}
+
+	.btn-white {
+		background-color: white;
+		color: var(--color-secondary-accent-blue);
+	}
+
+	.btn-white:hover {
+		background-color: var(--color-primary-light-gray-100);
+	}
+
+	.btn-white:active {
+		background-color: var(--color-primary-light-gray-300);
+	}
+
+	.btn-green {
+		background-color: rgba(209, 250, 229, 1);
+		color: rgba(6, 95, 70, 1);
+	}
+
+	.btn-green:hover {
+		background-color: rgba(167, 243, 208, 1);
+	}
+
+	.btn-gray {
+		background-color: var(--color-primary-light-gray-100);
+		color: var(--color-primary-dark-blue);
+	}
+
+	.btn-gray:hover {
+		background-color: rgba(249, 250, 251, 1);
+	}
+
+	.btn-inactive {
+		background-color: var(--color-primary-light-gray-400);
+		color: #fff;
+	}
+
+	.btn-inactive:hover {
+		background-color: var(--color-primary-light-gray-500);
+	}
+
+	/* Cards */
+	.card-white {
+		padding: 1.25rem 1rem;
+		background-color: #fff;
+		border-radius: 0.5rem;
+		box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+		overflow: hidden;
+	}
+
+	@media (min-width: 640px) {
+		.card-white {
+			padding: 1.5rem;
+		}
+	}
+}
+
+@layer utilities {
+
+	/* Chrome, Safari and Opera */
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		/* IE and Edge */
+		scrollbar-width: none;
+		/* Firefox */
+	}
+
+
+	@media (prefers-color-scheme: dark) {
+		::-webkit-scrollbar {
+			background-color: #202324;
+			color: #aba499;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background-color: #454a4d;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background-color: #575e62;
+		}
+
+		::-webkit-scrollbar-thumb:active {
+			background-color: #484e51;
+		}
+
+		::-webkit-scrollbar-corner {
+			background-color: #181a1b;
+		}
+	}
+}

@@ -1,28 +1,8 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import { configureEditor } from "@/editor";
-import { onMount } from 'solid-js';
+import App from './src/framework/solid/App';
 
 
-function App() {
-	onMount(() => {
-		configureEditor({
-			projectId: '2',
-			projectName: 'test',
-			itemTitle: 'test',
-			itemId: '1',
-			themePreference: 'dark',
-			itemStatus: 'draft',
-			itemMappingState: 'active',
-		});
-	});
-	return (
-		<div class="App">
-			<div id='editorCanvas'></div>
-
-		</div>
-	)
-}
 
 const root = document.getElementById('root');
 

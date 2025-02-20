@@ -621,20 +621,20 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
 
             //&display=swap
 
-            const fontLinks: Record<googleFonts, string> = {
-                "'Lato', sans-serif": "family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900",
-                "'Old Standard TT', serif": "family=Old+Standard+TT:ital,wght@0,400;0,700;1,400",
-                "'Open Sans', sans-serif": "family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800",
-                "'Oxygen', sans-serif": "family=Oxygen:wght@300;400;700",
-                "'PT Sans', sans-serif": "family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700",
-                "'Poppins', sans-serif": "family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900",
-                "'Raleway', sans-serif": "family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900",
-                "'Roboto', sans-serif": "family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900",
-                "'Spectral', serif": "family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800",
-                "'Work Sans', sans-serif": "family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900",
-                "Merriweather, serif": "family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900",
-                "Montserrat, sans-serif": "family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900"
-            }
+            // const fontLinks: Record<googleFonts, string> = {
+            //     "'Lato', sans-serif": "family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900",
+            //     "'Old Standard TT', serif": "family=Old+Standard+TT:ital,wght@0,400;0,700;1,400",
+            //     "'Open Sans', sans-serif": "family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800",
+            //     "'Oxygen', sans-serif": "family=Oxygen:wght@300;400;700",
+            //     "'PT Sans', sans-serif": "family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700",
+            //     "'Poppins', sans-serif": "family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900",
+            //     "'Raleway', sans-serif": "family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900",
+            //     "'Roboto', sans-serif": "family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900",
+            //     "'Spectral', serif": "family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800",
+            //     "'Work Sans', sans-serif": "family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900",
+            //     "Merriweather, serif": "family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900",
+            //     "Montserrat, sans-serif": "family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900"
+            // }
             const acceptedFonts: googleFonts[] = ["'Lato', sans-serif", "'Old Standard TT', serif", "'Open Sans', sans-serif", "'Oxygen', sans-serif", "'PT Sans', sans-serif", "'Poppins', sans-serif", "'Raleway', sans-serif", "'Roboto', sans-serif", "'Spectral', serif", "'Work Sans', sans-serif", "Merriweather, serif", "Montserrat, sans-serif"]
 
             const styleList = editor.CssComposer.getAll().toJSON() as { style: { 'font-family'?: googleFonts } }[];//[0].style['font-family']
@@ -696,24 +696,24 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
 
     editor.on("storage:error", (e) => {
         //console.log('wow',e)
-        if (browser) {
-            const loginWindow = window.open('/login', '', 'height=600,width=600');
-            loginWindow?.addEventListener('load', () => {
-                //console.log('loaded')
-                //console.log(loginWindow?.document.getElementById('loginButton'))
-                loginWindow?.document.getElementById('loginButton')!.addEventListener('click', async () => {
-                    const email = loginWindow?.document.getElementById('ilqa4') as HTMLInputElement;
-                    const password = loginWindow?.document.getElementById('imhd2') as HTMLInputElement;
-                    const formdata = new FormData();
-                    loginWindow?.close()
-                    formdata.append('email', email.value);
-                    formdata.append('password', password.value);
-                    const req = await fetch('/login', { method: "POST", body: formdata });
-                    //console.log(req);
-
-                });
-            })
-        }
+        // if (browser) {
+        //     const loginWindow = window.open('/login', '', 'height=600,width=600');
+        //     loginWindow?.addEventListener('load', () => {
+        //         //console.log('loaded')
+        //         //console.log(loginWindow?.document.getElementById('loginButton'))
+        //         loginWindow?.document.getElementById('loginButton')!.addEventListener('click', async () => {
+        //             const email = loginWindow?.document.getElementById('ilqa4') as HTMLInputElement;
+        //             const password = loginWindow?.document.getElementById('imhd2') as HTMLInputElement;
+        //             const formdata = new FormData();
+        //             loginWindow?.close()
+        //             formdata.append('email', email.value);
+        //             formdata.append('password', password.value);
+        //             const req = await fetch('/login', { method: "POST", body: formdata });
+        //             //console.log(req);
+        //
+        //         });
+        //     })
+        // }
         /*setTimeout(() => {
             loginWindow?.document.getElementById('loginButton')!.addEventListener('click',()=>{
                 

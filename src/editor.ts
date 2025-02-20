@@ -43,7 +43,7 @@ export type editorConfig = {
 	itemStatus: VisualEditor.status;
 	dev?: boolean;
 	browser?: boolean;
-	itemMappingState: ItemMappingStatus
+	itemMappingState?: ItemMappingStatus
 }
 
 // interface installedApps {
@@ -137,8 +137,6 @@ export const configureEditor = async (config: editorConfig) => {
 			]
 		},
 		domComponents: {
-
-
 			processor: (component: JSXObject) => {
 				//console.log(component);
 
@@ -156,36 +154,21 @@ export const configureEditor = async (config: editorConfig) => {
 		fromElement: false,
 		height: '300px',
 		layerManager: {
-
 			appendTo: '.layers-container',
 			hidable: true,
-
-			//stylePrefix:blinkStylePrefix,
-			//stylePrefix: '',
 		},
-		//layers: {
-		//stylePrefix:blinkStylePrefix,
-		//},
 		panels: {
 			defaults: defaultPanels({
 				itemTitle: config.itemTitle,
 				themePreference: config.themePreference
 			}),
 
-			//delayBtnsShow:true
-			//stylePrefix:blinkStylePrefix
 		},
-
-
 		plugins: setUpPlugins() as Plugin[],
 		pluginsOpts: setUpPlugInOpts(),
 		projectData: defaultProjectData,
-
 		selectorManager: {
-
 			appendTo: '.selector-container',
-
-			//stylePrefix:blinkStylePrefix,
 			states: [
 				{ name: 'hover', label: 'Hover' },
 				{ name: 'active', label: 'Click' },
@@ -196,8 +179,7 @@ export const configureEditor = async (config: editorConfig) => {
 				{ name: 'visited', label: 'Visited' },
 				{ name: 'placeholder-shown', label: 'Placholder Visible' }
 			],
-			//componentFirst: false,
-			//TODO redo this
+			//TODO: redo this
 			render: defaultSelectorTemplate
 		},
 		showOffsets: true,
@@ -213,13 +195,7 @@ export const configureEditor = async (config: editorConfig) => {
 					headers: {
 						"Content-Type": "application/json"
 					},
-					/*fetchOptions:(a)=>{
-						
-						return{
-							method:"POST",
 
-						}
-					},*/
 					//Pass custom server data here
 					onLoad: (data) => {
 						//console.log(data);
@@ -295,15 +271,10 @@ export const configureEditor = async (config: editorConfig) => {
 								itemMappingState = "pending";
 							}
 
-							//!check for status here
-							//console.log(screenshot)
 							let item_preview = null;
 							if (screenshot) {
 								item_preview = screenshot;
-								//console.log(data.item_preview)
 							}
-
-
 
 							return {
 								...data,
@@ -324,7 +295,6 @@ export const configureEditor = async (config: editorConfig) => {
 			//@deprecated
 			id: 'blink-'
 		},
-		//style: style ?? undefined,
 		styleManager: {
 			appendTo: '.styles-container',
 			clearProperties: true,
@@ -332,7 +302,6 @@ export const configureEditor = async (config: editorConfig) => {
 			//stylePrefix:blinkStylePrefix,
 		},
 		stylePrefix: blinkStylePrefix,
-		//pStylePrefix:blinkStylePrefix,
 		traitManager: {
 			appendTo: '.traits-container' //'.traits-container',
 			//stylePrefix:blinkStylePrefix,
@@ -385,63 +354,11 @@ export const configureEditor = async (config: editorConfig) => {
 			console.warn(log);
 		}
 
-		/*function openDataModal(title: string, content: string | HTMLTableElement | HTMLElement) {
-			editor.Modal.setTitle(title);
-			editor.Modal.setContent(content);
-			editor.Modal.open();
-		}*/
-		/*function createTableString(table: any[]) {
-				const newTable = document.createElement("table");
-				const container = document.createElement("tbody");
-
-				table.forEach((element: any[]) => {
-					const row = document.createElement("tr");
-					row.classList.add("blink-two-color");
-					element.forEach((item: string) => {
-						const cell = document.createElement("td");
-						cell.innerText = item;
-						row.append(cell);
-					});
-					container.append(row);
-				});
-
-				newTable.append(container);
-				return newTable;
-			}*/
-		//bindStatusUpdates(editor);
 		pageSettings(editor);
-
-		//pass editor issue blinkx #8
-		//pass data from server here on inital load
-		//await setProjectLinks(editorConfig.collection!, editor);
-
-		/*const dataParserScript = function () {
-			if (dev) console.log('Opening Data Parser');
-		};*/
-
-		/*templateExplorer.addEventListener('click', () => {
-			openDataModal('Template Manager', showTemplates());
-		});*/
-
-		/*editor.Commands.add('data-explorer', (editor: any) => {
-			if (dev) console.log(editor, 'Has expanded');
-			dataParserScript();
-		});*/
 
 		inputVal.addEventListener('change', () => {
 			editor.store();
 		});
-
-		//TODO Add a better check here
-		/*if (editorTemplate != null) {
-			//console.log("Setting title");
-			//inputVal.value = `New Content Item ${temporaryPostIdentifier.item_id}`;
-			inputVal.value = 'Untitled';
-			//@ts-ignore
-			editor.store();
-		} else {
-			//inputVal.value = `Untitled Content Item ${itemID}`
-		}*/
 
 		//Rearange or place custom built components
 		const imports = document.querySelector('#content-blocks button');
@@ -485,56 +402,6 @@ export const configureEditor = async (config: editorConfig) => {
 			Logger('To access the editor object use the global editor in the console');
 		}
 
-		//const loader = document.getElementById('initial-loader') as HTMLElement;
-		//loader.remove();
-
-		//const activePanel = editorPanels().leftPanelContainer.querySelector(".blink-pn-active") as HTMLElement;
-		//if(activePanel)activePanel.click();
-
-		// const iframe = document.querySelector('.blink-frame') as HTMLIFrameElement;
-		// const innerDoc = iframe.contentDocument || iframe.contentWindow!.document;
-
-		// interface MenuCommand {
-		// 	name: string;
-		// 	key: string;
-		// 	command: string;
-		// 	toggleable: boolean;
-		// }
-
-		/*function runCommand(command: MenuCommand) {
-			//editor.Commands.isActive
-			if (command.toggleable && editor.Commands.isActive(command.command)) {
-				editor.stopCommand(command.command);
-			} else {
-				editor.runCommand(command.command);
-			}
-			editor.stopCommand('secondary-menu');
-			document.removeEventListener('click', closeMenu);
-			innerDoc.body.removeEventListener('click', closeMenu);
-		}*/
-		// const menuItem: MenuCommand[] = [
-		// 	{
-		// 		name: 'Select Parent',
-		// 		key: 'A',
-		// 		command: 'core:component-exit',
-		// 		toggleable: false
-		// 	},
-		// 	{ name: 'Copy', key: '⌘+c', command: 'core:copy', toggleable: false },
-		// 	{ name: 'Paste', key: '⌘+v', command: 'core:paste', toggleable: false },
-		// 	{ name: 'Undo', key: '⌘+z', command: 'core:undo', toggleable: false },
-		// 	{ name: 'Redo', key: '⌘+shift+z', command: 'core:redo', toggleable: false },
-		// 	//{name:"Edit Code",key:"⌘+shift+e",command:"html-edit",toggleable:false},
-		// 	{ name: 'Toggle Fullscreen', key: '', command: 'expand-screen', toggleable: true },
-		// 	{ name: 'Toggle Grid', key: 'alt+g', command: 'sw-visibility', toggleable: true },
-		// 	{
-		// 		name: 'Toggle Active Classes',
-		// 		key: '',
-		// 		command: 'toggle-classes',
-		// 		toggleable: false
-		// 	}
-		// ];
-
-		//move this to a separte module
 
 		function addKeyMapFromPanel(config: { panelId: VisualEditor.PanelIdNames, panelCommand: VisualEditor.PanelCommands, hotKey: string }) {
 			const { hotKey, panelCommand, panelId } = config;
@@ -558,69 +425,6 @@ export const configureEditor = async (config: editorConfig) => {
 		addKeyMapFromPanel({ panelId: 'edit-actions', panelCommand: 'edit-code', hotKey: 'alt+c' });
 		addKeyMapFromPanel({ panelId: 'panel__left', panelCommand: 'show-blocks', hotKey: 'alt+b' });
 
-		//TODO redo slide/state logic
-		//addKeyMapFromPanel({panelId:'panel-utilities',panelCommand:'show-styles',hotKey:'alt+s'});
-		//addKeyMapFromPanel({panelId:'panel-utilities',panelCommand:'show-traits',hotKey:'alt+o'});
-		/*const contextMenu = html`
-			<div>
-				${menuItem.map(
-			(command) => html`
-						<div
-							@click=${() => runCommand(command)}
-							class="my-1 cursor-pointer context-menu-items text-white flex items-center justify-between"
-						>
-							<div class="pl-3">${command.name}</div>
-							<div class="pr-3">${command.key}</div>
-						</div>
-					`
-		)}
-			</div>
-		`;*/
-		//if(editorPanels()?.contextMenu){	
-		////render(contextMenu, editorPanels().contextMenu);
-		//}
-		/*function toggleContextMenu(e: MouseEvent) {
-			editorPanels().contextMenu.dataset.xPosition = `${e.clientX}`;
-			editorPanels().contextMenu.dataset.yPosition = `${e.clientY}`;
-			editor.Commands.isActive('secondary-menu')
-				? editor.stopCommand('secondary-menu')
-				: editor.runCommand('secondary-menu');
-		}*/
-
-		/*function closeMenu(e: MouseEvent) {
-			const childEl = e.target as HTMLElement;
-
-			if (
-				editor.Commands.isActive('secondary-menu') &&
-				e.target !== editorPanels().contextMenu &&
-				!editorPanels().contextMenu.contains(childEl)
-			) {
-				editor.stopCommand('secondary-menu');
-
-				document.removeEventListener('click', closeMenu);
-
-				innerDoc.body.removeEventListener('click', closeMenu);
-			}
-		}*/
-
-		/*innerDoc.addEventListener('contextmenu', (e) => {
-			e.preventDefault();
-			toggleContextMenu(e);
-			innerDoc.body.addEventListener('click', (e) => closeMenu(e));
-			document.addEventListener('click', (e) => closeMenu(e));
-		});*/
-
-		/*document.addEventListener("contextmenu", (e) => {
-				e.preventDefault();
-				toggleContextMenu(e);
-				document.addEventListener("click", (e) => closeMenu(e));
-				innerDoc.body.addEventListener("click", (e) => closeMenu(e));
-			});*/
-
-		//Content in Canvas iframe
-		//const frameBody = innerDoc.querySelector('.gjs-dashed') as HTMLBodyElement;
-		//frameBody.classList.add('blink-dashed');
-		//frameBody.classList.remove('gjs-dashed');
 	});
 
 	return editor;

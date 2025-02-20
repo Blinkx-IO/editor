@@ -10,6 +10,7 @@
     "jsxImportSource": "solid-js",
     "types": [
       "vite/client",
+      "svelte",
       "globals.ts"
     ],
     "noEmit": true,
@@ -69,6 +70,9 @@
       ],
       "$components/*": [
         "./src/components/*"
+      ],
+      "@framework/*": [
+        "./src/framework/*"
       ]
     }
   },
@@ -76,6 +80,7 @@
     "./index.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.js"
+    "src/**/*.js",
+    "src/**/*.svelte"
   ]
 }
