@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { fly } from "svelte/transition";
 	import { configureEditor } from "@/editor";
-	import "./editor.css";
-	import "./npgrogress.css";
+	import "@/css/index.css";
+	import "@/css/editor.css";
+	import "@/css/npgrogress.css";
 	import { onMount } from "svelte";
 	import type monaco from "monaco-editor";
 	import type { editor as monacoEditor } from "monaco-editor";
-	import "./../../../index.css";
 	import {
 		selectedComponent,
 		themePreference,
@@ -30,24 +30,8 @@
 
 	let selectedLanguage: codeLanguageOptions = "json";
 
-	type ProjectData = {
-		id: string;
-		project: string;
-		projectName: string;
-		title: string;
-		status: VisualEditor.status;
-		urlPath: string;
-		seoToolkit: VisualEditor.seoToolKit;
-		body: {
-			"blink-components": "";
-			"blink-styles": [];
-			"blink-assets": [];
-		};
-		itemEditorStatus?: ItemMappingStatus;
-	};
-
 	export let data: {
-		item: ProjectData;
+		item: VisualEditor.ProjectData;
 	} = {
 		item: {
 			id: "1",
