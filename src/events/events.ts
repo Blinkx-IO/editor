@@ -695,7 +695,7 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
     });
 
     editor.on("storage:error", (e) => {
-        //console.log('wow',e)
+        console.trace('Storage error', e)
         // if (browser) {
         //     const loginWindow = window.open('/login', '', 'height=600,width=600');
         //     loginWindow?.addEventListener('load', () => {
@@ -726,6 +726,7 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
         //
     });
     editor.on("storage:end:load", (data: VisualEditor.editorStorageObject) => {
+        console.log("Beginning Data Load", data.styles, data.css)
         /*console.log({
             assets:data.assets,
             pages:data.pages,

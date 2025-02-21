@@ -1,43 +1,27 @@
-import type { cssStyles } from "../interfaces";
+import type { ComponentDefinition } from "grapesjs";
 
-export interface contentB {
-    name: string;
-    label: string;
-    content: {
-        /**
-         * Block Type
-         */
-        type: string;
-        style: cssStyles;
-    };
-    resizeable?: boolean;
+// Define the content interface that matches GrapesJS expectations
+export interface BlockContent extends ComponentDefinition {
+    type: string;
+    style?: Record<string, string>;
+    text?: string;
+    [key: string]: any; // Index signature for additional properties
 }
 
-//TODO redo this as an interface
-export class contentBlock {
+// Main interface for content blocks
+export interface ContentBlock {
     name: string;
     label: string;
+    content: BlockContent;
+}
 
-    content:
-        | {
-              text?:string;
-              type: string; //Block Type
-              style?: Record<string,string>
-          }
-        | undefined;
+// Class implementation
+export class contentBlock implements ContentBlock {
+    name: string;
+    label: string;
+    content: BlockContent;
 
-    constructor(
-        name: string,
-        label: string,
-        content:
-            | {
-                  text?:string;
-                  type: string; //Block Type
-                  //Block Type
-                  style?: Record<string,string>;
-              }
-            | undefined,
-    ) {
+    constructor(name: string, label: string, content: BlockContent) {
         this.name = name;
         this.label = label;
         this.content = content;

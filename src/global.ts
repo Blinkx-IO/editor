@@ -109,6 +109,8 @@ declare global {
 		JSXComponents: JSX.Element[];
 		BlinkJS: typeof BlinkJS;
 		editor: VisualEditor.BlinkEditor;
+		dataLayer: any;
+
 
 	}
 

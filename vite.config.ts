@@ -8,7 +8,9 @@ import path from 'path';
 export default defineConfig({
 
 	optimizeDeps: {
-		exclude: ['@sveltejs/vite-plugin-svelte'],
+		exclude: [
+			'@sveltejs/vite-plugin-svelte'
+		],
 		include: [
 			'monaco-editor/esm/vs/language/json/json.worker',
 			'monaco-editor/esm/vs/language/css/css.worker',
@@ -41,7 +43,7 @@ export default defineConfig({
 	// },
 	build: {
 		target: 'esnext',
-
+		sourcemap: true,
 		rollupOptions: {
 			output: {
 				assetFileNames: (assetInfo) => {

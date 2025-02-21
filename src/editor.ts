@@ -1,12 +1,9 @@
-//import type { BlinkJS } from './editorTypes';
 import type { Plugin } from "grapesjs";
 import { defaultStyles } from './design/styles/styles';
 import { defaultPanels } from './panels/panels';
-//import { components, style } from './templates/templates';
 import { setCommands } from './commands/commands';
 import { setEvents } from './events/events';
 import { setTraits } from './traits/traits';
-//import { loadAllDynamicBlocks } from '../controller/dynamicBlocks';
 import domtoimage from 'dom-to-image-more';
 import { setUpPlugInOpts, setUpPlugins } from './additonalPlugins';
 
@@ -14,22 +11,14 @@ import { addDomComponents } from './blocks/blinkcontentmodel';
 import breadCrumbs from './panels/breadcrumbs';
 import ToggleClassSelectors from './panels/selectors';
 import { defaultSelectorTemplate } from './panels/selectorManager';
-// import { testComponent } from './plugins/codeParsers/test';
 import { createElement } from 'react';
 import { transformJSX, type JSXObject } from './plugins/codeParsers/jsxParserLegacy';
 import { BlinkJS } from './editorConfig';
 import { blockCategories } from './blocks/interfaces';
-// import { editorPanels } from './panels/state';
-// import { html, render } from 'lit-html';
-//import { bindStatusUpdates } from './panels/status';
 import { pageSettings, /*setProjectLinks*/ } from './panels/pageSettings';
 import type { ItemMappingStatus } from "./global";
-// import { itemMappingState } from "$editorItem/stores.client";
-// import { get, writable, type Writable } from 'svelte/store';
 
 const blinkStylePrefix = 'blink-';
-// export const contentStatus: Writable<VisualEditor.status> = writable();
-// export const contentTitle: Writable<string> = writable();
 export let contentStatus: VisualEditor.status = "draft";
 export let contentTitle = '';
 let itemMappingState: ItemMappingStatus = "active";
@@ -44,29 +33,32 @@ export type editorConfig = {
 	dev?: boolean;
 	browser?: boolean;
 	itemMappingState?: ItemMappingStatus
+	storageStrategy?: "local" | "remote";
+	serverRoutes?: {
+		assetManagerUrl?: string;
+		storageManager?: {
+			remote?: {
+				urlStore: string,
+				urlLoad: string
+			}
+		}
+
+	};
+}
+type CategoryBackBoneType = {
+	id: string;
+	set: (arg0: string, arg1: boolean) => {
+		(): any; new(): any; on: { (arg0: string, arg1: (opened: { get?: any; set?: (toggle: string, catToggle: boolean) => any; }) => void): void; new(): any; };
+	};
 }
 
-// interface installedApps {
-// 	valid: boolean;
-// 	message: string;
-// 	meta?: { apps: apps };
-// }
-
-// interface appDetails {
-// 	enabled: boolean;
-// 	activated: boolean;
-// }
-// interface apps {
-// 	contacts: appDetails;
-// 	'e-commerce': appDetails;
-// }
-
-//TODO: Add more option to config
 export const configureEditor = async (config: editorConfig) => {
-	const { projectData, itemId, projectId, } = config;
+	const { projectData, itemId, projectId, serverRoutes, storageStrategy } = config;
+	let storageStrategyValue = storageStrategy ?? "local";
 	let dev = config.dev ?? false;
-	let browser = config.browser ?? false;
-	let defaultProjectData;
+	let browser = config.browser ?? true;
+	let defaultProjectData: Record<string, unknown>;
+	const { assetManagerUrl, storageManager } = serverRoutes ?? {};
 	if (projectData) {
 		defaultProjectData = projectData;
 		//TODO: check proj data to set these
@@ -76,9 +68,7 @@ export const configureEditor = async (config: editorConfig) => {
 		defaultProjectData = {
 			pages: [
 				{
-					component: `
-                    <div>Start dragging your blocks here...</div>
-                  `
+					component: `<div>Start dragging your blocks here...</div>`
 				}
 			]
 		};
@@ -90,7 +80,7 @@ export const configureEditor = async (config: editorConfig) => {
 
 	const editor = BlinkJS.init({
 		assetManager: {
-			upload: `/content/api/file-upload?project=${projectId}`,
+			upload: assetManagerUrl ?? `/content/api/file-upload?project=${projectId}`,
 			uploadName: 'image',
 			multiUpload: false,
 			autoAdd: true
@@ -137,22 +127,22 @@ export const configureEditor = async (config: editorConfig) => {
 			]
 		},
 		domComponents: {
-			processor: (component: JSXObject) => {
+			processor: (obj: JSXObject) => {
 				//console.log(component);
 
-				if (component.tagName === 'div') {
-					component.type = 'box';
+				if (obj.tagName === 'div') {
+					obj.type = 'box';
 				}
 				//Checks for JSX component types
 
-				if (component.$$typeof) return transformJSX(editor, component);
+				if (obj.$$typeof) return transformJSX(editor, obj);
 				//check for vue or svelte lit and more
 			}
 			//components:[testComponent()],
 			//stylePrefix:blinkStylePrefix
 		},
-		fromElement: false,
-		height: '300px',
+		// fromElement: false,
+		// height: '300px',
 		layerManager: {
 			appendTo: '.layers-container',
 			hidable: true,
@@ -166,6 +156,7 @@ export const configureEditor = async (config: editorConfig) => {
 		},
 		plugins: setUpPlugins() as Plugin[],
 		pluginsOpts: setUpPlugInOpts(),
+		//NOTE: more investigation to be done on loading/perf
 		projectData: defaultProjectData,
 		selectorManager: {
 			appendTo: '.selector-container',
@@ -185,20 +176,27 @@ export const configureEditor = async (config: editorConfig) => {
 		showOffsets: true,
 		showOffsetsSelected: true,
 		storageManager: {
-			type: 'remote',
+			type: storageStrategyValue,
 			stepsBeforeSave: 1,
-
+			onLoad: (data) => {
+				console.log(data);
+				return {
+					...data
+				};
+			},
 			options: {
-				remote: {
-					urlStore: `/content/api/store?itemId=${itemId}&project=${projectId}`,
-					urlLoad: `/content/api/load?itemId=${itemId}`,
+				local: storageStrategyValue === "local" ? { key: "blink-" } : undefined,
+
+				remote: storageStrategyValue === "remote" ? {
+					urlStore: storageManager?.remote?.urlStore ?? `/content/api/store?itemId=${itemId}&project=${projectId}`,
+					urlLoad: storageManager?.remote?.urlLoad ?? `/content/api/load?itemId=${itemId}`,
 					headers: {
 						"Content-Type": "application/json"
 					},
 
 					//Pass custom server data here
 					onLoad: (data) => {
-						//console.log(data);
+						console.log(data);
 						return {
 							...data
 						};
@@ -289,7 +287,7 @@ export const configureEditor = async (config: editorConfig) => {
 					/*onStore:(data : editorStorageObject)=>{
 						console.log(data)
 					}*/
-				}
+				} : undefined
 			},
 
 			//@deprecated
@@ -299,12 +297,10 @@ export const configureEditor = async (config: editorConfig) => {
 			appendTo: '.styles-container',
 			clearProperties: true,
 			sectors: defaultStyles
-			//stylePrefix:blinkStylePrefix,
 		},
 		stylePrefix: blinkStylePrefix,
 		traitManager: {
-			appendTo: '.traits-container' //'.traits-container',
-			//stylePrefix:blinkStylePrefix,
+			appendTo: '.traits-container'
 		},
 		width: 'auto'
 	});
@@ -333,20 +329,9 @@ export const configureEditor = async (config: editorConfig) => {
 		window.editor = editor;
 	}
 
-	//!Refactor?
 	editor.on('load', async () => {
 		const inputVal = document.getElementById('panel__Title') as HTMLInputElement;
-		//const idNumber = document.getElementById('idNumber') as HTMLElement;
-		//idNumber.innerText = `ID:${config.itemId}`;
-		//const dataExplorer: HTMLElement = document.getElementById("data-explorer")!;
-		//let templateManager = document.querySelector('#template-manager')
-		//const templateExplorer = document.createElement('button');
 
-		//TODO this is a temporary modification to a placholder
-		//const addClassInput = document.getElementById('blink-clm-new') as HTMLInputElement;
-		//addClassInput.placeholder = 'Add new class...';
-
-		//feather.replace();
 		function Logger(...log: any) {
 			console.warn(
 				'Values being exposed by logger, make sure to turn this off in production mode.'
@@ -366,20 +351,17 @@ export const configureEditor = async (config: editorConfig) => {
 
 		//TODO extend this functionality outside of here
 		const categories = editor.BlockManager.getCategories();
-		//@ts-ignore
-		categories.each((category) => {
+		//TODO: check if this is still needed
+		categories.each((category: CategoryBackBoneType) => {
 			//console.log(category)
 			//Set defaults to close here
-			//@ts-ignore
 			if (category.id != blockCategories.basic) {
 				category
 					.set('open', false)
-					//@ts-ignore
 					.on(
 						'change:open',
 						(opened: { get?: any; set?: (toggle: string, catToggle: boolean) => any }) => {
 							opened.get('open') &&
-								//@ts-ignore
 								categories.each(
 									(category: { set: (toggle: string, catToggle: boolean) => any }) => {
 										category !== opened && category.set('open', false);
@@ -390,10 +372,6 @@ export const configureEditor = async (config: editorConfig) => {
 			}
 		});
 
-		//Modify Block Option Here and create the htmlelement in the toolbar
-		//! blinkx #5
-		//createPopUpToolbar();
-
 		const wrapper = document.getElementById('editor-wrapper') as HTMLElement;
 		wrapper.dataset.load = 'loaded';
 
@@ -403,30 +381,43 @@ export const configureEditor = async (config: editorConfig) => {
 		}
 
 
-		function addKeyMapFromPanel(config: { panelId: VisualEditor.PanelIdNames, panelCommand: VisualEditor.PanelCommands, hotKey: string }) {
-			const { hotKey, panelCommand, panelId } = config;
+		addKeyMapFromPanel({ editor, panelId: 'edit-actions', panelCommand: 'sw-visibility', hotKey: 'alt+g' });
+		addKeyMapFromPanel({ editor, panelId: 'panel-switcher', panelCommand: 'preview', hotKey: 'alt+p' });
+		addKeyMapFromPanel({ editor, panelId: 'panel__left', panelCommand: 'show-layers', hotKey: 'alt+l' });
+		addKeyMapFromPanel({ editor, panelId: 'edit-actions', panelCommand: 'edit-code', hotKey: 'alt+c' });
+		addKeyMapFromPanel({ editor, panelId: 'panel__left', panelCommand: 'show-blocks', hotKey: 'alt+b' });
 
-			//TODO check if panel has other buttons, then check if they are active, if they are active close them
+		if (storageStrategyValue == "local") {
+			if (projectData) {
+				if (projectData.css) {
+					const localCss = projectData.css;
+					if (typeof localCss == 'string') {
+						editor.Css.addRules(localCss);
 
-			editor.Keymaps.add(`bx:${panelCommand}`, hotKey, (_) => {
-				const panelButton = editor.Panels.getButton(panelId, panelCommand);
-				if (editor.Commands.isActive(panelCommand)) {
-					editor.stopCommand(panelCommand);
-					if (panelButton) panelButton.set('active', false);
-				} else {
-					editor.runCommand(panelCommand);
-					if (panelButton) panelButton.set('active', true);
+					}
+
 				}
-			});
+
+			}
 		}
-		addKeyMapFromPanel({ panelId: 'edit-actions', panelCommand: 'sw-visibility', hotKey: 'alt+g' });
-		addKeyMapFromPanel({ panelId: 'panel-switcher', panelCommand: 'preview', hotKey: 'alt+p' });
-		addKeyMapFromPanel({ panelId: 'panel__left', panelCommand: 'show-layers', hotKey: 'alt+l' });
-		addKeyMapFromPanel({ panelId: 'edit-actions', panelCommand: 'edit-code', hotKey: 'alt+c' });
-		addKeyMapFromPanel({ panelId: 'panel__left', panelCommand: 'show-blocks', hotKey: 'alt+b' });
 
 	});
 
 	return editor;
 };
-//})();
+export function addKeyMapFromPanel(config: { editor: VisualEditor.BlinkEditor, panelId: VisualEditor.PanelIdNames, panelCommand: VisualEditor.PanelCommands, hotKey: string }) {
+	const { editor, hotKey, panelCommand, panelId } = config;
+
+	//TODO check if panel has other buttons, then check if they are active, if they are active close them
+
+	editor.Keymaps.add(`bx:${panelCommand}`, hotKey, (_) => {
+		const panelButton = editor.Panels.getButton(panelId, panelCommand);
+		if (editor.Commands.isActive(panelCommand)) {
+			editor.stopCommand(panelCommand);
+			if (panelButton) panelButton.set('active', false);
+		} else {
+			editor.runCommand(panelCommand);
+			if (panelButton) panelButton.set('active', true);
+		}
+	});
+};

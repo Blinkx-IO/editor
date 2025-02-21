@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import type Component from 'grapesjs'
+// import type { Component } from 'grapesjs'
 //import type { BlinkEditor } from "../editorTypes";
 import { defaultToolbar } from "../toolbar/toolbar"
 //import { modalStyles } from '../design/styles/tailwind'
 import { imageStyle, cardHeadertextStyle, cardSubtextStyle, cardtextStyle } from '../design/styles/componentStyles';
 
 
-declare global {
-  interface Window {
-    dataLayer: any;
-  }
-}
+
 
 /*function include(file: string) {
   const script = document.createElement('script');
@@ -67,10 +62,9 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
   editor.Components.addType('link', {
 
     model: {
-      updated(this: typeof Component, property: any, value: any, prevValue: any) {
+      updated(this, property: any, value: any, prevValue: any) {
 
         if (property === "data-search" && value != '') {
-          //@ts-ignore
           console.log('look here', property, value, this.attributes);
         }
       },
@@ -320,9 +314,7 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
 
   editor.Components.addType('googleTagManager', {
     model: {
-      //@ts-ignore
-      init(this: Component) {
-        //console.log(this,"has been initialized");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+      init(this) {
       },
       /*view:{
         init() {
@@ -348,7 +340,7 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
         }],
         'script-export': function placeTag(props: any) {
 
-          (function (w: any, d, s, l, i) {
+          (function(w: any, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
               'gtm.start':
                 new Date().getTime(), event: 'gtm.js'
@@ -373,8 +365,7 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
   editor.Components.addType('box', {
     model: {
 
-      init(this: typeof Component) {
-        //@ts-ignore
+      init(this) {
         this.addTrait!(
           [
             // { name: "data-href", type: "text", label: "Link" }
@@ -444,9 +435,8 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
 
   editor.Components.addType("grid", {
     model: {
-     
-      init(this: typeof  Component) {
-        //@ts-expect-error
+
+      init(this) {
         this.addTrait!(
           [
             {
@@ -454,12 +444,12 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
               name: 'columns',
               changeProp: true,
               options: [
-                { name: '1', value: 'repeat(1, minmax(0, 1fr))' },
-                { name: '2', value: 'repeat(2, minmax(0, 1fr))' },
-                { name: '3', value: 'repeat(3, minmax(0, 1fr))' },
-                { name: '4', value: 'repeat(4, minmax(0, 1fr))' },
-                { name: '5', value: 'repeat(5, minmax(0, 1fr))' },
-                { name: '6', value: 'repeat(6, minmax(0, 1fr))' },
+                { id: "grid-1", name: '1', value: 'repeat(1, minmax(0, 1fr))' },
+                { id: "grid-2", name: '2', value: 'repeat(2, minmax(0, 1fr))' },
+                { id: "grid-3", name: '3', value: 'repeat(3, minmax(0, 1fr))' },
+                { id: "grid-4", name: '4', value: 'repeat(4, minmax(0, 1fr))' },
+                { id: "grid-5", name: '5', value: 'repeat(5, minmax(0, 1fr))' },
+                { id: "grid-6", name: '6', value: 'repeat(6, minmax(0, 1fr))' },
               ]
             },
             {
@@ -479,8 +469,7 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
           }
         )
       },
-      //@ts-ignore
-      updated(this: Component, property: any, value: any, prevValue: any) {
+      updated(this, property, value, prevValue) {
         //property is rows
         //value is selected
         //prevvalue is last value
@@ -747,21 +736,21 @@ export function addDomComponents(editor: VisualEditor.BlinkEditor) {
       },
 
     },
-    
+
     view: {
       //tagName:'dialog',
       events: {
         click: 'innerModalClick'
       },
-      init({model}){
+      init({ model }) {
         //model.setAttributes({open:true});
-        console.log('init view',model.getAttributes().open)
-        if(model.getAttributes().open){
+        console.log('init view', model.getAttributes().open)
+        if (model.getAttributes().open) {
 
         }
       },
-      onRender({model}){
-        console.log('on render',model.getAttributes().open)
+      onRender({ model }) {
+        console.log('on render', model.getAttributes().open)
       },
       innerModalClick(ev: Event) {
         //editor.Components.getById(this.cid)

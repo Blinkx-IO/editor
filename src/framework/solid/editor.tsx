@@ -1,10 +1,12 @@
+import "./../../../index.css";
+import "./../../../editor.css";
+import "./../../../npgrogress.css";
 import { createSignal, onMount, Show } from 'solid-js';
 import { configureEditor } from "@/editor";
 import type monaco from "monaco-editor";
 import type { editor as monacoEditor } from "monaco-editor";
 
-import { selectedComponent, setSelectedComponent, themePreference } from "@framework/solid/stores"; // Need to convert Svelte stores to Solid signals
-// import { ItemMappingStatus } from "@/global";
+import { selectedComponent, setSelectedComponent, themePreference } from "@framework/solid/stores";
 import { setThemeClass } from "@/components/utilities/themePreferences";
 // Import converted Solid components
 import Title from "./Title";
@@ -19,7 +21,6 @@ interface EditorProps {
 }
 
 function Editor(props: EditorProps) {
-	// Convert let variables to signals
 	const [showCodeEditor, setShowCodeEditor] = createSignal(false);
 	const [loaded, setLoaded] = createSignal(false);
 	const [selectedLanguage, setSelectedLanguage] = createSignal<codeLanguageOptions>("json");
@@ -56,6 +57,8 @@ function Editor(props: EditorProps) {
 			},
 		},
 	};
+	const mode = "local";
+
 	let projectData = {
 		pages: [
 			{
@@ -68,22 +71,29 @@ function Editor(props: EditorProps) {
 		assets: defaultData.item.body?.["blink-assets"] ?? [],
 
 	};
+	if (mode == "local") {
+		const localKey = "blink-";
+		const projectDataSaved = localStorage.getItem(localKey);
+		if (projectDataSaved) {
+			projectData = JSON.parse(projectDataSaved);
+			console.log('loaded from local storage', projectData);
+		}
+	}
 	const data = props.data || defaultData;
 
 	onMount(async () => {
 		const editor = await configureEditor({
 			projectData,
 			itemId: data.item.id,
+			storageStrategy: mode,
 			projectId: data.item.project ?? "Project",
 			projectName: data.item.projectName ?? "",
-			itemTitle:
-				data.item.title ??
-				`New Content Item${data.item.id}`,
+			itemTitle: data.item.title ?? `New Content Item${data.item.id}`,
 			themePreference: themePreference(),
 			itemStatus: data.item.status ?? "draft",
-			itemMappingState:
-				data.item.itemEditorStatus ?? "active",
+			itemMappingState: data.item.itemEditorStatus ?? "active",
 		});
+		setEditor(editor);
 
 		editor.on("component:selected", () => {
 			setSelectedComponent(editor.getSelected())
@@ -96,7 +106,7 @@ function Editor(props: EditorProps) {
 				setShowCodeEditor(true);
 			},
 			stop(editor, sender, opts) {
-				setShowCodeEditor(true);
+				setShowCodeEditor(false);
 
 			},
 		});
@@ -964,6 +974,7 @@ function Editor(props: EditorProps) {
 						selectedLanguage={selectedLanguage()}
 						bottomCodePanel={bottomCodePanel()}
 						visualEditor={editor()}
+						onClose={() => { setShowCodeEditor(false); }}
 					></CodeEditor>
 				</div>
 			</Show>

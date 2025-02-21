@@ -1,11 +1,11 @@
 import { setThemeClass } from "$components/utilities/themePreferences";
-import { get } from "@utilities/utilities";
-// import {themePreference} from '$stores/theme';
-// import { get } from 'svelte/store';
+import { get, html } from "@utilities/utilities";
 
 const themePreference: themePreference = 'dark';
 
 
+
+//TODO: Add proper typings for this
 export const defaultSelectorTemplate = ({ labelInfo, labelHead, iconSync, iconAdd, pfx, ppfx }: any) => {
   //console.log('before',pfx,ppfx)
   pfx = 'blink-clm-';
@@ -13,7 +13,7 @@ export const defaultSelectorTemplate = ({ labelInfo, labelHead, iconSync, iconAd
   //console.log('after',pfx,ppfx)
   //!adjust the state of this here
   //TODP add autocomplete on classes
-  return /*html*/`
+  return html`
     <div class="${pfx}sels-info flex items-center ${setThemeClass('bg-monochromatic-gray', 'dark:bg-primary-bg-darkmode', get(themePreference))}  mt-0  border-b border-t px-1 py-3 border-gray-300">
       <div class="${pfx}label-sel text-base ${setThemeClass('', 'dark:text-white', get(themePreference))}">${labelInfo}:</div>
       <div class="${pfx}sels text-base ${setThemeClass('', 'dark:text-white', get(themePreference))}" data-selected></div>
