@@ -5,22 +5,25 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "noEmitOnError": false,
+    "emitDeclarationOnly": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": [
       "vite/client",
-      "svelte",
-      "globals.ts"
+      "svelte"
+      // "./src/global.ts"
     ],
-    "noEmit": true,
+    // "noEmit": true,
     "isolatedModules": true,
     "lib": [
       "DOM",
       "DOM.Iterable",
       "ESNext"
     ],
-    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -74,7 +77,8 @@
       "@framework/*": [
         "./src/framework/*"
       ]
-    }
+    },
+    "outDir": "./dist/types"
   },
   "include": [
     "./index.tsx",

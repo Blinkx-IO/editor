@@ -6,11 +6,8 @@ import tailwind from "@tailwindcss/vite";
 import path from 'path';
 
 export default defineConfig({
-
 	optimizeDeps: {
-		exclude: [
-			'@sveltejs/vite-plugin-svelte'
-		],
+		exclude: ['@sveltejs/vite-plugin-svelte'],
 		include: [
 			'monaco-editor/esm/vs/language/json/json.worker',
 			'monaco-editor/esm/vs/language/css/css.worker',
@@ -27,51 +24,59 @@ export default defineConfig({
 	worker: {
 		format: 'es',
 	},
-
-	publicDir: "public", // Remove the ./ as it's not needed
+	publicDir: "public",
 	plugins: [
 		solidPlugin(),
 		svelte(),
 		tailwind()
 	],
-	// server: {
-	// 	port: 3000,
-	// 	fs: {
-	// 		strict: false,
-	// 		allow: ['..']
-	// 	}
-	// },
 	build: {
 		target: 'esnext',
 		sourcemap: true,
+		lib: {
+			entry: {
+				index: path.resolve(__dirname, 'src/index.ts'),
+				'framework/svelte/index': path.resolve(__dirname, 'src/framework/svelte/index.ts'),
+				'framework/solid/index': path.resolve(__dirname, 'src/framework/solid/index.ts'),
+			},
+			formats: ['es'],
+		},
 		rollupOptions: {
+			external: [
+				'svelte',
+				'solid-js',
+				'grapesjs',
+				'monaco-editor',
+				// Add other external dependencies
+			],
 			output: {
+				preserveModules: true,
+				preserveModulesRoot: 'src',
+				entryFileNames: '[name].js',
 				assetFileNames: (assetInfo) => {
 					if (!assetInfo.name) return 'assets/[name]-[hash][extname]';
 
-					// Remove query parameters and preserve directory structure
 					const [filename] = assetInfo.name.split('?');
 					const extname = path.extname(filename);
 
-					// Handle different asset types
 					if (/\.(png|jpe?g|gif|svg|webp)$/i.test(extname)) {
-						return `images/${filename}`;
+						return `assets/images/${filename}`;
 					}
 					if (/\.(woff2?|eot|ttf|otf)$/i.test(extname)) {
-						return `fonts/${filename}`;
+						return `assets/fonts/${filename}`;
 					}
 					if (/\.css$/i.test(extname)) {
-						return `css/${filename}`;
+						return `assets/css/${filename}`;
 					}
 
 					return filename;
-				},
-				chunkFileNames: 'js/[name]-[hash].js',
-				entryFileNames: 'js/[name]-[hash].js'
+				}
 			}
 		},
 		assetsInlineLimit: 0,
 		copyPublicDir: true,
+		outDir: 'dist',
+		emptyOutDir: true,
 	},
 	resolve: {
 		alias: {
@@ -92,8 +97,8 @@ export default defineConfig({
 			'@utilities': path.resolve(__dirname, './src/utilities'),
 			'$components': path.resolve(__dirname, './src/components'),
 			'@framework': path.resolve(__dirname, './src/framework'),
-			'/static': path.resolve(__dirname, './static'), // Updated to match publicDir
-			'/fonts': path.resolve(__dirname, './static/fonts') // Updated to match publicDir
+			'/static': path.resolve(__dirname, './static'),
+			'/fonts': path.resolve(__dirname, './static/fonts')
 		}
 	}
 });

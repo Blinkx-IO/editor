@@ -1,0 +1,1 @@
+export { configureEditor } from './editor';

@@ -1,15 +1,49 @@
-# editor
+# @blinkx/editor
 
-To install dependencies:
+A powerful visual editor built with GrapesJS and Monaco Editor, available for both Svelte and Solid.js.
 
+## Installation
+
+For Svelte:
 ```bash
-bun install
+bun install @blinkx/editor svelte
+# or
+npm install @blinkx/editor svelte 
 ```
 
-To run:
-
+For Solid.js:
 ```bash
-bun run index.ts
+bun install @blinkx/editor solid-js
+# or
+npm install @blinkx/editor solid-js
 ```
 
-This project was created using `bun init` in bun v1.1.34. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## Usage
+
+### Core Editor
+```typescript
+import { configureEditor } from '@blinkx/editor';
+
+const editor = configureEditor({
+  container: '#editor',
+  // other options
+});
+```
+
+### Svelte Component
+```svelte
+<script>
+import { Editor } from '@blinkx/editor/svelte';
+</script>
+
+<Editor theme="light" />
+```
+
+### Solid Component
+```typescript
+import { Editor } from '@blinkx/editor/solid';
+
+function App() {
+  return <Editor theme="light" />;
+}
+```

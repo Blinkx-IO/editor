@@ -1,11 +1,38 @@
 {
-  "name": "editor",
-  "module": "index.ts",
+  "name": "@blinkx/editor",
+  "version": "1.0.0",
   "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./svelte": {
+      "types": "./dist/types/framework/svelte/index.d.ts",
+      "import": "./dist/framework/svelte/index.js"
+    },
+    "./solid": {
+      "types": "./dist/types/framework/solid/index.d.ts",
+      "import": "./dist/framework/solid/index.js"
+    },
+    "./css/*": "./dist/assets/css/*",
+    "./images/*": "./dist/assets/images/*",
+    "./fonts/*": "./dist/assets/fonts/*"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build && bun run build:types",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist/types --noCheck",
+    "preview": "vite preview",
+    "prepublishOnly": "bun run build || npm run build"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
@@ -19,14 +46,17 @@
     "svelte": "5.19.6",
     "tailwindcss": "^4.0.7",
     "vite": "^6.1.0",
-    "vite-plugin-solid": "^2.11.1"
-  },
-  "peerDependencies": {
+    "vite-plugin-solid": "^2.11.1",
     "typescript": "^5.0.0"
   },
+  "peerDependencies": {
+    "solid-js": "^1.9.4",
+    "svelte": "^5.19.6"
+  },
   "dependencies": {
-    "dom-to-image-more": "^3.5.0",
+    "dom-to-image-more": "^3.0.2",
     "grapesjs": "^0.22.5",
+    "monaco-editor": "^0.52.2",
     "grapesjs-custom-code": "^1.0.2",
     "grapesjs-parser-postcss": "^1.0.3",
     "grapesjs-style-bg": "^2.0.2",
@@ -34,8 +64,29 @@
     "grapesjs-touch": "^0.1.1",
     "grapesjs-typed": "^2.0.1",
     "lit": "^3.2.1",
-    "monaco-editor": "^0.52.2",
     "nprogress": "^0.2.0",
     "papaparse": "^5.5.2"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "editor",
+    "grapesjs",
+    "monaco",
+    "svelte",
+    "solid-js",
+    "visual-editor",
+    "blinkx"
+  ],
+  "author": "Blinkx",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blinkx-IO/editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Blinkx-IO/editor/issues"
+  },
+  "homepage": "https://github.com/Blinkx-IO/editor#readme"
 }

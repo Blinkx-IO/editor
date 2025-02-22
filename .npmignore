@@ -1,0 +1,58 @@
+# Source files
+src/
+svelte.html
+index.html
+index.tsx
+svelte.ts
+local/
+tests/
+*.test.*
+test/
+__tests__/
+coverage/
+
+# Configuration files
+.github/
+.vscode/
+.idea/
+.editorconfig
+.eslintrc*
+.prettierrc*
+.babelrc*
+tsconfig.json
+vite.config.ts
+postcss.config.js
+tailwind.config.js
+
+# Development files
+node_modules/
+.env*
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build/cache directories not needed in package
+.cache/
+.temp/
+.tmp/
+.vite/
+
+# Development documentation
+docs/
+examples/
+demo/
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Git files
+.git/
+.gitignore
+
+# Misc
+*.tgz
+*.zip
+.husky/
+.bun

@@ -1,62 +1,44 @@
 <script lang="ts">
-	import { fly } from "svelte/transition";
-	import { configureEditor } from "@/editor";
-	import "@/css/index.css";
-	import "@/css/editor.css";
-	import "@/css/npgrogress.css";
-	import { onMount } from "svelte";
-	import type monaco from "monaco-editor";
-	import type { editor as monacoEditor } from "monaco-editor";
-	import {
-		selectedComponent,
-		themePreference,
-	} from "@framework/svelte/stores.client";
-	import { ItemMappingStatus } from "@/global";
-	import { setThemeClass } from "@/components/utilities/themePreferences";
-	import Title from "./title.svelte";
 	import Status from "./status.svelte";
-	import DataTableLayout from "./datatablelayout.svelte";
-	import CodeEditor from "./codeEditor.svelte";
+	import CodeComplete from "$ai/codeComplete.svelte";
+	import { setThemeClass } from "$components/utilities/themePreferences";
+	import { configureEditor } from "@/editor";
+	import type { editor as monacoEditor } from "monaco-editor";
+	//NOTE: This is a temporary fix for the themePreference issue
+	const themePreference: themePreference = "dark";
+	//import {joinChannel} from "$visualeditor/multiplayer";
+	import "./npgrogress.css";
 
+	import { onMount } from "svelte";
+	import CodeEditor from "@/framework/svelte/codeEditor.svelte";
+	//import type { Component } from 'grapesjs';
+	import type { PageData } from "./$types";
+	export let data: PageData;
+	export let loaded = false;
+
+	let projectData: any = null;
 	let sectionWrap: HTMLElement;
 	let bottomCodePanel: HTMLElement;
+	let showCodeEditor = false;
+	let showComponentCodeEditor = false;
+
+	let selectedLanguage: codeLanguageOptions = "json";
+	import type monaco from "monaco-editor";
+	import Title from "./title.svelte";
+
+	import DataTableLayout from "$components/data/dataTableLayout.svelte";
+
+	import { fly } from "svelte/transition";
+	//import { writable } from 'svelte/store';
+	import { selectedComponent, itemMappingState } from "./stores.client";
 
 	let codeEditor: monaco.editor.IStandaloneCodeEditor;
 	let monacoEditorRef: typeof monacoEditor;
+	//let monacoElement: HTMLElement;
 	let Monaco: any;
 	let editor: VisualEditor.BlinkEditor;
-	export let showCodeEditor = false;
-	export let loaded = false;
 
-	let selectedLanguage: codeLanguageOptions = "json";
-
-	export let data: {
-		item: VisualEditor.ProjectData;
-	} = {
-		item: {
-			id: "1",
-			project: "test",
-			projectName: "test",
-			title: "test",
-			status: "draft",
-			urlPath: "/",
-			body: {
-				"blink-components": "",
-				"blink-styles": [],
-				"blink-assets": [],
-			},
-			seoToolkit: {
-				siteTitle: "",
-				siteDescription: "",
-				favicon: "",
-				metaImage: "",
-				keywords: "",
-				author: "",
-			},
-		},
-	};
-
-	let projectData = {
+	projectData = {
 		pages: [
 			{
 				component:
@@ -67,6 +49,9 @@
 		],
 		assets: data.item.body?.["blink-assets"] ?? [],
 	};
+
+	itemMappingState.set(data.item.itemEditorStatus!);
+
 	onMount(() => {
 		(async () => {
 			editor = await configureEditor({
@@ -77,10 +62,8 @@
 				itemTitle:
 					data.item.title ??
 					`New Content Item${data.item.id}`,
-				themePreference: $themePreference,
+				themePreference: themePreference,
 				itemStatus: data.item.status ?? "draft",
-				itemMappingState:
-					data.item.itemEditorStatus ?? "active",
 			});
 
 			editor.on("component:selected", () => {
@@ -129,19 +112,20 @@
 
 			//showComponentCodeEditor
 		})();
+
 		loaded = true;
 	});
 </script>
 
 <section id="mainEditorSection" bind:this={sectionWrap}>
 	<div data-load="initial" id="editor-wrapper" class="overflow-hidden">
-		<div class="hidden fixed z-50 top-1/4" id="magnet-panels"></div>
+		<div class="hidden fixed z-50 top-1/4" id="magnet-panels" />
 		<div
 			id="pre-top-panel"
 			class=" hidden fixed w-full right-0 z-10"
 		>
-			<div class="flex-grow" id="panel-nav"></div>
-			<div id="panel-status"></div>
+			<div class="flex-grow" id="panel-nav" />
+			<div id="panel-status" />
 		</div>
 		<div
 			id="top-panel"
@@ -171,7 +155,7 @@
 					'dark:bg-nav-darkmode',
 					$themePreference,
 				)}"
-			></div>
+			/>
 			<div
 				class="flex items-center {setThemeClass(
 					'',
@@ -180,21 +164,21 @@
 				)}"
 				id="rightPanelIcons"
 			>
-				<div id="undo-manager"></div>
+				<div id="undo-manager" />
 				<div
 					class="panel__edit-actions {setThemeClass(
 						'',
 						'dark:bg-nav-darkmode',
 						$themePreference,
 					)}"
-				></div>
+				/>
 				<div
 					class="panel__switcher {setThemeClass(
 						'',
 						'dark:bg-nav-darkmode',
 						$themePreference,
 					)}"
-				></div>
+				/>
 				<div
 					class="panel__status {setThemeClass(
 						'',
@@ -222,7 +206,7 @@
 						$themePreference,
 					)}
 					 fixed h-screen z-10 left-0"
-				></div>
+				/>
 
 				<div
 					style="left:2.5%;"
@@ -239,7 +223,7 @@
 							'dark:bg-nav-darkmode',
 							$themePreference,
 						)}"
-					></div>
+					/>
 					<div
 						id="toggledEditorLayer"
 						data-current-panel="blocks"
@@ -501,7 +485,7 @@
 										<div
 											class="px-3 text-sm"
 											id="projectLinks"
-										></div>
+										/>
 									</div>
 								</div>
 								<div
@@ -596,8 +580,7 @@
 														block w-full sm:text-sm border rounded-md
 														p-2
 														"
-
-													></textarea>
+													/>
 												</div>
 											</div>
 										</div>
@@ -801,7 +784,7 @@
 								data-x-position=""
 								data-y-position=""
 								class="flex"
-							></div>
+							/>
 						</div>
 					</div>
 				</div>
@@ -822,7 +805,7 @@
 					)}"
 					style="padding-bottom:78px;"
 					id="editorCanvas"
-				></div>
+				/>
 			</div>
 			<!--End Editor Canvas-->
 			<!--Right Panel-->
@@ -850,11 +833,11 @@
 								'dark:border-muted',
 								$themePreference,
 							)}"
-						></div>
+						/>
 						<div
 							id="styles"
 							class="styles-container no-scrollbar overflow-y-scroll"
-						></div>
+						/>
 					</div>
 
 					<div
@@ -893,7 +876,7 @@
 							$themePreference,
 						)}  pb-6 border shadow-md"
 					>
-						<!-- <CodeComplete {editor} /> -->
+						<CodeComplete {editor} />
 						<!--
 						<AiCompletion editor={editor}/>
 						<AiChat/>
@@ -917,7 +900,7 @@
 							'dark:bg-formfields-darkmode dark:border-muted',
 							$themePreference,
 						)}  pb-6 border shadow-md"
-					></div>
+					/>
 
 					<!-- TODO add conditons for showing the data parser-->
 					<div class="hidden" id="data-parser">
@@ -953,7 +936,7 @@
 				>
 					<div
 						class="panel__utilities space-y-2"
-					></div>
+					/>
 				</div>
 			</div>
 
@@ -982,7 +965,7 @@
 			></CodeEditor>
 		</div>
 	{/if}
-	<div class="hidden shadow rounded py-3" id="context-menu"></div>
+	<div class="hidden shadow rounded py-3" id="context-menu" />
 	<div
 		style="width:74.5%; left: 3%;"
 		class="fixed bottom-0 z-[9] transition-all duration-[200ms] pl-1 pr-[14px]"
@@ -995,10 +978,7 @@
 				$themePreference,
 			)}"
 			id="breadcrumbs"
-		></div>
+		/>
 	</div>
-	<div id="toastyContainer"></div>
+	<div id="toastyContainer" />
 </section>
-
-<style>
-</style>
