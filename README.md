@@ -1,5 +1,9 @@
 # @blinkx/editor
 
+> **⚠️ ACTIVE DEVELOPMENT / BETA**: This package is currently in active development and beta testing. For questions, support, or to report issues, please reach out to:
+> - Jonathan / RicheTechGuy
+> - GitHub: [@RicheTechGuy](https://github.com/RicheTechGuy)
+
 A powerful visual editor built with GrapesJS and Monaco Editor, available for both Svelte and Solid.js.
 
 ## Installation

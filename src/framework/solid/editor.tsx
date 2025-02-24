@@ -1,6 +1,3 @@
-import "../../css/index.css"
-import "../../css/editor.css"
-import "../../css/npgrogress.css"
 import { createSignal, onMount, Show } from 'solid-js';
 import { configureEditor } from "@/editor";
 import type monaco from "monaco-editor";
