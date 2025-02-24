@@ -4,7 +4,7 @@
 > - Jonathan / RicheTechGuy
 > - GitHub: [@JonathanRiche](https://github.com/JonathanRiche)
 
-A powerful visual editor built with GrapesJS and Monaco Editor, available for both Svelte and Solid.js.
+A powerful visual editor built with [GrapesJS](https://github.com/GrapesJS/grapesjs) and [Monaco Editor](https://github.com/microsoft/monaco-editor), available for both [Svelte](https://svelte.dev/) and [Solid.js](https://www.solidjs.com/).
 
 ## Installation
 
