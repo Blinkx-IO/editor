@@ -33,6 +33,8 @@ export default defineConfig({
 	build: {
 		target: 'esnext',
 		sourcemap: true,
+		// cssCodeSplit: true,
+		cssMinify: true,
 		lib: {
 			entry: {
 				index: path.resolve(__dirname, 'src/index.ts'),

@@ -18,7 +18,7 @@
       // "./src/global.ts"
     ],
     // "noEmit": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -81,7 +81,6 @@
     "outDir": "./dist/types"
   },
   "include": [
-    "./index.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.js",

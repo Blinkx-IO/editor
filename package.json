@@ -24,6 +24,7 @@
       "import": "./dist/framework/solid/index.js"
     },
     "./css/*": "./dist/assets/css/*",
+    "./css/editor.css": "./dist/assets/css/editor.css",
     "./images/*": "./dist/assets/images/*",
     "./fonts/*": "./dist/assets/fonts/*"
   },
@@ -32,6 +33,7 @@
     "build": "vite build && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types --noCheck",
     "preview": "vite preview",
+    "dev:link": "bun run build && bun link",
     "prepublishOnly": "bun run build || npm run build"
   },
   "devDependencies": {

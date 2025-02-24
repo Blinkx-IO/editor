@@ -1,11 +1,11 @@
-import "@/css/index.css";
-import "@/css/editor.css";
-import "@/css/npgrogress.css";
+import "../../css/index.css"
+import "../../css/editor.css"
+import "../../css/npgrogress.css"
 import { createSignal, onMount, Show } from 'solid-js';
 import { configureEditor } from "@/editor";
 import type monaco from "monaco-editor";
 import type { editor as monacoEditor } from "monaco-editor";
-
+import type { ProjectData } from "../../global";
 import { selectedComponent, setSelectedComponent, themePreference } from "@framework/solid/stores";
 import { setThemeClass } from "@/components/utilities/themePreferences";
 // Import converted Solid components
@@ -14,10 +14,11 @@ import Status from "./Status";
 import DataTableLayout from "./DataTableLayout";
 import CodeEditor from "./CodeEditor";
 
-interface EditorProps {
-	data?: {
-		item: VisualEditor.ProjectData;
-	};
+export interface EditorProps {
+	/** The data for the editor's page ie first page to view  if nothing is passed it will default to a blank canvas to start editing with */
+	item?: ProjectData;
+	/** The data for the editor's pages anything after the first page */
+	pages?: Array<ProjectData>
 }
 
 function Editor(props: EditorProps) {
@@ -79,19 +80,20 @@ function Editor(props: EditorProps) {
 			console.log('loaded from local storage', projectData);
 		}
 	}
-	const data = props.data || defaultData;
+	const data = props.item || defaultData.item;
+
 
 	onMount(async () => {
 		const editor = await configureEditor({
 			projectData,
-			itemId: data.item.id,
+			itemId: data.id,
 			storageStrategy: mode,
-			projectId: data.item.project ?? "Project",
-			projectName: data.item.projectName ?? "",
-			itemTitle: data.item.title ?? `New Content Item${data.item.id}`,
+			projectId: data.project ?? "Project",
+			projectName: data.projectName ?? "",
+			itemTitle: data.title ?? `New Content Item${data.id}`,
 			themePreference: themePreference(),
-			itemStatus: data.item.status ?? "draft",
-			itemMappingState: data.item.itemEditorStatus ?? "active",
+			itemStatus: data.status ?? "draft",
+			itemMappingState: data.itemEditorStatus ?? "active",
 		});
 		setEditor(editor);
 
@@ -161,8 +163,8 @@ function Editor(props: EditorProps) {
 					>
 						<Title
 							editor={editor()}
-							itemId={data.item.id}
-							projectName={data.item.projectName ?? ""}
+							itemId={data.id}
+							projectName={data.projectName ?? ""}
 						/>
 					</div>
 					<div
@@ -202,7 +204,7 @@ function Editor(props: EditorProps) {
 								themePreference(),
 							)}`}
 						>
-							<Status itemId={data.item.id} />
+							<Status itemId={data.id} />
 						</div>
 					</div>
 				</div>
@@ -484,7 +486,6 @@ function Editor(props: EditorProps) {
 														name="page-url"
 														id="page-url"
 														value={data
-															.item
 															.urlPath ??
 															""}
 														class={`
@@ -546,9 +547,8 @@ function Editor(props: EditorProps) {
 														name="site-title"
 														id="site-title"
 														value={data
-															.item
 															.title ??
-															`New Content Item${data.item.id}`}
+															`New Content Item${data.id}`}
 														class={`
 											block w-full border-0 p-0 ${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
@@ -584,7 +584,6 @@ function Editor(props: EditorProps) {
 																name="site-description"
 																id="site-description"
 																value={data
-																	.item
 																	.seoToolkit
 																	?.siteDescription}
 																class={`${setThemeClass(
@@ -623,7 +622,6 @@ function Editor(props: EditorProps) {
 														name="favicon"
 														id="favicon"
 														value={data
-															.item
 															.seoToolkit
 															?.favicon}
 														class={`

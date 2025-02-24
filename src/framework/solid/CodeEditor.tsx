@@ -30,7 +30,7 @@ const styles = `
     background-color: #ccc;
   }
 `;
-interface CodeEditorProps {
+export interface CodeEditorProps {
 	selectedLanguage?: codeLanguageOptions;
 	defaultEditorValues?: string;
 	bottomCodePanel: HTMLElement | undefined;

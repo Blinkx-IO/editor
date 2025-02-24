@@ -101,6 +101,182 @@ export const itemMappingStatus = ['active', 'inactive', 'pending', 'deprecated']
 export type ItemMappingStatus = typeof itemMappingStatus[number];
 
 export const itemStatus = ['draft', 'published', 'inactive', 'archived', 'deleted'] as const;
+
+
+export type ProjectData = {
+	id: string;
+	project: string;
+	projectName: string;
+	title: string;
+	status: VisualEditor.status;
+	urlPath: string;
+	seoToolkit: VisualEditor.seoToolKit;
+	body: {
+		"blink-components": "";
+		"blink-styles": [];
+		"blink-assets": [];
+	};
+	itemEditorStatus?: ItemMappingStatus;
+}
+export type editorStorageObject = {
+	pages: Record<any, any>[];
+	customHtml: string;
+	title: string;
+	status: status;
+	csvParser: any;
+	components: Components;
+	url: string;
+	dynamic: boolean;
+	'seo-toolkit': seoToolKit;
+	fonts: string[];
+	project: string;
+	html: string;
+	css: string;
+	assets: string[];
+	item_preview?: string;
+	itemMappingState?: ItemMappingStatus;
+	styles: Record<string, any>[];
+}
+export type seoToolKit = typeof seoToolKitDefault;
+
+export type status = typeof itemStatus[number] | null;  //'draft' | 'published' | 'inactive' | 'archived' |'deleted';
+
+//!Fix this
+export interface BlinkButtonProps extends ButtonProps {
+	label?: string;
+}
+export interface Panel extends Omit<PanelProps, 'buttons'> {
+	buttons?: BlinkButtonProps[];
+	el?: string;
+	doNotUse?: string;
+}
+export interface BlinkComponentView extends Omit<ComponentManager['view'], 'events'> {
+	events: ComponentViewEvents;
+}
+
+type test = AddComponentTypeOptions['view']
+//Partial<ComponentViewDefinition> & ThisType<ComponentViewDefinition & ComponentView>;
+type tester = ComponentView['events']
+export interface BlinkComponentView extends Omit<ComponentView, 'events'> {
+	events: ComponentViewEvents;
+}
+
+export interface BlinkIComponentView extends Omit<ComponentViewDefinition, 'events'> {
+	events: ComponentViewEvents;
+}
+
+//IComponentView
+export type BlinkPartialView = Partial<BlinkIComponentView> & ThisType<BlinkIComponentView & BlinkComponentView>;
+export type BlinkComponentOpts = ComponentViewDefinition['init'];
+type tr = ComponentViewDefinition['onRender']
+export interface BlinkExtendedView extends BlinkPartialView {
+	init?: BlinkComponentOpts;
+	onRender?: BlinkComponentOpts;
+}
+
+export interface BlinkAddComponentTypeOptions extends Omit<AddComponentTypeOptions, 'view'> {
+	view?: BlinkExtendedView;
+
+}
+
+export interface BlinkComponentManager extends Omit<ComponentManager, 'view' | 'addType'> {
+	view?: BlinkComponentView;
+	addType(type: string, methods: BlinkAddComponentTypeOptions): this;
+}
+
+
+//addType(type: string, methods: AddComponentTypeOptions): this;
+export interface BlinkEditor extends Omit<Editor, 'DomComponents'> {
+	/**
+	 * Can be any JSX renderer such as react, preact, solidjs etc
+	 **/
+	renderJSX: Function;
+	DomComponents: BlinkComponentManager
+
+}
+
+export interface BlinkDomComponentsConfig extends DomComponentsConfig {
+	processor: any;
+}
+
+
+export interface BlinkCanvasComponentsConfig extends Omit<CanvasConfig, 'styles'> {
+	styles?: Array<string | { rel: string; href: string; crossorigin?: boolean }>;
+	frameContent?: string;
+}
+export interface BlinkAssetManager extends Omit<AssetManagerConfig, 'upload'> {
+	upload?: string | boolean;
+}
+export interface BlinkSelectorManager extends SelectorManagerConfig {
+	componentFirst?: boolean;
+	/**
+	 * Custom render function for the Selector Manager
+	 * @example
+	 * render: ({ el, labelHead, labelStates, labelInfo, }) => {
+	 *  // You can use the default `el` to extend/edit the current
+	 *  // DOM element of the Selector Manager
+	 *  const someEl = document.createElement('div');
+	 *  // ...
+	 *  el.appendChild(someEl);
+	 *  // no need to return anything from the function
+	 *
+	 *  // Create and return a new DOM element
+	 *  const newEl = document.createElement('div');
+	 *  // ...
+	 *  return newEl;
+	 *
+	 *  // Return an HTML string for a completely different layout.
+	 *  // Use `data-*` attributes to make the module recognize some elements:
+	 *  // `data-states` - Where to append state `<option>` elements (or just write yours)
+	 *  // `data-selectors` - Where to append selectors
+	 *  // `data-input` - Input element which is used to add new selectors
+	 *  // `data-add` - Element which triggers the add of a new selector on click
+	 *  // `data-sync-style` - Element which triggers the sync of styles (visible with `componentFirst` enabled)
+	 *  // `data-selected` - Where to print selected selectors
+	 *  return `
+	 *    <div class="my-sm-header">
+	 *     <div>${labelHead}</div>
+	 *     <div>
+	 *       <select data-states>
+	 *         <option value="">${labelStates}</option>
+	 *       </select>
+	 *     </div>
+	 *    </div>
+	 *    <div class="my-sm-body">
+	 *      <div data-selectors></div>
+	 *      <input data-input/>
+	 *      <span data-add>Add</span>
+	 *      <span data-sync-style>Sync</span>
+	 *    </div>
+	 *    <div class="my-sm-info">
+	 *      <div>${labelInfo}</div>
+	 *      <div data-selected></div>
+	 *    </div>
+	 * `;
+	 * }
+	 */
+	render?: any;
+}
+
+export interface BlinkStorageManager extends StorageManagerConfig {
+	id?: string;
+}
+export interface BlinkEditorConfig
+	extends Omit<EditorConfig, 'canvas' | 'domComponents' | 'assetManager' | 'storageManager'> {
+	canvas?: VisualEditor.BlinkCanvasComponentsConfig;
+	domComponents?: VisualEditor.BlinkDomComponentsConfig;
+	assetManager?: VisualEditor.BlinkAssetManager;
+	colorPicker?: any;
+	//selectorManager?:VisualEditor.BlinkSelectorManager
+	projectData?: any;
+	storageManager?: VisualEditor.BlinkStorageManager;
+}
+
+export type PanelCommands = CommandNames[keyof CommandNames];
+
+export type PanelIdNames = PanelIds[keyof PanelIds];
+
+
 declare global {
 	type themePreference = 'light' | 'dark' | 'system';
 	type settingsPages = 'team' | 'account' | 'billing' | 'integrations' | 'users';
@@ -299,4 +475,3 @@ declare global {
 	}
 }
 export { };
-
