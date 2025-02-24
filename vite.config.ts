@@ -47,6 +47,8 @@ export default defineConfig({
 			external: [
 				'svelte',
 				'solid-js',
+				"solid-js/web",
+				'solid-js/store',
 				'grapesjs',
 				'monaco-editor',
 				// Add other external dependencies
