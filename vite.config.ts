@@ -8,6 +8,7 @@ import path from 'path';
 export default defineConfig({
 	optimizeDeps: {
 		exclude: ['@sveltejs/vite-plugin-svelte'],
+		include: ['dom-to-image-more'],
 		// include: [
 		// 	'monaco-editor/esm/vs/language/json/json.worker',
 		// 	'monaco-editor/esm/vs/language/css/css.worker',
@@ -53,10 +54,8 @@ export default defineConfig({
 				"solid-js/web",
 				'solid-js/store',
 				'react',
-				// 'grapesjs',
 				'monaco-editor',
 				/^monaco-editor\/.*/
-				// Add other external dependencies
 			],
 			output: {
 				preserveModules: true,
