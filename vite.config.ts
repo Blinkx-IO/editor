@@ -41,7 +41,9 @@ export default defineConfig({
 				'framework/svelte/index': path.resolve(__dirname, 'src/framework/svelte/index.ts'),
 				'framework/solid/index': path.resolve(__dirname, 'src/framework/solid/index.ts'),
 			},
+			// fileName: (format) => `index.${format}.js`,
 			formats: ['es'],
+
 		},
 		rollupOptions: {
 			//So they dont get bundled into lib
@@ -51,7 +53,7 @@ export default defineConfig({
 				"solid-js/web",
 				'solid-js/store',
 				// 'grapesjs',
-				// 'monaco-editor',
+				'monaco-editor',
 				// Add other external dependencies
 			],
 			output: {
@@ -72,6 +74,15 @@ export default defineConfig({
 
 					const [filename] = assetInfo.name.split('?');
 					const extname = path.extname(filename);
+					console.log("look here", filename)
+					if (filename.includes('worker')) {
+						const workerTypes = ['editor', 'json', 'css', 'html', 'ts'];
+						for (const type of workerTypes) {
+							if (filename.includes(`${type}.worker`)) {
+								return `workers/${type}.worker.js`;
+							}
+						}
+					}
 
 					if (/\.(png|jpe?g|gif|svg|webp)$/i.test(extname)) {
 						return `assets/images/${filename}`;
@@ -82,9 +93,9 @@ export default defineConfig({
 					if (/\.css$/i.test(extname)) {
 						return `assets/css/${filename}`;
 					}
-					if (assetInfo.name.endsWith('.worker.js')) {
-						return 'workers/[name][extname]';
-					}
+					// if (assetInfo.name.endsWith('.worker.js')) {
+					// 	return 'workers/[name][extname]';
+					// }
 
 					return filename;
 				}
