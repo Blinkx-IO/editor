@@ -11,7 +11,7 @@ import { addDomComponents } from './blocks/blinkcontentmodel';
 import breadCrumbs from './panels/breadcrumbs';
 import ToggleClassSelectors from './panels/selectors';
 import { defaultSelectorTemplate } from './panels/selectorManager';
-import { createElement } from 'react';
+// import { createElement } from 'react';
 import { transformJSX, type JSXObject } from './plugins/codeParsers/jsxParserLegacy';
 import { BlinkJS } from './editorConfig';
 import { blockCategories } from './blocks/interfaces';
@@ -319,7 +319,7 @@ export const configureEditor = async (config: editorConfig) => {
 	//addCustomStyleTraits(editor);
 	ToggleClassSelectors(editor);
 
-	editor.renderJSX = createElement;
+	// editor.renderJSX = createElement;
 
 	if (dev && browser) {
 		window.BlinkJS = BlinkJS;
