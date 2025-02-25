@@ -44,6 +44,7 @@ export default defineConfig({
 			formats: ['es'],
 		},
 		rollupOptions: {
+			//So they dont get bundled into lib
 			external: [
 				'svelte',
 				'solid-js',
@@ -57,6 +58,15 @@ export default defineConfig({
 				preserveModules: true,
 				preserveModulesRoot: 'src',
 				entryFileNames: '[name].js',
+				// manualChunks: {
+				// 	'monaco-editor': ['monaco-editor'],
+				// 	// Define chunks for worker files
+				// 	'editor-worker': ['monaco-editor/esm/vs/editor/editor.worker'],
+				// 	'json-worker': ['monaco-editor/esm/vs/language/json/json.worker'],
+				// 	'css-worker': ['monaco-editor/esm/vs/language/css/css.worker'],
+				// 	'html-worker': ['monaco-editor/esm/vs/language/html/html.worker'],
+				// 	'ts-worker': ['monaco-editor/esm/vs/language/typescript/ts.worker'],
+				// },
 				assetFileNames: (assetInfo) => {
 					if (!assetInfo.name) return 'assets/[name]-[hash][extname]';
 
@@ -71,6 +81,9 @@ export default defineConfig({
 					}
 					if (/\.css$/i.test(extname)) {
 						return `assets/css/${filename}`;
+					}
+					if (assetInfo.name.endsWith('.worker.js')) {
+						return 'workers/[name][extname]';
 					}
 
 					return filename;

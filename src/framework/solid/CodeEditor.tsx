@@ -2,7 +2,7 @@ import { Component, createSignal, createEffect, onMount, onCleanup, Show, For, o
 import type monaco from "monaco-editor";
 import type { editor as monacoEditor } from "monaco-editor";
 // import { createStore } from "solid-js/store";
-
+// import * as monacoInstance from 'monaco-editor';
 import { transformJSX } from "@plugins/codeParsers/jsxParserLegacy";
 import type { Component as EditorComponent, Components, StyleProps } from "grapesjs";
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
@@ -452,35 +452,36 @@ const el = this;`;
 
 		self.MonacoEnvironment = {
 			getWorker: function(_moduleId: any, label: string) {
+				console.log('Getworker running', label, _moduleId);
 				if (label === "json") {
-					return createWorker(jsonWorker, "json");
-					// return new jsonWorker();
+					// return createWorker(jsonWorker, "json");
+					return new jsonWorker();
 				}
 				if (
 					label === "css" ||
 					label === "scss" ||
 					label === "less"
 				) {
-					return createWorker(cssWorker, "css");
-					// return new cssWorker();
+					// return createWorker(cssWorker, "css");
+					return new cssWorker();
 				}
 				if (
 					label === "html" ||
 					label === "handlebars" ||
 					label === "razor"
 				) {
-					return createWorker(htmlWorker, "html");
-					// return new htmlWorker();
+					// return createWorker(htmlWorker, "html");
+					return new htmlWorker();
 				}
 				if (
 					label === "typescript" ||
 					label === "javascript"
 				) {
-					return createWorker(tsWorker, "typescript");
-					// return new tsWorker();
+					// return createWorker(tsWorker, "typescript");
+					return new tsWorker();
 				}
-				return createWorker(editorWorker, label);
-				// return new editorWorker();
+				// return createWorker(editorWorker, label);
+				return new editorWorker();
 			},
 		};
 
