@@ -54,6 +54,7 @@ export default defineConfig({
 				'solid-js/store',
 				// 'grapesjs',
 				'monaco-editor',
+				/^monaco-editor\/.*/
 				// Add other external dependencies
 			],
 			output: {
