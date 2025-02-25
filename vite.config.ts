@@ -9,13 +9,13 @@ export default defineConfig({
 	optimizeDeps: {
 		exclude: ['@sveltejs/vite-plugin-svelte'],
 		// include: ['dom-to-image-more'],
-		// include: [
-		// 	'monaco-editor/esm/vs/language/json/json.worker',
-		// 	'monaco-editor/esm/vs/language/css/css.worker',
-		// 	'monaco-editor/esm/vs/language/html/html.worker',
-		// 	'monaco-editor/esm/vs/language/typescript/ts.worker',
-		// 	'monaco-editor/esm/vs/editor/editor.worker'
-		// ],
+		include: [
+			'monaco-editor/esm/vs/language/json/json.worker',
+			'monaco-editor/esm/vs/language/css/css.worker',
+			'monaco-editor/esm/vs/language/html/html.worker',
+			'monaco-editor/esm/vs/language/typescript/ts.worker',
+			'monaco-editor/esm/vs/editor/editor.worker'
+		],
 		esbuildOptions: {
 			define: {
 				global: 'globalThis'
