@@ -8,13 +8,13 @@ import path from 'path';
 export default defineConfig({
 	optimizeDeps: {
 		exclude: ['@sveltejs/vite-plugin-svelte'],
-		include: [
-			'monaco-editor/esm/vs/language/json/json.worker',
-			'monaco-editor/esm/vs/language/css/css.worker',
-			'monaco-editor/esm/vs/language/html/html.worker',
-			'monaco-editor/esm/vs/language/typescript/ts.worker',
-			'monaco-editor/esm/vs/editor/editor.worker'
-		],
+		// include: [
+		// 	'monaco-editor/esm/vs/language/json/json.worker',
+		// 	'monaco-editor/esm/vs/language/css/css.worker',
+		// 	'monaco-editor/esm/vs/language/html/html.worker',
+		// 	'monaco-editor/esm/vs/language/typescript/ts.worker',
+		// 	'monaco-editor/esm/vs/editor/editor.worker'
+		// ],
 		esbuildOptions: {
 			define: {
 				global: 'globalThis'
@@ -32,7 +32,7 @@ export default defineConfig({
 	],
 	build: {
 		target: 'esnext',
-		sourcemap: true,
+		// sourcemap: true,
 		// cssCodeSplit: true,
 		cssMinify: true,
 		lib: {
@@ -76,15 +76,15 @@ export default defineConfig({
 
 					const [filename] = assetInfo.name.split('?');
 					const extname = path.extname(filename);
-					console.log("look here", filename)
-					if (filename.includes('worker')) {
-						const workerTypes = ['editor', 'json', 'css', 'html', 'ts'];
-						for (const type of workerTypes) {
-							if (filename.includes(`${type}.worker`)) {
-								return `workers/${type}.worker.js`;
-							}
-						}
-					}
+					// console.log("look here", filename)
+					// if (filename.includes('worker')) {
+					// 	const workerTypes = ['editor', 'json', 'css', 'html', 'ts'];
+					// 	for (const type of workerTypes) {
+					// 		if (filename.includes(`${type}.worker`)) {
+					// 			return `workers/${type}.worker.js`;
+					// 		}
+					// 	}
+					// }
 
 					if (/\.(png|jpe?g|gif|svg|webp)$/i.test(extname)) {
 						return `assets/images/${filename}`;
