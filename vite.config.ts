@@ -53,9 +53,7 @@ export default defineConfig({
 				'solid-js',
 				"solid-js/web",
 				'solid-js/store',
-				'react',
-				'monaco-editor',
-				// /^monaco-editor\/.*/
+				'react'
 			],
 			output: {
 				preserveModules: true,
