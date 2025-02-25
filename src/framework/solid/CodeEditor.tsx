@@ -40,6 +40,15 @@ export interface CodeEditorProps {
 	onClose: () => void;
 }
 
+const createWorker = (worker: any, label: string) => {
+	const blob = new Blob(['self.addEventListener("message", () => {})', worker], {
+		type: 'application/javascript'
+	});
+	return new Worker(URL.createObjectURL(blob), {
+		type: 'module',
+		name: label
+	});
+};
 const CodeEditor: Component<CodeEditorProps> = (props) => {
 	const [selectedLanguage, setSelectedLanguage] = createSignal<codeLanguageOptions>(props.selectedLanguage || "javascript");
 	const [expanded, setExpanded] = createSignal(false);
@@ -440,32 +449,38 @@ const el = this;`;
 			setSelectedComponent(component);
 		});
 		// Monaco environment setup
+
 		self.MonacoEnvironment = {
 			getWorker: function(_moduleId: any, label: string) {
 				if (label === "json") {
-					return new jsonWorker();
+					return createWorker(jsonWorker, "json");
+					// return new jsonWorker();
 				}
 				if (
 					label === "css" ||
 					label === "scss" ||
 					label === "less"
 				) {
-					return new cssWorker();
+					return createWorker(cssWorker, "css");
+					// return new cssWorker();
 				}
 				if (
 					label === "html" ||
 					label === "handlebars" ||
 					label === "razor"
 				) {
-					return new htmlWorker();
+					return createWorker(htmlWorker, "html");
+					// return new htmlWorker();
 				}
 				if (
 					label === "typescript" ||
 					label === "javascript"
 				) {
-					return new tsWorker();
+					return createWorker(tsWorker, "typescript");
+					// return new tsWorker();
 				}
-				return new editorWorker();
+				return createWorker(editorWorker, label);
+				// return new editorWorker();
 			},
 		};
 
