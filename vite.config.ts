@@ -1,9 +1,85 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 //@ts-ignore
 import tailwind from "@tailwindcss/vite";
 import path from 'path';
+import fs from 'fs';
+// Custom plugin to copy Monaco workers
+//
+
+const monacoWorkersBundle = (): Plugin => {
+	return {
+		name: 'monaco-workers-bundle',
+		enforce: 'post',
+		apply: 'build',
+		resolveId(id) {
+			// These conditions identify Monaco worker entry points to ensure
+			// they're processed correctly
+			if (id.includes('monaco-editor/esm/vs/editor/editor.worker')) {
+				return id;
+			}
+			if (id.includes('monaco-editor/esm/vs/language/json/json.worker')) {
+				return id;
+			}
+			if (id.includes('monaco-editor/esm/vs/language/css/css.worker')) {
+				return id;
+			}
+			if (id.includes('monaco-editor/esm/vs/language/html/html.worker')) {
+				return id;
+			}
+			if (id.includes('monaco-editor/esm/vs/language/typescript/ts.worker')) {
+				return id;
+			}
+			return null;
+		}
+	}
+}
+
+
+const copyMonacoWorkers = (): Plugin => {
+	return {
+		name: 'copy-monaco-workers',
+		closeBundle: async () => {
+			console.log('Copying Monaco Editor workers...');
+			const workersPath = path.resolve(__dirname, 'node_modules/monaco-editor/esm/vs');
+			const targetDir = path.resolve(__dirname, 'dist/workers');
+
+			if (!fs.existsSync(targetDir)) {
+				fs.mkdirSync(targetDir, { recursive: true });
+			}
+
+			// Copy editor.worker.js
+			fs.copyFileSync(
+				path.resolve(workersPath, 'editor/editor.worker.js'),
+				path.resolve(targetDir, 'editor.worker.js')
+			);
+
+			// Copy language workers
+			fs.copyFileSync(
+				path.resolve(workersPath, 'language/json/json.worker.js'),
+				path.resolve(targetDir, 'json.worker.js')
+			);
+
+			fs.copyFileSync(
+				path.resolve(workersPath, 'language/css/css.worker.js'),
+				path.resolve(targetDir, 'css.worker.js')
+			);
+
+			fs.copyFileSync(
+				path.resolve(workersPath, 'language/html/html.worker.js'),
+				path.resolve(targetDir, 'html.worker.js')
+			);
+
+			fs.copyFileSync(
+				path.resolve(workersPath, 'language/typescript/ts.worker.js'),
+				path.resolve(targetDir, 'ts.worker.js')
+			);
+
+			console.log('Monaco Editor workers copied successfully!');
+		}
+	};
+};
 
 export default defineConfig({
 	optimizeDeps: {
@@ -29,7 +105,9 @@ export default defineConfig({
 	plugins: [
 		solidPlugin(),
 		svelte(),
-		tailwind()
+		tailwind(),
+		monacoWorkersBundle()
+		// copyMonacoWorkers()
 	],
 	build: {
 		target: 'esnext',
@@ -41,8 +119,9 @@ export default defineConfig({
 				index: path.resolve(__dirname, 'src/index.ts'),
 				'framework/svelte/index': path.resolve(__dirname, 'src/framework/svelte/index.ts'),
 				'framework/solid/index': path.resolve(__dirname, 'src/framework/solid/index.ts'),
+				'monaco-utils': path.resolve(__dirname, 'src/monaco-setup.ts'),
 			},
-			// fileName: (format) => `index.${format}.js`,
+			fileName: (format, entryName) => `${entryName}.${format}.js`,
 			formats: ['es'],
 
 		},
@@ -59,14 +138,15 @@ export default defineConfig({
 				// preserveModules: true,
 				preserveModulesRoot: 'src',
 				entryFileNames: '[name].js',
+				inlineDynamicImports: false,
 				manualChunks: {
 					'monaco-editor': ['monaco-editor'],
 					// Define chunks for worker files
-					'editor-worker': ['monaco-editor/esm/vs/editor/editor.worker'],
-					'json-worker': ['monaco-editor/esm/vs/language/json/json.worker'],
-					'css-worker': ['monaco-editor/esm/vs/language/css/css.worker'],
-					'html-worker': ['monaco-editor/esm/vs/language/html/html.worker'],
-					'ts-worker': ['monaco-editor/esm/vs/language/typescript/ts.worker'],
+					'editor.worker': ['monaco-editor/esm/vs/editor/editor.worker'],
+					'json.worker': ['monaco-editor/esm/vs/language/json/json.worker'],
+					'css.worker': ['monaco-editor/esm/vs/language/css/css.worker'],
+					'html.worker': ['monaco-editor/esm/vs/language/html/html.worker'],
+					'ts.worker': ['monaco-editor/esm/vs/language/typescript/ts.worker'],
 				},
 				assetFileNames: (assetInfo) => {
 					if (!assetInfo.name) return 'assets/[name]-[hash][extname]';
@@ -78,7 +158,7 @@ export default defineConfig({
 					// 	const workerTypes = ['editor', 'json', 'css', 'html', 'ts'];
 					// 	for (const type of workerTypes) {
 					// 		if (filename.includes(`${type}.worker`)) {
-					// 			return `workers/${type}.worker.js`;
+					// 			return `assets/${type}.worker.js`;
 					// 		}
 					// 	}
 					// }

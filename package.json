@@ -1,6 +1,6 @@
 {
   "name": "@blinkx/editor",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "type": "module",
   "files": [
     "dist",
@@ -26,7 +26,8 @@
     "./css/*": "./dist/assets/css/*",
     "./css/editor.css": "./dist/assets/css/editor.css",
     "./images/*": "./dist/assets/images/*",
-    "./fonts/*": "./dist/assets/fonts/*"
+    "./fonts/*": "./dist/assets/fonts/*",
+    "./workers/*": "./dist/workers/*"
   },
   "scripts": {
     "dev": "vite",
