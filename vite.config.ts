@@ -7,79 +7,57 @@ import path from 'path';
 import fs from 'fs';
 // Custom plugin to copy Monaco workers
 //
-
 const monacoWorkersBundle = (): Plugin => {
 	return {
 		name: 'monaco-workers-bundle',
 		enforce: 'post',
 		apply: 'build',
-		resolveId(id) {
-			// These conditions identify Monaco worker entry points to ensure
-			// they're processed correctly
-			if (id.includes('monaco-editor/esm/vs/editor/editor.worker')) {
-				return id;
-			}
-			if (id.includes('monaco-editor/esm/vs/language/json/json.worker')) {
-				return id;
-			}
-			if (id.includes('monaco-editor/esm/vs/language/css/css.worker')) {
-				return id;
-			}
-			if (id.includes('monaco-editor/esm/vs/language/html/html.worker')) {
-				return id;
-			}
-			if (id.includes('monaco-editor/esm/vs/language/typescript/ts.worker')) {
-				return id;
-			}
-			return null;
-		}
-	}
-}
-
-
-const copyMonacoWorkers = (): Plugin => {
-	return {
-		name: 'copy-monaco-workers',
 		closeBundle: async () => {
-			console.log('Copying Monaco Editor workers...');
-			const workersPath = path.resolve(__dirname, 'node_modules/monaco-editor/esm/vs');
+			console.log('Monaco workers bundled to workers directory');
+
+			// Path they already exist in
+			const existingDir = path.resolve(__dirname, 'dist/assets');
+
+			// Target directory for workers
 			const targetDir = path.resolve(__dirname, 'dist/workers');
 
 			if (!fs.existsSync(targetDir)) {
 				fs.mkdirSync(targetDir, { recursive: true });
 			}
 
-			// Copy editor.worker.js
-			fs.copyFileSync(
-				path.resolve(workersPath, 'editor/editor.worker.js'),
-				path.resolve(targetDir, 'editor.worker.js')
-			);
+			// Copy all .js files from existingDir to targetDir
+			try {
+				if (fs.existsSync(existingDir)) {
+					const files = fs.readdirSync(existingDir);
 
-			// Copy language workers
-			fs.copyFileSync(
-				path.resolve(workersPath, 'language/json/json.worker.js'),
-				path.resolve(targetDir, 'json.worker.js')
-			);
+					// Filter for .js files
+					const jsFiles = files.filter(file => file.endsWith('.js'));
 
-			fs.copyFileSync(
-				path.resolve(workersPath, 'language/css/css.worker.js'),
-				path.resolve(targetDir, 'css.worker.js')
-			);
+					// Copy each .js file
+					for (const file of jsFiles) {
+						fs.copyFileSync(
+							path.join(existingDir, file),
+							path.join(targetDir, file)
+						);
+						console.log(`Copied ${file} to workers directory`);
+					}
 
-			fs.copyFileSync(
-				path.resolve(workersPath, 'language/html/html.worker.js'),
-				path.resolve(targetDir, 'html.worker.js')
-			);
+					console.log(`Copied ${jsFiles.length} .js files to workers directory`);
+				} else {
+					console.warn(`Source directory ${existingDir} does not exist`);
+				}
+			} catch (error) {
+				console.error('Error copying worker files:', error);
+			}
 
-			fs.copyFileSync(
-				path.resolve(workersPath, 'language/typescript/ts.worker.js'),
-				path.resolve(targetDir, 'ts.worker.js')
-			);
-
-			console.log('Monaco Editor workers copied successfully!');
+			console.log('Monaco worker files processing completed');
 		}
-	};
-};
+	}
+}
+
+
+
+
 
 export default defineConfig({
 	optimizeDeps: {
@@ -119,7 +97,7 @@ export default defineConfig({
 				index: path.resolve(__dirname, 'src/index.ts'),
 				'framework/svelte/index': path.resolve(__dirname, 'src/framework/svelte/index.ts'),
 				'framework/solid/index': path.resolve(__dirname, 'src/framework/solid/index.ts'),
-				'monaco-utils': path.resolve(__dirname, 'src/monaco-setup.ts'),
+				'monaco-utils': path.resolve(__dirname, 'src/utilities/monaco-setup.ts'),
 			},
 			fileName: (format, entryName) => `${entryName}.${format}.js`,
 			formats: ['es'],
@@ -141,7 +119,7 @@ export default defineConfig({
 				inlineDynamicImports: false,
 				manualChunks: {
 					'monaco-editor': ['monaco-editor'],
-					// Define chunks for worker files
+					// Define chunks for worker files - these will be placed in /workers directory
 					'editor.worker': ['monaco-editor/esm/vs/editor/editor.worker'],
 					'json.worker': ['monaco-editor/esm/vs/language/json/json.worker'],
 					'css.worker': ['monaco-editor/esm/vs/language/css/css.worker'],
@@ -153,15 +131,16 @@ export default defineConfig({
 
 					const [filename] = assetInfo.name.split('?');
 					const extname = path.extname(filename);
-					// console.log("look here", filename)
-					// if (filename.includes('worker')) {
-					// 	const workerTypes = ['editor', 'json', 'css', 'html', 'ts'];
-					// 	for (const type of workerTypes) {
-					// 		if (filename.includes(`${type}.worker`)) {
-					// 			return `assets/${type}.worker.js`;
-					// 		}
-					// 	}
-					// }
+
+					// Check for Monaco worker files and place them in /workers directory
+					if (filename.includes('worker')) {
+						const workerTypes = ['editor', 'json', 'css', 'html', 'ts'];
+						for (const type of workerTypes) {
+							if (filename.includes(`${type}.worker`)) {
+								return `workers/${type}.worker.js`;
+							}
+						}
+					}
 
 					if (/\.(png|jpe?g|gif|svg|webp)$/i.test(extname)) {
 						return `assets/images/${filename}`;
@@ -172,9 +151,6 @@ export default defineConfig({
 					if (/\.css$/i.test(extname)) {
 						return `assets/css/${filename}`;
 					}
-					// if (assetInfo.name.endsWith('.worker.js')) {
-					// 	return 'workers/[name][extname]';
-					// }
 
 					return filename;
 				}
