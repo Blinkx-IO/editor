@@ -56,18 +56,18 @@ export default defineConfig({
 				'react'
 			],
 			output: {
-				preserveModules: true,
+				// preserveModules: true,
 				preserveModulesRoot: 'src',
 				entryFileNames: '[name].js',
-				// manualChunks: {
-				// 	'monaco-editor': ['monaco-editor'],
-				// 	// Define chunks for worker files
-				// 	'editor-worker': ['monaco-editor/esm/vs/editor/editor.worker'],
-				// 	'json-worker': ['monaco-editor/esm/vs/language/json/json.worker'],
-				// 	'css-worker': ['monaco-editor/esm/vs/language/css/css.worker'],
-				// 	'html-worker': ['monaco-editor/esm/vs/language/html/html.worker'],
-				// 	'ts-worker': ['monaco-editor/esm/vs/language/typescript/ts.worker'],
-				// },
+				manualChunks: {
+					'monaco-editor': ['monaco-editor'],
+					// Define chunks for worker files
+					'editor-worker': ['monaco-editor/esm/vs/editor/editor.worker'],
+					'json-worker': ['monaco-editor/esm/vs/language/json/json.worker'],
+					'css-worker': ['monaco-editor/esm/vs/language/css/css.worker'],
+					'html-worker': ['monaco-editor/esm/vs/language/html/html.worker'],
+					'ts-worker': ['monaco-editor/esm/vs/language/typescript/ts.worker'],
+				},
 				assetFileNames: (assetInfo) => {
 					if (!assetInfo.name) return 'assets/[name]-[hash][extname]';
 
