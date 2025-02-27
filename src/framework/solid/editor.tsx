@@ -140,6 +140,10 @@ function Editor(props: EditorProps) {
 				editCodebutton.set("active", true);
 			}
 		});
+		editor.on('command:run:show-layers', () => {
+
+			console.log('layers being toggled')
+		});
 
 	});
 

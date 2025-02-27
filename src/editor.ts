@@ -333,6 +333,11 @@ export const configureEditor = async (config: editorConfig) => {
 		window.editor = editor;
 	}
 
+	// editor.on('command:run:show-layers', () => {
+	//
+	// 	console.log('layers being toggled')
+	// });
+
 	editor.on('load', async () => {
 		const inputVal = document.getElementById('panel__Title') as HTMLInputElement;
 
