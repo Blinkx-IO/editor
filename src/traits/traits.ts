@@ -6,7 +6,7 @@ interface TraitManager {
 	addType(name: string, options: object): any | string | HTMLElement;
 }
 
-export function setTraits(editor: VisualEditor.BlinkEditor) {
+export function setTraits(editor: VisualEditor.BlinkEditor, dev = false) {
 	const traitManager: TraitManager = editor.TraitManager;
 
 	//Add new traits
@@ -89,7 +89,7 @@ export function setTraits(editor: VisualEditor.BlinkEditor) {
 					let csvReader = new FileReader();
 					const input = csvFile.files[0];
 
-					csvReader.onload = function (evt) {
+					csvReader.onload = function(evt) {
 						const text = evt.target.result;
 
 						if (typeof text === 'string' || text instanceof String) {

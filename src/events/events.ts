@@ -8,9 +8,6 @@ import { modalSmall } from "@panels/modalTemplates";
 import { getStatus, updateStatus } from "@panels/status";
 import { getPageUrl, getSeoFields, setPageUrl, setSeoFields } from "@panels/pageSettings";
 import NProgress from "nprogress";
-// import { browser } from "$app/environment";
-//NOTE: This is a hack to get around the fact that the editor is not running in a browser environment
-const browser = true;
 let data: Array<any>;
 interface pexelGridRequest {
     container: HTMLElement;
@@ -183,7 +180,7 @@ function parseDataFiles() {
  * Trigger additonal functionality on events such as,
  * run:preview, change:device, run:export-template, or any custom command
  */
-export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | number) {
+export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | number, dev = false) {
     /*
     editor.on("run:export-template:before", (opts: {abort: number}) => {
         console.log("Before the command run");
@@ -726,7 +723,9 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
         //
     });
     editor.on("storage:end:load", (data: VisualEditor.editorStorageObject) => {
-        console.log("Beginning Data Load", data.styles, data.css)
+        if (dev)
+            console.log("Beginning Data Load", data.styles, data.css)
+    }
         /*console.log({
             assets:data.assets,
             pages:data.pages,
@@ -739,28 +738,28 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
         });*/
 
         const inputVal = document.getElementById("panel__Title") as HTMLInputElement;
-        inputVal.value = data.title;
-        const projectName = document.getElementById('projectName') as HTMLElement;
-        projectName.innerHTML = `&nbsp; | ${data.project}`;
-        //projectName
-        //Update Status method
-        updateStatus(data.status);
+    inputVal.value = data.title;
+    const projectName = document.getElementById('projectName') as HTMLElement;
+    projectName.innerHTML = `&nbsp; | ${data.project}`;
+    //projectName
+    //Update Status method
+    updateStatus(data.status);
 
-        //Update page url
-        setPageUrl(data.url);
+    //Update page url
+    setPageUrl(data.url);
 
-        try {
-            //Update seo toolkit options
-            setSeoFields(data["seo-toolkit"]);
-        } catch (error) {
-            //need to set seoFields
-        }
+    try {
+        //Update seo toolkit options
+        setSeoFields(data["seo-toolkit"]);
+    } catch (error) {
+        //need to set seoFields
+    }
 
-        //TODO add this to data/api integrations
-        if (data.csvParser) {
-            FilterData(data.csvParser);
-            //unParseFiles(resultObject['csvParser'])
-        }
+    //TODO add this to data/api integrations
+    if (data.csvParser) {
+        FilterData(data.csvParser);
+        //unParseFiles(resultObject['csvParser'])
+    }
 
-    });
+});
 }

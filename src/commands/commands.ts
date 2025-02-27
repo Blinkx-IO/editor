@@ -18,7 +18,6 @@ import {
 //import type {BlinkEditor} from "../editorTypes";
 // import { browser, dev } from '$app/environment';
 const browser = true;
-const dev = true;
 // import { createSliceBlock } from '$visualeditor/blocks/contentblocks/slice';
 const popupHtml = `<div id="popup" class="inset-0 flex items-center justify-center z-10">
 <div class="bg-white w-1/3 p-6 shadow-lg rounded">
@@ -221,7 +220,7 @@ function pannelIsActive(editor: VisualEditor.BlinkEditor, panelId: string) {
 /**
  * Initialize Commands for the style editor .layers-container
  */
-export function setCommands(editor: VisualEditor.BlinkEditor) {
+export function setCommands(editor: VisualEditor.BlinkEditor, dev = false) {
 	// Define commands layers-container
 	//editor.Commands.add("show-layers", toggleLeftPanelOptions);
 	//@ts-ignore

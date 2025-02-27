@@ -179,7 +179,9 @@ export const configureEditor = async (config: editorConfig) => {
 			type: storageStrategyValue,
 			stepsBeforeSave: 1,
 			onLoad: (data) => {
-				console.log(data);
+				if (dev) {
+					console.log(data);
+				}
 				return {
 					...data
 				};
@@ -196,7 +198,9 @@ export const configureEditor = async (config: editorConfig) => {
 
 					//Pass custom server data here
 					onLoad: (data) => {
-						console.log(data);
+						if (dev) {
+							console.log(data);
+						}
 						return {
 							...data
 						};
@@ -306,18 +310,18 @@ export const configureEditor = async (config: editorConfig) => {
 	});
 
 	//Init Commands for Editor after config
-	addDomComponents(editor);
+	addDomComponents(editor, dev);
 	//addfeatureBlocks(editor);
-	setCommands(editor);
-	setEvents(editor, projectId);
-	setTraits(editor);
+	setCommands(editor, dev);
+	setEvents(editor, projectId, dev);
+	setTraits(editor, dev);
 
 	//TODO Fix this
 	//loadAllDynamicBlocks(editor);
-	breadCrumbs(editor, {});
+	breadCrumbs(editor, {}, dev);
 	//TODO bug test this further
 	//addCustomStyleTraits(editor);
-	ToggleClassSelectors(editor);
+	ToggleClassSelectors(editor, {}, dev);
 
 	// editor.renderJSX = createElement;
 

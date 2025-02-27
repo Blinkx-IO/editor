@@ -20,6 +20,8 @@ export interface EditorProps {
 	cssPosition?: "fixed" | "absolute";
 	replaceLogo?: Component<{}>;
 	logoLink?: string;
+	/**Debug mode enabled**/
+	dev?: boolean;
 
 }
 
@@ -80,7 +82,9 @@ function Editor(props: EditorProps) {
 		const projectDataSaved = localStorage.getItem(localKey);
 		if (projectDataSaved) {
 			projectData = JSON.parse(projectDataSaved);
-			console.log('loaded from local storage', projectData);
+			if (props.dev) {
+				console.log('loaded from local storage', projectData);
+			}
 		}
 	}
 	const data = props.item || defaultData.item;
@@ -97,6 +101,7 @@ function Editor(props: EditorProps) {
 			themePreference: themePreference(),
 			itemStatus: data.status ?? "draft",
 			itemMappingState: data.itemEditorStatus ?? "active",
+			dev: props.dev ?? false
 		});
 		setEditor(editor);
 

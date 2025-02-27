@@ -3,33 +3,33 @@
 //import type {BlinkEditor} from "../editorTypes";
 //import { editorPanels } from "../controller/state";
 
-function createElement(html: string){
+function createElement(html: string) {
     const template = document.createElement('template');
     template.innerHTML = html;
     return template.content //.childNodes;
 }
 
-export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}) {
-    
-    const generateQuerySelector = (el : HTMLElement) => {
-        
+export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}, dev = false) {
+
+    const generateQuerySelector = (el: HTMLElement) => {
+
         let str = el.dataset.gjsType;//el.tagName.toLowerCase();
-       
-        if(el.dataset.gjsType === "wrapper")str='body';
+
+        if (el.dataset.gjsType === "wrapper") str = 'body';
         //str += el.dataset.gjsType  ?  el.dataset.gjsType  : "";
         el.className.length &&
-            el.className.split(/\s/).forEach((cls : string) => {
+            el.className.split(/\s/).forEach((cls: string) => {
                 str +=
                     cls != "gjs-selected" &&
-                    cls != "cke_editable" &&
-                    cls != "cke_editable_inline" &&
-                    cls != "cke_contents_ltr" &&
-                    cls != "cke_show_borders"
+                        cls != "cke_editable" &&
+                        cls != "cke_editable_inline" &&
+                        cls != "cke_contents_ltr" &&
+                        cls != "cke_show_borders"
                         ? "." + cls
                         : "";
             });
         const parentElement = el.parentNode as HTMLElement;
-        
+
         return createElement(`${generateTree(parentElement)} 
         <div class="crumbCard">    
             <div class="crumb">
@@ -45,8 +45,8 @@ export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}
         `);
     };
 
-    const generateTree = (el : HTMLElement) : string => {
-        
+    const generateTree = (el: HTMLElement): string => {
+
         if (el.tagName.toLowerCase() === "html")
             return  /*html*/`
             <div class="crumbCard">    
@@ -59,7 +59,7 @@ export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}
                     </div>
                 </div>
             </div>
-            `; 
+            `;
         if (el.tagName.toLowerCase() === "wrapper" || el.dataset.gjsType === "wrapper")
             return  /*html*/`
             <div class="crumbCard">
@@ -72,11 +72,11 @@ export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}
                     </div>
                 </div>
             </div>
-            `; 
-        if (el.dataset.gjsType){
+            `;
+        if (el.dataset.gjsType) {
             //template checker
             let typeName = el.dataset.gjsType;
-            if(el.dataset.gjsType === "wrapper")typeName='body';
+            if (el.dataset.gjsType === "wrapper") typeName = 'body';
             const parentElement = el.parentNode as HTMLElement;
             return (
                 generateTree(parentElement) +
@@ -93,17 +93,17 @@ export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}
                 </div>
                 `
             );
-        }else{
+        } else {
             return ``;
         }
-        
+
     };
     //replace with render
     //const $ : any = editor.$;
     //const pfx = editor.Config.stylePrefix;
 
     editor.on("component:selected", (model: { getEl: () => HTMLElement; }) => {
-       
+
         const breadCrumbs = document.getElementById('breadcrumbs') as HTMLElement;
         //const breadcrumbs = $(`#breadcrumbs`);
         //editorPanels.breadCrumbs = document.getElementById('breadcrumbs') as HTMLElement;
@@ -117,16 +117,16 @@ export default function breadCrumbs(editor: VisualEditor.BlinkEditor, config: {}
         } catch (error) {
             console.warn(error)
         }
-        
-        breadCrumbs.querySelectorAll("span").forEach((elem)=>{
-            elem.addEventListener("click", function (e : any) {
+
+        breadCrumbs.querySelectorAll("span").forEach((elem) => {
+            elem.addEventListener("click", function(e: any) {
                 const doc = editor.Canvas.getDocument();
                 editor.select(doc.querySelector(e.currentTarget.innerText.trim()));
             });
         })
-        
-        
 
-        
+
+
+
     });
 }
