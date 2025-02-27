@@ -29,8 +29,8 @@ function Editor(props: EditorProps) {
 	const [monacoEditorRef, setMonacoEditorRef] = createSignal<typeof monacoEditor>();
 	const [Monaco, setMonaco] = createSignal<any>();
 	const [bottomCodePanel, setBottomCodePanel] = createSignal<HTMLElement>();
-
-	const [cssPosition, setCssPosition] = createSignal<EditorProps["cssPosition"]>("fixed");
+	const defaultCssPos: EditorProps["cssPosition"] = props.cssPosition;
+	const [cssPosition, setCssPosition] = createSignal<EditorProps["cssPosition"]>(defaultCssPos ?? "fixed");
 	// Refs
 	let sectionWrap: HTMLElement;
 
