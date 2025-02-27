@@ -16,6 +16,8 @@ export interface EditorProps {
 	item?: ProjectData;
 	/** The data for the editor's pages anything after the first page */
 	pages?: Array<ProjectData>
+	/** Defaults to fixed**/
+	cssPosition?: "fixed" | "absolute";
 }
 
 function Editor(props: EditorProps) {
@@ -28,6 +30,7 @@ function Editor(props: EditorProps) {
 	const [Monaco, setMonaco] = createSignal<any>();
 	const [bottomCodePanel, setBottomCodePanel] = createSignal<HTMLElement>();
 
+	const [cssPosition, setCssPosition] = createSignal<EditorProps["cssPosition"]>("fixed");
 	// Refs
 	let sectionWrap: HTMLElement;
 
@@ -135,10 +138,10 @@ function Editor(props: EditorProps) {
 	return (
 		<section id="mainEditorSection" ref={(el) => sectionWrap = el}>
 			<div data-load="initial" id="editor-wrapper" class="overflow-hidden">
-				<div class="hidden fixed z-50 top-1/4" id="magnet-panels"></div>
+				<div class={`hidden ${cssPosition() == "fixed" ? "fixed" : "absolute"} z-50 top-1/4`} id="magnet-panels"></div>
 				<div
 					id="pre-top-panel"
-					class=" hidden fixed w-full right-0 z-10"
+					class={`hidden ${cssPosition() == "fixed" ? "fixed" : "absolute"} w-full right-0 z-10`}
 				>
 					<div class="flex-grow" id="panel-nav"></div>
 					<div id="panel-status"></div>
@@ -149,7 +152,7 @@ function Editor(props: EditorProps) {
 						'border-gray-300 bg-primary-light-gray',
 						'dark:border-muted dark:bg-nav-darkmode',
 						themePreference(),
-					)}  fixed w-full right-0 z-10`}
+					)}  ${cssPosition() == "fixed" ? "fixed" : "absolute"} w-full right-0 z-10`}
 				>
 					<div
 						class={`panel__basic-actions ${setThemeClass(
@@ -220,7 +223,7 @@ function Editor(props: EditorProps) {
 								'dark:border-muted dark:bg-nav-darkmode',
 								themePreference(),
 							)}
-					 fixed h-screen z-10 left-0`}
+					 ${cssPosition() == "fixed" ? "fixed" : "absolute"} h-screen z-10 left-0`}
 						></div>
 
 						<div
@@ -229,7 +232,7 @@ function Editor(props: EditorProps) {
 								'border-gray-300',
 								'dark:border-muted',
 								themePreference(),
-							)} border-r border-t z-10 h-screen fixed flex`}
+							)} border-r border-t z-10 h-screen ${cssPosition() == "fixed" ? "fixed" : "absolute"} flex`}
 							id="leftSlideOutMenu"
 						>
 							<div
@@ -807,7 +810,7 @@ function Editor(props: EditorProps) {
 					<div
 						style="width: 94.5%;  left:3%;"
 						id="editor-container"
-						class="fixed pl-1 pr-[15px] transition-all duration-[200ms]"
+						class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} pl-1 pr-[15px] transition-all duration-[200ms]`}
 					>
 						<div
 							class={`border ${setThemeClass(
@@ -828,7 +831,7 @@ function Editor(props: EditorProps) {
 								'bg-primary-light-gray border-gray-300',
 								'dark:bg-nav-darkmode dark:border-muted',
 								themePreference(),
-							)} w-1/5 border-l fixed transition-all duration-[200ms] right-[50px] h-full`}
+							)} w-1/5 border-l ${cssPosition() == "fixed" ? "fixed" : "absolute"} transition-all duration-[200ms] right-[50px] h-full`}
 						>
 							<div
 								style="display: none;"
@@ -942,7 +945,7 @@ function Editor(props: EditorProps) {
 								'border-gray-300 bg-primary-light-gray',
 								'dark:border-muted dark:bg-nav-darkmode',
 								themePreference(),
-							)} right_tab_right w-[50px] border-l fixed h-full right-0`}
+							)} right_tab_right w-[50px] border-l ${cssPosition() == "fixed" ? "fixed" : "absolute"} h-full right-0`}
 						>
 							<div
 								class="panel__utilities space-y-2"
@@ -962,7 +965,7 @@ function Editor(props: EditorProps) {
 				{/*out:fly={{ y: 100, duration: 300, delay: 0 }}*/}
 				<div
 					ref={(el) => setBottomCodePanel(el)}
-					class="fixed z-10 bg-black bottom-0 w-screen transition-all ease-in duration-300"
+					class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} z-10 bg-black bottom-0 w-screen transition-all ease-in duration-300`}
 					id="bottom-code-panel"
 				>
 					<CodeEditor
@@ -976,7 +979,7 @@ function Editor(props: EditorProps) {
 			<div class="hidden shadow rounded py-3" id="context-menu"></div>
 			<div
 				style="width:74.5%; left: 3%;"
-				class="fixed bottom-0 z-[9] transition-all duration-[200ms] pl-1 pr-[14px]"
+				class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} bottom-0 z-[9] transition-all duration-[200ms] pl-1 pr-[14px]`}
 				id="breadcrumbsContainer"
 			>
 				<div
