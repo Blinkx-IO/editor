@@ -6,7 +6,10 @@ const themePreference: themePreference = 'dark';
 
 
 //TODO: Add proper typings for this
-export const defaultSelectorTemplate = ({ labelInfo, labelHead, iconSync, iconAdd, pfx, ppfx }: any) => {
+export const defaultSelectorTemplate = (config: any) => {
+  const { labelInfo, labelHead, iconSync, iconAdd, } = config;
+  let pfx = 'blink-clm-';
+  let ppfx = 'blink-';
   //console.log('before',pfx,ppfx)
   pfx = 'blink-clm-';
   ppfx = 'blink-';
@@ -15,7 +18,7 @@ export const defaultSelectorTemplate = ({ labelInfo, labelHead, iconSync, iconAd
   //TODP add autocomplete on classes
   return html`
     <div class="${pfx}sels-info flex items-center ${setThemeClass('bg-monochromatic-gray', 'dark:bg-primary-bg-darkmode', get(themePreference))}  mt-0  border-b border-t px-1 py-3 border-gray-300">
-      <div class="${pfx}label-sel text-base ${setThemeClass('', 'dark:text-white', get(themePreference))}">${labelInfo}:</div>
+      <div class="${pfx}label-sel pl-2 text-base ${setThemeClass('', 'dark:text-white', get(themePreference))}">${labelInfo}:</div>
       <div class="${pfx}sels text-base ${setThemeClass('', 'dark:text-white', get(themePreference))}" data-selected></div>
       <div style="clear:both"></div> 
     </div>
