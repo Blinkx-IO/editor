@@ -4553,7 +4553,7 @@ span.CodeMirror-selectedtext {
 
 .panel__right {
   /*flex-basis: 230px;*/
-  position: relative;
+  /* position: relative; */
   /*overflow-y: auto;*/
   height: 90%;
 }
