@@ -723,9 +723,10 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
         //
     });
     editor.on("storage:end:load", (data: VisualEditor.editorStorageObject) => {
-        if (dev)
+        if (dev) {
             console.log("Beginning Data Load", data.styles, data.css)
-    }
+
+        }
         /*console.log({
             assets:data.assets,
             pages:data.pages,
@@ -738,28 +739,28 @@ export function setEvents(editor: VisualEditor.BlinkEditor, projectId: string | 
         });*/
 
         const inputVal = document.getElementById("panel__Title") as HTMLInputElement;
-    inputVal.value = data.title;
-    const projectName = document.getElementById('projectName') as HTMLElement;
-    projectName.innerHTML = `&nbsp; | ${data.project}`;
-    //projectName
-    //Update Status method
-    updateStatus(data.status);
+        inputVal.value = data.title;
+        const projectName = document.getElementById('projectName') as HTMLElement;
+        projectName.innerHTML = `&nbsp; | ${data.project}`;
+        //projectName
+        //Update Status method
+        updateStatus(data.status);
 
-    //Update page url
-    setPageUrl(data.url);
+        //Update page url
+        setPageUrl(data.url);
 
-    try {
-        //Update seo toolkit options
-        setSeoFields(data["seo-toolkit"]);
-    } catch (error) {
-        //need to set seoFields
-    }
+        try {
+            //Update seo toolkit options
+            setSeoFields(data["seo-toolkit"]);
+        } catch (error) {
+            //need to set seoFields
+        }
 
-    //TODO add this to data/api integrations
-    if (data.csvParser) {
-        FilterData(data.csvParser);
-        //unParseFiles(resultObject['csvParser'])
-    }
+        //TODO add this to data/api integrations
+        if (data.csvParser) {
+            FilterData(data.csvParser);
+            //unParseFiles(resultObject['csvParser'])
+        }
 
-});
+    });
 }
