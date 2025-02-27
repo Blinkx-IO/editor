@@ -1,4 +1,4 @@
-import { createSignal, onMount, Show } from 'solid-js';
+import { Component, createSignal, onMount, Show } from 'solid-js';
 import { configureEditor } from "@/editor";
 import type monaco from "monaco-editor";
 import type { editor as monacoEditor } from "monaco-editor";
@@ -18,6 +18,9 @@ export interface EditorProps {
 	pages?: Array<ProjectData>
 	/** Defaults to fixed**/
 	cssPosition?: "fixed" | "absolute";
+	replaceLogo?: Component<{}>;
+	logoLink?: string;
+
 }
 
 function Editor(props: EditorProps) {
@@ -165,6 +168,8 @@ function Editor(props: EditorProps) {
 							editor={editor()}
 							itemId={data.id}
 							projectName={data.projectName ?? ""}
+							replaceLogo={props.replaceLogo}
+							logoLink={props.logoLink}
 						/>
 					</div>
 					<div

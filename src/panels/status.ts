@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //import type { BlinkEditor, status } from "../editorTypes";
-import {html, render} from "lit-html";
+import { html, render } from "lit-html";
 
 
 
-const defaultStatus: VisualEditor.status = "Draft";
+const defaultStatus: VisualEditor.status = "draft";
 const icons = {
     greenCheck: html`
         <svg
@@ -53,7 +53,7 @@ function getStatus() {
     return itemStatus.dataset.status as VisualEditor.status;
 }
 
-function bindStatusUpdates(editor:VisualEditor.BlinkEditor) {
+function bindStatusUpdates(editor: VisualEditor.BlinkEditor) {
     const changeStatusButton = document.getElementById(
         "listbox-option-publish-status",
     ) as HTMLLIElement;
@@ -196,4 +196,4 @@ const statusButton = html`
             </div>     
 `;
 
-export {statusButton, updateStatus, getStatus, bindStatusUpdates};
+export { statusButton, updateStatus, getStatus, bindStatusUpdates };
