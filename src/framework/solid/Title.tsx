@@ -121,7 +121,7 @@ const Title: Component<TitleProps> = (props) => {
 					<div
 						class={`
 	            flex
-	            text-xs mt-1 ${setThemeClass(
+	            text-xs  ${setThemeClass(
 							"text-gray-500",
 							"dark:text-muted",
 							themePreference()

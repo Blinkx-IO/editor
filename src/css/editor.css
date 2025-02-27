@@ -4394,7 +4394,8 @@ span.CodeMirror-selectedtext {
 
 #panel__Title {
   /*height: 25px;*/
-  font-size: 18px;
+  /* font-size: 18px; */
+  font-size: 16px;
 }
 
 #mainEditorSection a {
