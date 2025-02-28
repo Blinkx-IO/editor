@@ -25,6 +25,8 @@ export interface EditorProps {
 
 }
 
+const leftPanelEvents = ["show-blocks", "show-pages", "show-layers"] as const;
+
 function Editor(props: EditorProps) {
 	const [showCodeEditor, setShowCodeEditor] = createSignal(false);
 	const [loaded, setLoaded] = createSignal(false);
@@ -36,6 +38,10 @@ function Editor(props: EditorProps) {
 	const [bottomCodePanel, setBottomCodePanel] = createSignal<HTMLElement>();
 	const defaultCssPos: EditorProps["cssPosition"] = props.cssPosition;
 	const [cssPosition, setCssPosition] = createSignal<EditorProps["cssPosition"]>(defaultCssPos ?? "fixed");
+
+	//Panel Signals
+	const [leftPanelOpen, setLeftPanelOpen] = createSignal(false);
+
 	// Refs
 	let sectionWrap: HTMLElement;
 
@@ -140,9 +146,20 @@ function Editor(props: EditorProps) {
 				editCodebutton.set("active", true);
 			}
 		});
-		editor.on('command:run:show-layers', () => {
 
-			console.log('layers being toggled')
+		leftPanelEvents.forEach((ev) => {
+			editor.on(`command:run:${ev}`, () => {
+				setLeftPanelOpen(true);
+				if (props.dev) {
+					console.log(`Left panel being toggled open by ${ev} layer`)
+				}
+			});
+			editor.on(`command:stop:${ev}`, () => {
+				setLeftPanelOpen(false);
+				if (props.dev) {
+					console.log(`Left panel being toggled closed by ${ev} layer`)
+				}
+			});
 		});
 
 	});
@@ -241,7 +258,8 @@ function Editor(props: EditorProps) {
 						></div>
 
 						<div
-							style="left:2.5%;"
+							style={leftPanelOpen() ? "left:2.5%;" : ""}
+
 							class={`${setThemeClass(
 								'border-gray-300',
 								'dark:border-muted',
