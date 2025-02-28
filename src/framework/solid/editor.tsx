@@ -22,7 +22,8 @@ export interface EditorProps {
 	logoLink?: string;
 	/**Debug mode enabled**/
 	dev?: boolean;
-
+	/**Callback function to get the editor instance when it's initialized**/
+	onEditorInit?: (editor: VisualEditor.BlinkEditor) => void;
 }
 
 const leftPanelEvents = ["show-blocks", "show-pages", "show-layers"] as const;
@@ -110,6 +111,11 @@ function Editor(props: EditorProps) {
 			dev: props.dev ?? false
 		});
 		setEditor(editor);
+
+		// Call the callback with the editor instance if provided
+		if (props.onEditorInit) {
+			props.onEditorInit(editor);
+		}
 
 		editor.on("component:selected", () => {
 			setSelectedComponent(editor.getSelected())
