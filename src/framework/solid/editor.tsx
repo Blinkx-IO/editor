@@ -247,7 +247,7 @@ function Editor(props: EditorProps) {
 					{/*Left Panel border-r border-t*/}
 					<div id="left-panel">
 						<div
-							style="width: 2.5%;"
+							// style="width: 2.5%;"
 							class={`panel__left
 					${setThemeClass(
 								'border-gray-300 bg-primary-light-gray',
@@ -261,10 +261,10 @@ function Editor(props: EditorProps) {
 							style={leftPanelOpen() ? "left:2.5%;" : ""}
 
 							class={`${setThemeClass(
-								'border-gray-300',
-								'dark:border-muted',
+								'',
+								'',
 								themePreference(),
-							)} border-r border-t z-10 h-screen ${cssPosition() == "fixed" ? "fixed" : "absolute"} flex`}
+							)}  z-10 h-screen ${cssPosition() == "fixed" ? "fixed" : "absolute"} flex`}
 							id="leftSlideOutMenu"
 						>
 							<div
