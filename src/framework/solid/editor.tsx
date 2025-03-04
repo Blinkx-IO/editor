@@ -1,16 +1,22 @@
 import { Component, createSignal, onMount, Show } from 'solid-js';
 import { configureEditor } from "@/editor";
-import type monaco from "monaco-editor";
-import type { editor as monacoEditor } from "monaco-editor";
+// import type monaco from "monaco-editor";
+// import type { editor as monacoEditor } from "monaco-editor";
 import type { ProjectData } from "../../global";
-import { selectedComponent, setSelectedComponent, themePreference, setThemePreference } from "@framework/solid/stores";
+import { setSelectedComponent, themePreference, setThemePreference } from "@framework/solid/stores";
 import { setThemeClass } from "@/components/utilities/themePreferences";
 // Import converted Solid components
 import Title from "./Title";
 import Status from "./Status";
 import DataTableLayout from "./DataTableLayout";
 import CodeEditor from "./CodeEditor";
-
+import { createStore } from "solid-js/store";
+type CssModeTheming = { dark: string, light: string };
+type EditorTheme = {
+	primaryBackgroundColor: CssModeTheming
+	primaryBorderColor: CssModeTheming
+	primaryTextColor: CssModeTheming
+}
 export interface EditorProps {
 	/** The data for the editor's page ie first page to view  if nothing is passed it will default to a blank canvas to start editing with */
 	item?: ProjectData;
@@ -20,7 +26,9 @@ export interface EditorProps {
 	cssPosition?: "fixed" | "absolute";
 	replaceLogo?: Component<{}>;
 	logoLink?: string;
+	/**Theme preference for the editor defaults to system*/
 	themePreference?: themePreference;
+	theme?: Partial<EditorTheme>;
 	/**Debug mode enabled**/
 	dev?: boolean;
 	/**Callback function to get the editor instance when it's initialized**/
@@ -29,20 +37,56 @@ export interface EditorProps {
 
 const leftPanelEvents = ["show-blocks", "show-pages", "show-layers"] as const;
 
+const defaultTheme: EditorTheme = {
+	primaryBackgroundColor: {
+		dark: "bg-nav-darkmode",
+		light: "bg-primary-light-gray"
+	},
+	primaryBorderColor: {
+		light: "border-gray-300",
+		dark: "border-muted"
+	},
+	primaryTextColor: {
+		light: "text-black",
+		dark: "text-white"
+	}
+}
+
 function Editor(props: EditorProps) {
 	const [showCodeEditor, setShowCodeEditor] = createSignal(false);
-	const [loaded, setLoaded] = createSignal(false);
+	// const [loaded, setLoaded] = createSignal(false);
 	const [selectedLanguage, setSelectedLanguage] = createSignal<codeLanguageOptions>("json");
 	const [editor, setEditor] = createSignal<VisualEditor.BlinkEditor>();
-	const [codeEditor, setCodeEditor] = createSignal<monaco.editor.IStandaloneCodeEditor>();
-	const [monacoEditorRef, setMonacoEditorRef] = createSignal<typeof monacoEditor>();
-	const [Monaco, setMonaco] = createSignal<any>();
+	// const [codeEditor, setCodeEditor] = createSignal<monaco.editor.IStandaloneCodeEditor>();
+	// const [monacoEditorRef, setMonacoEditorRef] = createSignal<typeof monacoEditor>();
+	// const [Monaco, setMonaco] = createSignal<any>();
 	const [bottomCodePanel, setBottomCodePanel] = createSignal<HTMLElement>();
 	const defaultCssPos: EditorProps["cssPosition"] = props.cssPosition;
-	const [cssPosition, setCssPosition] = createSignal<EditorProps["cssPosition"]>(defaultCssPos ?? "fixed");
+	const [cssPosition, _setCssPosition] = createSignal<EditorProps["cssPosition"]>(defaultCssPos ?? "fixed");
 
+	const [editorTheme, setEditorTheme] = createStore<EditorTheme>(defaultTheme);
 	if (props.themePreference) {
 		setThemePreference(props.themePreference);
+	}
+
+	if (props.theme) {
+		const { primaryBackgroundColor, primaryBorderColor, primaryTextColor } = props.theme;
+
+		if (primaryBackgroundColor) {
+			setEditorTheme({
+				primaryBackgroundColor
+			});
+		}
+		if (primaryBorderColor) {
+			setEditorTheme({
+				primaryBorderColor
+			});
+		}
+		if (primaryTextColor) {
+			setEditorTheme({
+				primaryTextColor
+			});
+		}
 	}
 	//Panel Signals
 	const [leftPanelOpen, setLeftPanelOpen] = createSignal(false);
@@ -125,13 +169,13 @@ function Editor(props: EditorProps) {
 			setSelectedComponent(editor.getSelected())
 		});
 
-		editor.on("component:update", (e) => { });
+		// editor.on("component:update", (e) => { });
 
 		editor.Commands.add("edit-code", {
-			run(editor, sender, opts) {
+			run(/* editor, sender, opts */) {
 				setShowCodeEditor(true);
 			},
-			stop(editor, sender, opts) {
+			stop(/* editor, sender, opts */) {
 				setShowCodeEditor(false);
 
 			},
@@ -188,15 +232,15 @@ function Editor(props: EditorProps) {
 				<div
 					id="top-panel"
 					class={`panel__top min-h-[60px] border-b ${setThemeClass(
-						'border-gray-300 bg-primary-light-gray',
-						'dark:border-muted dark:bg-nav-darkmode',
+						`border-gray-300 ${editorTheme.primaryBackgroundColor.light}`,
+						`border-muted ${editorTheme.primaryBackgroundColor.dark}`,
 						themePreference(),
 					)}  ${cssPosition() == "fixed" ? "fixed" : "absolute"} w-full right-0 z-10`}
 				>
 					<div
 						class={`panel__basic-actions ${setThemeClass(
 							'',
-							'dark:bg-nav-darkmode',
+							'',
 							themePreference(),
 						)}`}
 					>
@@ -210,15 +254,15 @@ function Editor(props: EditorProps) {
 					</div>
 					<div
 						class={`panel__devices ${setThemeClass(
-							'',
-							'dark:bg-nav-darkmode',
+							`${editorTheme.primaryBackgroundColor.light}`,
+							`${editorTheme.primaryBackgroundColor.dark}`,
 							themePreference(),
 						)}`}
 					></div>
 					<div
 						class={`flex items-center ${setThemeClass(
-							'',
-							'dark:bg-nav-darkmode',
+							`${editorTheme.primaryBackgroundColor.light}`,
+							`${editorTheme.primaryBackgroundColor.dark}`,
 							themePreference(),
 						)}`}
 						id="rightPanelIcons"
@@ -226,22 +270,22 @@ function Editor(props: EditorProps) {
 						<div id="undo-manager"></div>
 						<div
 							class={`panel__edit-actions ${setThemeClass(
-								'',
-								'dark:bg-nav-darkmode',
+								`${editorTheme.primaryBackgroundColor.light}`,
+								`${editorTheme.primaryBackgroundColor.dark}`,
 								themePreference(),
 							)}`}
 						></div>
 						<div
 							class={`panel__switcher ${setThemeClass(
-								'',
-								'dark:bg-nav-darkmode',
+								`${editorTheme.primaryBackgroundColor.light}`,
+								`${editorTheme.primaryBackgroundColor.dark}`,
 								themePreference(),
 							)}`}
 						></div>
 						<div
 							class={`panel__status ${setThemeClass(
-								'',
-								'dark:bg-nav-darkmode',
+								`${editorTheme.primaryBackgroundColor.light}`,
+								`${editorTheme.primaryBackgroundColor.dark}`,
 								themePreference(),
 							)}`}
 						>
@@ -260,8 +304,8 @@ function Editor(props: EditorProps) {
 							// style="width: 2.5%;"
 							class={`panel__left
 					${setThemeClass(
-								'border-gray-300 bg-primary-light-gray',
-								'dark:border-muted dark:bg-nav-darkmode',
+								`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryBackgroundColor.light}`,
+								`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark}`,
 								themePreference(),
 							)}
 					 ${cssPosition() == "fixed" ? "fixed" : "absolute"} h-screen z-10 left-0`}
@@ -279,8 +323,8 @@ function Editor(props: EditorProps) {
 						>
 							<div
 								class={`h-screen pl-1 ${setThemeClass(
-									'bg-[#e0e5ee]',
-									'dark:bg-nav-darkmode',
+									`${editorTheme.primaryBackgroundColor.light}`,
+									`${editorTheme.primaryBackgroundColor.dark}`,
 									themePreference(),
 								)}`}
 							></div>
@@ -290,9 +334,8 @@ function Editor(props: EditorProps) {
 								data-toggled-state="off"
 								data-pinned-state="false"
 								class={`hidden h-screen border-l ${setThemeClass(
-									'border-gray-300 bg-primary-light-gray',
-									'dark:border-muted dark:bg-nav-darkmode',
-									themePreference(),
+									`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryBackgroundColor.light}`,
+									`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark}`, themePreference(),
 								)}`}
 							>
 								{/*TODO replace with transition*/}
@@ -305,8 +348,8 @@ function Editor(props: EditorProps) {
 									>
 										<h1
 											class={setThemeClass(
-												"",
-												"dark:text-white",
+												editorTheme.primaryTextColor.light,
+												editorTheme.primaryTextColor.dark,
 												themePreference(),
 											)}
 										>
@@ -318,8 +361,8 @@ function Editor(props: EditorProps) {
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												class={`${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
@@ -337,8 +380,8 @@ function Editor(props: EditorProps) {
 												xmlns="http://www.w3.org/2000/svg"
 												data-command="show-blocks"
 												class={`${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
@@ -364,8 +407,8 @@ function Editor(props: EditorProps) {
 									>
 										<h1
 											class={setThemeClass(
-												"",
-												"dark:text-white",
+												editorTheme.primaryTextColor.light,
+												editorTheme.primaryTextColor.dark,
 												themePreference(),
 											)}
 										>
@@ -377,8 +420,8 @@ function Editor(props: EditorProps) {
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												class={`${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
@@ -396,8 +439,8 @@ function Editor(props: EditorProps) {
 												data-command="show-layers"
 												xmlns="http://www.w3.org/2000/svg"
 												class={`${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
@@ -420,15 +463,15 @@ function Editor(props: EditorProps) {
 								>
 									<div
 										class={`flex justify-between p-1 items-center border-b ${setThemeClass(
-											'border-gray-300',
-											'dark:border-muted',
+											editorTheme.primaryBorderColor.light,
+											editorTheme.primaryBorderColor.dark,
 											themePreference(),
 										)}   pb-1`}
 									>
 										<h1
 											class={setThemeClass(
-												"",
-												"dark:text-white",
+												editorTheme.primaryTextColor.light,
+												editorTheme.primaryTextColor.dark,
 												themePreference(),
 											)}
 										>
@@ -441,8 +484,8 @@ function Editor(props: EditorProps) {
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												class={`${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)} h-4 w-4 pinLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
@@ -460,8 +503,8 @@ function Editor(props: EditorProps) {
 												xmlns="http://www.w3.org/2000/svg"
 												data-command="show-blocks"
 												class={`${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)} h-4 w-4 closeLayer cursor-pointer hover:opacity-60 active:opacity-30 transition-all`}
 												fill="none"
@@ -483,8 +526,8 @@ function Editor(props: EditorProps) {
 									>
 										<div
 											class={`bg-gray-two-tone pb-3 pt-3 mx-3 my-5 rounded shadow-sm border ${setThemeClass(
-												'border-gray-300',
-												'dark:border-muted',
+												editorTheme.primaryBorderColor.light,
+												editorTheme.primaryBorderColor.dark,
 												themePreference(),
 											)}  `}
 										>
@@ -493,8 +536,8 @@ function Editor(props: EditorProps) {
 											>
 												<p
 													class={`font-semibold ${setThemeClass(
-														'',
-														'dark:text-white',
+														editorTheme.primaryTextColor.light,
+														editorTheme.primaryTextColor.dark,
 														themePreference(),
 													)}`}
 												>
@@ -508,8 +551,8 @@ function Editor(props: EditorProps) {
 											>
 												<div
 													class={`${setThemeClass(
-														'bg-white border-gray-300',
-														'dark:bg-formfields-darkmode dark:border-muted',
+														`bg-white ${editorTheme.primaryBorderColor.light}`,
+														`bg-formfields-darkmode ${editorTheme.primaryBorderColor.dark}`,
 														themePreference(),
 													)}   relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
@@ -517,7 +560,7 @@ function Editor(props: EditorProps) {
 														for="page-url"
 														class={`${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium`}
 													>Page
@@ -533,7 +576,7 @@ function Editor(props: EditorProps) {
 														class={`
 											block w-full border-0 p-0 ${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
-															'dark:text-white dark:placeholder-gray-400 dark:bg-formfields-darkmode',
+															'text-white placeholder-gray-400 bg-formfields-darkmode',
 															themePreference(),
 														)} 
 											sm:text-sm
@@ -549,15 +592,15 @@ function Editor(props: EditorProps) {
 										</div>
 										<div
 											class={`bg-gray-two-tone mx-3 pt-5 pb-3 rounded shadow-sm border ${setThemeClass(
-												'border-gray-300',
-												'dark:border-muted',
+												editorTheme.primaryBorderColor.light,
+												editorTheme.primaryBorderColor.dark,
 												themePreference(),
 											)}`}
 										>
 											<p
 												class={`ml-2 mb-5 pl-3 font-semibold ${setThemeClass(
-													'',
-													'dark:text-white',
+													editorTheme.primaryTextColor.light,
+													editorTheme.primaryTextColor.dark,
 													themePreference(),
 												)}`}
 											>
@@ -571,7 +614,7 @@ function Editor(props: EditorProps) {
 												<div
 													class={`${setThemeClass(
 														'bg-white border-gray-300',
-														'dark:bg-formfields-darkmode dark:border-muted',
+														'bg-formfields-darkmode border-muted',
 														themePreference(),
 													)}  relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
@@ -579,7 +622,7 @@ function Editor(props: EditorProps) {
 														for="site-title"
 														class={`${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium`}
 													>Title</label
@@ -594,7 +637,7 @@ function Editor(props: EditorProps) {
 														class={`
 											block w-full border-0 p-0 ${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
-															'dark:text-white dark:bg-formfields-darkmode dark:placeholder-gray-400',
+															'text-white bg-formfields-darkmode placeholder-gray-400',
 															themePreference(),
 														)} 
 											 sm:text-sm
@@ -609,7 +652,7 @@ function Editor(props: EditorProps) {
 														for="site-description"
 														class={`block text-sm font-medium ${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)}`}
 													>Site
@@ -630,7 +673,7 @@ function Editor(props: EditorProps) {
 																	?.siteDescription}
 																class={`${setThemeClass(
 																	'border-gray-300',
-																	'dark:border-muted dark:bg-formfields-darkmode dark:text-white',
+																	'border-muted bg-formfields-darkmode text-white',
 																	themePreference(),
 																)} 
 														shadow-sm focus:outline-none focus:ring-0 focus
@@ -646,7 +689,7 @@ function Editor(props: EditorProps) {
 												<div
 													class={`${setThemeClass(
 														'bg-white border-gray-300',
-														'dark:bg-formfields-darkmode dark:border-muted',
+														'bg-formfields-darkmode border-muted',
 														themePreference(),
 													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
@@ -654,7 +697,7 @@ function Editor(props: EditorProps) {
 														for="favicon"
 														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)}`}
 													>Favicon</label
@@ -669,7 +712,7 @@ function Editor(props: EditorProps) {
 														class={`
 											${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
-															'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
+															'bg-formfields-darkmode text-white placeholder-gray-400',
 															themePreference(),
 														)}
 											block w-full border-0 p-0
@@ -682,7 +725,7 @@ function Editor(props: EditorProps) {
 												<div
 													class={`${setThemeClass(
 														'bg-white border-gray-300',
-														'dark:bg-formfields-darkmode dark:border-muted',
+														'bg-formfields-darkmode border-muted',
 														themePreference(),
 													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
@@ -690,7 +733,7 @@ function Editor(props: EditorProps) {
 														for="meta-image"
 														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)}`}
 													>OG:Image</label
@@ -702,7 +745,7 @@ function Editor(props: EditorProps) {
 														class={`
 												${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
-															'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
+															'bg-formfields-darkmode text-white placeholder-gray-400',
 															themePreference(),
 														)}
 											block w-full border-0 p-0
@@ -714,7 +757,7 @@ function Editor(props: EditorProps) {
 												<div
 													class={`${setThemeClass(
 														'bg-white border-gray-300',
-														'dark:bg-formfields-darkmode dark:border-muted',
+														'bg-formfields-darkmode border-muted',
 														themePreference(),
 													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
@@ -722,7 +765,7 @@ function Editor(props: EditorProps) {
 														for="keywords"
 														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)}`}
 													>Keywords</label
@@ -734,7 +777,7 @@ function Editor(props: EditorProps) {
 														class={`
 												${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
-															'dark:text-white dark:bg-formfields-darkmode dark:placeholder-gray-400',
+															'text-white bg-formfields-darkmode placeholder-gray-400',
 															themePreference(),
 														)}
 											block w-full border-0 p-0 sm:text-sm
@@ -746,7 +789,7 @@ function Editor(props: EditorProps) {
 												<div
 													class={`${setThemeClass(
 														'bg-white border-gray-300',
-														'dark:bg-formfields-darkmode dark:border-muted',
+														'bg-formfields-darkmode border-muted',
 														themePreference(),
 													)} relative border rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-secondary-accent-blue focus-within:border-secondary-accent-blue`}
 												>
@@ -754,7 +797,7 @@ function Editor(props: EditorProps) {
 														for="author"
 														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
 															'text-gray-900 ',
-															'dark:text-white',
+															'text-white',
 															themePreference(),
 														)}`}
 													>Author</label
@@ -766,7 +809,7 @@ function Editor(props: EditorProps) {
 														class={`
 												${setThemeClass(
 															'text-gray-900 placeholder-gray-500',
-															'dark:bg-formfields-darkmode dark:text-white dark:placeholder-gray-400',
+															'bg-formfields-darkmode text-white placeholder-gray-400',
 															themePreference(),
 														)}
 											block w-full border-0 p-0 sm:text-sm
@@ -792,7 +835,7 @@ function Editor(props: EditorProps) {
 										<h1
 											class={setThemeClass(
 												"",
-												"dark:text-white",
+												"text-white",
 												themePreference(),
 											)}
 										>
@@ -803,7 +846,7 @@ function Editor(props: EditorProps) {
 											xmlns="http://www.w3.org/2000/svg"
 											class={`h-4 w-4 closeLayer cursor-pointer ${setThemeClass(
 												'',
-												'dark:text-white',
+												'text-white',
 												themePreference(),
 											)}`}
 											fill="none"
@@ -823,7 +866,7 @@ function Editor(props: EditorProps) {
 										<p
 											class={`ml-2 pl-3 ${setThemeClass(
 												'',
-												'dark:text-white',
+												'text-white',
 												themePreference(),
 											)}`}
 										>
@@ -857,7 +900,7 @@ function Editor(props: EditorProps) {
 						<div
 							class={`border ${setThemeClass(
 								'border-gray-300',
-								'dark:border-muted',
+								'border-muted',
 								themePreference(),
 							)}`}
 							style="padding-bottom:78px;"
@@ -871,7 +914,7 @@ function Editor(props: EditorProps) {
 							style="transform: translateX(20vw);"
 							class={`right_tab_left ${setThemeClass(
 								'bg-primary-light-gray border-gray-300',
-								'dark:bg-nav-darkmode dark:border-muted',
+								'bg-nav-darkmode border-muted',
 								themePreference(),
 							)} w-1/5 border-l ${cssPosition() == "fixed" ? "fixed" : "absolute"} transition-all duration-[200ms] right-[50px] h-full`}
 						>
@@ -879,7 +922,7 @@ function Editor(props: EditorProps) {
 								style="display: none;"
 								class={`border ${setThemeClass(
 									'border-gray-300',
-									'dark:border-muted',
+									'border-muted',
 									themePreference(),
 								)} shadow-md`}
 								id="stlyeSelectorContainer"
@@ -887,7 +930,7 @@ function Editor(props: EditorProps) {
 								<div
 									class={`selector-container shadow border-b ${setThemeClass(
 										'border-gray-300',
-										'dark:border-muted',
+										'border-muted',
 										themePreference(),
 									)}`}
 								></div>
@@ -902,21 +945,21 @@ function Editor(props: EditorProps) {
 								id="traits"
 								class={`traits-container ${setThemeClass(
 									'bg-monochromatic-gray border-gray-300',
-									'dark:bg-primary-bg-darkmode dark:border-muted',
+									'bg-primary-bg-darkmode border-muted',
 									themePreference(),
 								)}  pb-6 border shadow-md`}
 							>
 								<div
 									class={`${setThemeClass(
 										'bg-monochromatic-gray border-gray-300',
-										'dark:bg-primary-bg-darkmode dark:border-muted',
+										'bg-primary-bg-darkmode border-muted',
 										themePreference(),
 									)} mt-0 border-b border-t px-1 py-3`}
 								>
 									<h1
 										class={setThemeClass(
 											"",
-											"dark:text-white",
+											"text-white",
 											themePreference(),
 										)}
 									>
@@ -929,7 +972,7 @@ function Editor(props: EditorProps) {
 								id="ai-prompt"
 								class={`flex flex-col gap-20 h-100 ai-prompt-container ${setThemeClass(
 									'bg-monochromatic-gray border-gray-300',
-									'dark:bg-primary-bg-darkmode dark:border-muted',
+									'bg-primary-bg-darkmode border-muted',
 									themePreference(),
 								)}  pb-6 border shadow-md`}
 							>
@@ -943,7 +986,7 @@ function Editor(props: EditorProps) {
 								id="component-css"
 								class={`${setThemeClass(
 									'bg-monochromatic-gray border-gray-300',
-									'dark:bg-formfields-darkmode dark:border-muted',
+									'bg-formfields-darkmode border-muted',
 									themePreference(),
 								)}  pb-6 border shadow-md`}
 							></div>
@@ -952,7 +995,7 @@ function Editor(props: EditorProps) {
 								id="block-components edit-script"
 								class={`${setThemeClass(
 									'bg-monochromatic-gray border-gray-300',
-									'dark:bg-formfields-darkmode dark:border-muted',
+									'bg-formfields-darkmode border-muted',
 									themePreference(),
 								)}  pb-6 border shadow-md`}
 							></div>
@@ -985,7 +1028,7 @@ function Editor(props: EditorProps) {
 						<div
 							class={`${setThemeClass(
 								'border-gray-300 bg-primary-light-gray',
-								'dark:border-muted dark:bg-nav-darkmode',
+								'border-muted bg-nav-darkmode',
 								themePreference(),
 							)} right_tab_right w-[50px] border-l ${cssPosition() == "fixed" ? "fixed" : "absolute"} h-full right-0`}
 						>
@@ -1027,7 +1070,7 @@ function Editor(props: EditorProps) {
 				<div
 					class={`flex ${setThemeClass(
 						'bg-white',
-						'dark:bg-primary-bg-darkmode dark:text-white',
+						'bg-primary-bg-darkmode text-white',
 						themePreference(),
 					)}`}
 					id="breadcrumbs"

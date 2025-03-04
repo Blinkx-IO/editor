@@ -3247,7 +3247,7 @@ span.CodeMirror-selectedtext {
   justify-content: space-between;
   padding: 5px 10px;
   border-bottom: 1px solid white;
-  background-color: white;
+  /* background-color: white; */
   /*var(--gjs-secondary-dark-color);*/
   gap: var(--blink-flex-item-gap);
   cursor: pointer;
@@ -4578,16 +4578,16 @@ span.CodeMirror-selectedtext {
   color: #444;
 }
 
-.blink-one-bg {
-  background-color: var(--primary-background-color);
-}
+/* .blink-one-bg { */
+/*   background-color: var(--primary-background-color); */
+/* } */
 
 /* Secondary color for the text color */
 
 /**Replace thse**/
-.blink-two-bg {
-  background-color: #ddd;
-}
+/* .blink-two-bg { */
+/*   background-color: #ddd; */
+/* } */
 
 .blink-two-color-h:hover {
   color: #ddd;
@@ -5601,7 +5601,7 @@ body {
 @media (prefers-color-scheme: dark) {
 
   .optionsPanel,
-  .blink-one-bg,
+  /* .blink-one-bg, */
   /*Block Cat title Background*/
   .blink-block-category>.blink-title,
   #left-panel {
@@ -5687,6 +5687,7 @@ body {
     background-color: rgba(255, 255, 255, 0.7);
   }
 
+  /*TODO: fix this*/
   .blink-layer.blink-layer.blink-hovered .blink-layer-title-c {
     background-color: var(--dark-mode-hovered-layer);
   }

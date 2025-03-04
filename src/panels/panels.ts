@@ -90,7 +90,10 @@ const editAction = {
 const basicAction = (title: string, themePreference: themePreference): VisualEditor.Panel => {
 	return {
 		id: 'basic-actions' as const,
-		el: '.panel__basic-actions'
+		el: '.panel__basic-actions',
+		// content: '',
+		// attributes: { class: 'class test', className: 'classname test' }
+		// className: "",
 	};
 };
 

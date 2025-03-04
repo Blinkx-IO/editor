@@ -338,6 +338,7 @@ declare global {
 			buttons?: BlinkButtonProps[];
 			el?: string;
 			doNotUse?: string;
+			// className?: string;
 		}
 		interface BlinkComponentView extends Omit<ComponentManager['view'], 'events'> {
 			events: ComponentViewEvents;
