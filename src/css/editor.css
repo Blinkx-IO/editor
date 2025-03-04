@@ -5619,14 +5619,14 @@ body {
   .blink-pn-btn.blink-pn-active,
   .blink-three-bg,
   .blink-field,
-  select,
+  /* select, */
   .blink-input-holder>input,
   .blink-field>input {
     background-color: var(--formfields-darkmode);
   }
 
   .blink-input-holder>input,
-  select,
+  /* select, */
   .blink-sm-label,
   .blink-field>input {
     color: white !important;
