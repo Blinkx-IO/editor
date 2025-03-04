@@ -3,7 +3,7 @@ import { configureEditor } from "@/editor";
 import type monaco from "monaco-editor";
 import type { editor as monacoEditor } from "monaco-editor";
 import type { ProjectData } from "../../global";
-import { selectedComponent, setSelectedComponent, themePreference } from "@framework/solid/stores";
+import { selectedComponent, setSelectedComponent, themePreference, setThemePreference } from "@framework/solid/stores";
 import { setThemeClass } from "@/components/utilities/themePreferences";
 // Import converted Solid components
 import Title from "./Title";
@@ -20,6 +20,7 @@ export interface EditorProps {
 	cssPosition?: "fixed" | "absolute";
 	replaceLogo?: Component<{}>;
 	logoLink?: string;
+	themePreference?: themePreference;
 	/**Debug mode enabled**/
 	dev?: boolean;
 	/**Callback function to get the editor instance when it's initialized**/
@@ -40,6 +41,9 @@ function Editor(props: EditorProps) {
 	const defaultCssPos: EditorProps["cssPosition"] = props.cssPosition;
 	const [cssPosition, setCssPosition] = createSignal<EditorProps["cssPosition"]>(defaultCssPos ?? "fixed");
 
+	if (props.themePreference) {
+		setThemePreference(props.themePreference);
+	}
 	//Panel Signals
 	const [leftPanelOpen, setLeftPanelOpen] = createSignal(false);
 
