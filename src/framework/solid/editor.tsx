@@ -834,9 +834,9 @@ function Editor(props: EditorProps) {
 									>
 										<h1
 											class={setThemeClass(
-												"",
-												"text-white",
-												themePreference(),
+												editorTheme.primaryTextColor.light,
+												editorTheme.primaryTextColor.light,
+												"system",
 											)}
 										>
 											Settings
@@ -860,7 +860,7 @@ function Editor(props: EditorProps) {
 												d="M6 18L18 6M6 6l12 12"
 											/>
 										</svg>
-									</div>
+									</div >
 
 									<div class="flex ml-1">
 										<p
@@ -885,10 +885,10 @@ function Editor(props: EditorProps) {
 										data-y-position=""
 										class="flex"
 									></div>
-								</div>
-							</div>
-						</div>
-					</div>
+								</div >
+							</div >
+						</div >
+					</div >
 					{/*End Panel*/}
 
 					{/*Editor Canvas*/}
@@ -1039,8 +1039,8 @@ function Editor(props: EditorProps) {
 					</div>
 
 					{/*--End Right Panel-->*/}
-				</div>
-			</div>
+				</div >
+			</div >
 			<div style="display:none;" id="table-data-container">
 				<DataTableLayout />
 			</div>
@@ -1077,7 +1077,7 @@ function Editor(props: EditorProps) {
 				></div>
 			</div>
 			<div id="toastyContainer"></div>
-		</section>
+		</section >
 
 	);
 }
