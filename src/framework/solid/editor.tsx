@@ -235,12 +235,12 @@ function Editor(props: EditorProps) {
 						`border-gray-300 ${editorTheme.primaryBackgroundColor.light}`,
 						`border-muted ${editorTheme.primaryBackgroundColor.dark}`,
 						themePreference(),
-					)}  ${cssPosition() == "fixed" ? "fixed" : "absolute"} w-full right-0 z-10`}
+					)} ${cssPosition() == "fixed" ? "fixed" : "absolute"} w-full right-0 z-10`}
 				>
 					<div
 						class={`panel__basic-actions ${setThemeClass(
-							'',
-							'',
+							`${editorTheme.primaryBackgroundColor.light}`,
+							`${editorTheme.primaryBackgroundColor.dark}`,
 							themePreference(),
 						)}`}
 					>
@@ -621,7 +621,7 @@ function Editor(props: EditorProps) {
 													<label
 														for="site-title"
 														class={`${setThemeClass(
-															'text-gray-900 ',
+															'text-gray-900',
 															'text-white',
 															themePreference(),
 														)} absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium`}
@@ -651,7 +651,7 @@ function Editor(props: EditorProps) {
 													<label
 														for="site-description"
 														class={`block text-sm font-medium ${setThemeClass(
-															'text-gray-900 ',
+															'text-gray-900',
 															'text-white',
 															themePreference(),
 														)}`}
@@ -835,8 +835,8 @@ function Editor(props: EditorProps) {
 										<h1
 											class={setThemeClass(
 												editorTheme.primaryTextColor.light,
-												editorTheme.primaryTextColor.light,
-												"system",
+												editorTheme.primaryTextColor.dark,
+												themePreference(),
 											)}
 										>
 											Settings
@@ -893,7 +893,7 @@ function Editor(props: EditorProps) {
 
 					{/*Editor Canvas*/}
 					<div
-						style="width: 94.5%;  left:3%;"
+						style="width: 94.5%; left:3%;"
 						id="editor-container"
 						class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} pl-1 pr-[15px] transition-all duration-[200ms]`}
 					>
@@ -947,7 +947,7 @@ function Editor(props: EditorProps) {
 									'bg-monochromatic-gray border-gray-300',
 									'bg-primary-bg-darkmode border-muted',
 									themePreference(),
-								)}  pb-6 border shadow-md`}
+								)} pb-6 border shadow-md`}
 							>
 								<div
 									class={`${setThemeClass(
@@ -988,7 +988,7 @@ function Editor(props: EditorProps) {
 									'bg-monochromatic-gray border-gray-300',
 									'bg-formfields-darkmode border-muted',
 									themePreference(),
-								)}  pb-6 border shadow-md`}
+								)} pb-6 border shadow-md`}
 							></div>
 							<div
 								style="display: none;"
@@ -997,7 +997,7 @@ function Editor(props: EditorProps) {
 									'bg-monochromatic-gray border-gray-300',
 									'bg-formfields-darkmode border-muted',
 									themePreference(),
-								)}  pb-6 border shadow-md`}
+								)} pb-6 border shadow-md`}
 							></div>
 
 							{/* TODO: add conditons for showing the data parser*/}
@@ -1063,13 +1063,13 @@ function Editor(props: EditorProps) {
 			</Show>
 			<div class="hidden shadow rounded py-3" id="context-menu"></div>
 			<div
-				style="width:74.5%; left: 3%;"
+				style="width:74.5%; left:3%;"
 				class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} bottom-0 z-[9] transition-all duration-[200ms] pl-1 pr-[14px]`}
 				id="breadcrumbsContainer"
 			>
 				<div
 					class={`flex ${setThemeClass(
-						'bg-white',
+						'bg-white text-black',
 						'bg-primary-bg-darkmode text-white',
 						themePreference(),
 					)}`}
@@ -1077,7 +1077,7 @@ function Editor(props: EditorProps) {
 				></div>
 			</div>
 			<div id="toastyContainer"></div>
-		</section >
+		</section>
 
 	);
 }
