@@ -1081,4 +1081,4 @@ function Editor(props: EditorProps) {
 
 	);
 }
-export default Editor;
+export default Editor
