@@ -22,6 +22,12 @@ const blinkStylePrefix = 'blink-';
 export let contentStatus: VisualEditor.status = "draft";
 export let contentTitle = '';
 let itemMappingState: ItemMappingStatus = "active";
+export type CssModeTheming = { dark: string, light: string };
+export type EditorTheme = {
+	primaryBackgroundColor: CssModeTheming
+	primaryBorderColor: CssModeTheming
+	primaryTextColor: CssModeTheming
+}
 export type editorConfig = {
 	projectData?: Record<string, unknown>;
 	projectId: string;
@@ -29,6 +35,7 @@ export type editorConfig = {
 	itemId: string | number;
 	itemTitle: string;
 	themePreference: themePreference;
+	theme?: EditorTheme
 	itemStatus: VisualEditor.status;
 	dev?: boolean;
 	browser?: boolean;

@@ -1,4 +1,4 @@
-import { Component, createSignal, onMount, Show } from 'solid-js';
+import { Component, createEffect, createSignal, onMount, Show } from 'solid-js';
 import { configureEditor } from "@/editor";
 // import type monaco from "monaco-editor";
 // import type { editor as monacoEditor } from "monaco-editor";
@@ -65,29 +65,37 @@ function Editor(props: EditorProps) {
 	const [cssPosition, _setCssPosition] = createSignal<EditorProps["cssPosition"]>(defaultCssPos ?? "fixed");
 
 	const [editorTheme, setEditorTheme] = createStore<EditorTheme>(defaultTheme);
-	if (props.themePreference) {
-		setThemePreference(props.themePreference);
-	}
 
-	if (props.theme) {
-		const { primaryBackgroundColor, primaryBorderColor, primaryTextColor } = props.theme;
 
-		if (primaryBackgroundColor) {
-			setEditorTheme({
-				primaryBackgroundColor
-			});
+	createEffect(() => {
+		if (props.themePreference) {
+			setThemePreference(props.themePreference);
 		}
-		if (primaryBorderColor) {
-			setEditorTheme({
-				primaryBorderColor
-			});
+		if (props.theme) {
+			const { primaryBackgroundColor, primaryBorderColor, primaryTextColor } = props.theme;
+
+			if (primaryBackgroundColor) {
+				setEditorTheme({
+					primaryBackgroundColor
+				});
+			}
+			if (primaryBorderColor) {
+				setEditorTheme({
+					primaryBorderColor
+				});
+			}
+			if (primaryTextColor) {
+				setEditorTheme({
+					primaryTextColor
+				});
+			}
 		}
-		if (primaryTextColor) {
-			setEditorTheme({
-				primaryTextColor
-			});
+		if (props.dev) {
+			console.log('Theme updated', editorTheme)
 		}
-	}
+	});
+
+
 	//Panel Signals
 	const [leftPanelOpen, setLeftPanelOpen] = createSignal(false);
 
@@ -149,6 +157,7 @@ function Editor(props: EditorProps) {
 		const editor = await configureEditor({
 			projectData,
 			itemId: data.id,
+			theme: editorTheme,
 			storageStrategy: mode,
 			projectId: data.project ?? "Project",
 			projectName: data.projectName ?? "",
@@ -764,7 +773,7 @@ function Editor(props: EditorProps) {
 													<label
 														for="keywords"
 														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
-															'text-gray-900 ',
+															'text-gray-900',
 															'text-white',
 															themePreference(),
 														)}`}
@@ -796,7 +805,7 @@ function Editor(props: EditorProps) {
 													<label
 														for="author"
 														class={`absolute -top-5 left-0 -mt-px inline-block px-1 rounded text-xs font-medium ${setThemeClass(
-															'text-gray-900 ',
+															'text-gray-900',
 															'text-white',
 															themePreference(),
 														)}`}
@@ -827,8 +836,8 @@ function Editor(props: EditorProps) {
 								>
 									<div
 										class={`${setThemeClass(
-											'border-gray-300',
-											'border-muted',
+											`border-gray-300 ${editorTheme.primaryBackgroundColor.light}`,
+											`border-muted ${editorTheme.primaryBackgroundColor.dark}`,
 											themePreference(),
 										)} flex justify-between p-1 items-center border-b mb-4`}
 									>
@@ -845,7 +854,7 @@ function Editor(props: EditorProps) {
 											data-command="show-data-parser"
 											xmlns="http://www.w3.org/2000/svg"
 											class={`h-4 w-4 closeLayer cursor-pointer ${setThemeClass(
-												'',
+												'text-black',
 												'text-white',
 												themePreference(),
 											)}`}
@@ -865,7 +874,7 @@ function Editor(props: EditorProps) {
 									<div class="flex ml-1">
 										<p
 											class={`ml-2 pl-3 ${setThemeClass(
-												'',
+												'text-black',
 												'text-white',
 												themePreference(),
 											)}`}
@@ -951,8 +960,8 @@ function Editor(props: EditorProps) {
 							>
 								<div
 									class={`${setThemeClass(
-										'bg-monochromatic-gray border-gray-300',
-										'bg-primary-bg-darkmode border-muted',
+										'bg-monochromatic-gray border-gray-300 text-black',
+										'bg-primary-bg-darkmode border-muted text-white',
 										themePreference(),
 									)} mt-0 border-b border-t px-1 py-3`}
 								>
