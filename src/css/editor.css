@@ -5149,10 +5149,12 @@ body.enlarge-menu .page-wrapper {
   /* rgb(209, 213, 219) !important;*/
 }
 
-.blink-pn-btn svg {
-  color: #212c3e;
-}
+/*NOTE: This used to be needed*/
+/* .blink-pn-btn svg { */
+/*   color: #212c3e; */
+/* } */
 
+/*FIX: set these dynamically*/
 .blink-pn-active svg {
   color: var(--secondary-background-color);
 }

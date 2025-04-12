@@ -253,8 +253,8 @@ function Editor(props: EditorProps) {
 				>
 					<div
 						class={`panel__basic-actions ${setThemeClass(
-							`${editorTheme.primaryBackgroundColor.light}`,
-							`${editorTheme.primaryBackgroundColor.dark}`,
+							`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+							`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 							themePreference(),
 						)}`}
 					>
@@ -268,15 +268,15 @@ function Editor(props: EditorProps) {
 					</div>
 					<div
 						class={`panel__devices ${setThemeClass(
-							`${editorTheme.primaryBackgroundColor.light}`,
-							`${editorTheme.primaryBackgroundColor.dark}`,
+							`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+							`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 							themePreference(),
 						)}`}
 					></div>
 					<div
 						class={`flex items-center ${setThemeClass(
-							`${editorTheme.primaryBackgroundColor.light}`,
-							`${editorTheme.primaryBackgroundColor.dark}`,
+							`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+							`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 							themePreference(),
 						)}`}
 						id="rightPanelIcons"
@@ -284,22 +284,22 @@ function Editor(props: EditorProps) {
 						<div id="undo-manager"></div>
 						<div
 							class={`panel__edit-actions ${setThemeClass(
-								`${editorTheme.primaryBackgroundColor.light}`,
-								`${editorTheme.primaryBackgroundColor.dark}`,
+								`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+								`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 								themePreference(),
 							)}`}
 						></div>
 						<div
 							class={`panel__switcher ${setThemeClass(
-								`${editorTheme.primaryBackgroundColor.light}`,
-								`${editorTheme.primaryBackgroundColor.dark}`,
+								`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+								`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 								themePreference(),
 							)}`}
 						></div>
 						<div
 							class={`panel__status ${setThemeClass(
-								`${editorTheme.primaryBackgroundColor.light}`,
-								`${editorTheme.primaryBackgroundColor.dark}`,
+								`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+								`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 								themePreference(),
 							)}`}
 						>
@@ -337,8 +337,8 @@ function Editor(props: EditorProps) {
 						>
 							<div
 								class={`h-screen pl-1 ${setThemeClass(
-									`${editorTheme.primaryBackgroundColor.light}`,
-									`${editorTheme.primaryBackgroundColor.dark}`,
+									`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+									`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 									themePreference(),
 								)}`}
 							></div>
@@ -348,8 +348,8 @@ function Editor(props: EditorProps) {
 								data-toggled-state="off"
 								data-pinned-state="false"
 								class={`hidden h-screen border-l ${setThemeClass(
-									`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryBackgroundColor.light}`,
-									`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark}`, themePreference(),
+									`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+									`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`, themePreference(),
 								)}`}
 							>
 								{/*TODO replace with transition*/}
@@ -359,8 +359,8 @@ function Editor(props: EditorProps) {
 								>
 									<div
 										class={`flex justify-between p-1 items-center ${setThemeClass(
-											`${editorTheme.primaryBackgroundColor.light}`,
-											`${editorTheme.primaryBackgroundColor.dark}`,
+											`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
+											`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 											themePreference(),
 										)}`}
 									>
@@ -1076,8 +1076,8 @@ function Editor(props: EditorProps) {
 						</div>
 						<div
 							class={`${setThemeClass(
-								'border-gray-300 bg-primary-light-gray',
-								'border-muted bg-nav-darkmode',
+								`border-gray-300 bg-primary-light-gray ${editorTheme.primaryTextColor.light}`,
+								`border-muted bg-nav-darkmode ${editorTheme.primaryTextColor.dark}`,
 								themePreference(),
 							)} right_tab_right w-[50px] border-l ${cssPosition() == "fixed" ? "fixed" : "absolute"} h-full right-0`}
 						>
