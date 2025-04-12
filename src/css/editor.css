@@ -5619,14 +5619,20 @@ body {
     color: white;
   }
 
-  .blink-pn-btn.blink-pn-active,
-  .blink-three-bg,
-  .blink-field,
-  /* select, */
-  .blink-input-holder>input,
-  .blink-field>input {
-    background-color: var(--formfields-darkmode);
-  }
+  /**NOTE: Also removed this**/
+  /* .blink-pn-btn.blink-pn-active, */
+  /* .blink-three-bg, */
+  /* .blink-field, */
+  /* /* select, */
+  */
+  /* .blink-input-holder>input, */
+  /* .blink-field>input { */
+  /*   /* background-color: var(--formfields-darkmode); */
+  */
+  /*   /* background-color: var(--formfields-darkmode);  */
+  */
+  /**/
+  /* } */
 
   .blink-input-holder>input,
   /* select, */
