@@ -4227,7 +4227,7 @@ span.CodeMirror-selectedtext {
 .blink-sm-sector .blink-sm-title,
 .blink-block-category .blink-title,
 .blink-sm-sector-title {
-  background-color: var(--monochromatic-gray);
+  /* background-color: var(--monochromatic-gray); */
   border-bottom: none;
 }
 
@@ -5612,12 +5612,12 @@ body {
 
   }
 
-  .blink-sm-sector .blink-sm-title,
-  .blink-block-category .blink-title,
-  .blink-sm-sector-title {
-    background-color: var(--primary-bg-darkmode);
-    color: white;
-  }
+  /* .blink-sm-sector .blink-sm-title, */
+  /* .blink-block-category .blink-title, */
+  /* .blink-sm-sector-title { */
+  /*   background-color: var(--primary-bg-darkmode); */
+  /*   color: white; */
+  /* } */
 
   /**NOTE: Also removed this**/
   /* .blink-pn-btn.blink-pn-active, */
