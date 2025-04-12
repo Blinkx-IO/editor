@@ -167,6 +167,11 @@ function Editor(props: EditorProps) {
 			itemMappingState: data.itemEditorStatus ?? "active",
 			dev: props.dev ?? false
 		});
+
+		// Make the editor theme available globally for imported components
+		if (typeof window !== 'undefined') {
+			window.editorThemeConfig = editorTheme;
+		}
 		setEditor(editor);
 
 		// Call the callback with the editor instance if provided
@@ -353,7 +358,11 @@ function Editor(props: EditorProps) {
 									id="content-blocks"
 								>
 									<div
-										class="flex justify-between p-1 items-center"
+										class={`flex justify-between p-1 items-center ${setThemeClass(
+											`${editorTheme.primaryBackgroundColor.light}`,
+											`${editorTheme.primaryBackgroundColor.dark}`,
+											themePreference(),
+										)}`}
 									>
 										<h1
 											class={setThemeClass(
@@ -412,7 +421,11 @@ function Editor(props: EditorProps) {
 									class="layers-container"
 								>
 									<div
-										class="flex justify-between p-1 items-center"
+										class={`flex justify-between p-1 items-center ${setThemeClass(
+											`${editorTheme.primaryBackgroundColor.light}`,
+											`${editorTheme.primaryBackgroundColor.dark}`,
+											themePreference(),
+										)}`}
 									>
 										<h1
 											class={setThemeClass(
@@ -534,14 +547,18 @@ function Editor(props: EditorProps) {
 										style="height: 90vh;"
 									>
 										<div
-											class={`bg-gray-two-tone pb-3 pt-3 mx-3 my-5 rounded shadow-sm border ${setThemeClass(
-												editorTheme.primaryBorderColor.light,
-												editorTheme.primaryBorderColor.dark,
+											class={`pb-3 pt-3 mx-3 my-5 rounded shadow-sm border ${setThemeClass(
+												`bg-gray-two-tone ${editorTheme.primaryBorderColor.light}`,
+												`bg-primary-bg-darkmode ${editorTheme.primaryBorderColor.dark}`,
 												themePreference(),
-											)}  `}
+											)}`}
 										>
 											<div
-												class="ml-2 mb-5 px-3 items-center justify-between"
+												class={`ml-2 mb-5 px-3 items-center justify-between ${setThemeClass(
+													`${editorTheme.primaryBackgroundColor.light}`,
+													`${editorTheme.primaryBackgroundColor.dark}`,
+													themePreference(),
+												)}`}
 											>
 												<p
 													class={`font-semibold ${setThemeClass(
@@ -556,7 +573,11 @@ function Editor(props: EditorProps) {
 											</div>
 
 											<div
-												class="grid grid-cols-1 my-1 p-3 mx-1 gap-y-5"
+												class={`grid grid-cols-1 my-1 p-3 mx-1 gap-y-5 ${setThemeClass(
+													`${editorTheme.primaryBackgroundColor.light}`,
+													`${editorTheme.primaryBackgroundColor.dark}`,
+													themePreference(),
+												)}`}
 											>
 												<div
 													class={`${setThemeClass(
@@ -600,9 +621,9 @@ function Editor(props: EditorProps) {
 											</div>
 										</div>
 										<div
-											class={`bg-gray-two-tone mx-3 pt-5 pb-3 rounded shadow-sm border ${setThemeClass(
-												editorTheme.primaryBorderColor.light,
-												editorTheme.primaryBorderColor.dark,
+											class={`mx-3 pt-5 pb-3 rounded shadow-sm border ${setThemeClass(
+												`bg-gray-two-tone ${editorTheme.primaryBorderColor.light}`,
+												`bg-primary-bg-darkmode ${editorTheme.primaryBorderColor.dark}`,
 												themePreference(),
 											)}`}
 										>
@@ -618,7 +639,11 @@ function Editor(props: EditorProps) {
 											</p>
 											<div
 												id="seo-fields"
-												class="grid grid-cols-1 my-1 p-3 mx-1 gap-y-7"
+												class={`grid grid-cols-1 my-1 p-3 mx-1 gap-y-7 ${setThemeClass(
+													`${editorTheme.primaryBackgroundColor.light}`,
+													`${editorTheme.primaryBackgroundColor.dark}`,
+													themePreference(),
+												)}`}
 											>
 												<div
 													class={`${setThemeClass(
@@ -994,8 +1019,8 @@ function Editor(props: EditorProps) {
 								style="display: none;"
 								id="component-css"
 								class={`${setThemeClass(
-									'bg-monochromatic-gray border-gray-300',
-									'bg-formfields-darkmode border-muted',
+									`bg-monochromatic-gray ${editorTheme.primaryBorderColor.light} ${editorTheme.primaryTextColor.light}`,
+									`bg-formfields-darkmode ${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryTextColor.dark}`,
 									themePreference(),
 								)} pb-6 border shadow-md`}
 							></div>
@@ -1003,8 +1028,8 @@ function Editor(props: EditorProps) {
 								style="display: none;"
 								id="block-components edit-script"
 								class={`${setThemeClass(
-									'bg-monochromatic-gray border-gray-300',
-									'bg-formfields-darkmode border-muted',
+									`bg-monochromatic-gray ${editorTheme.primaryBorderColor.light} ${editorTheme.primaryTextColor.light}`,
+									`bg-formfields-darkmode ${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryTextColor.dark}`,
 									themePreference(),
 								)} pb-6 border shadow-md`}
 							></div>
@@ -1015,8 +1040,18 @@ function Editor(props: EditorProps) {
 									class="hidden"
 									id="data-etl"
 								>
-									<p>Data Explorer</p>
-									<label for="avatar"
+									<p class={setThemeClass(
+										editorTheme.primaryTextColor.light,
+										editorTheme.primaryTextColor.dark,
+										themePreference(),
+									)}>Data Explorer</p>
+									<label
+										for="avatar"
+										class={setThemeClass(
+											editorTheme.primaryTextColor.light,
+											editorTheme.primaryTextColor.dark,
+											themePreference(),
+										)}
 									>Select a data
 										source to import</label
 									>
@@ -1029,6 +1064,11 @@ function Editor(props: EditorProps) {
 
 									<button
 										id="data-explorer"
+										class={`px-3 py-1 rounded ${setThemeClass(
+											'bg-white border-gray-300 text-black',
+											'bg-primary-bg-darkmode border-muted text-white',
+											themePreference(),
+										)}`}
 									>Edit Table</button
 									>
 								</div>
@@ -1059,7 +1099,11 @@ function Editor(props: EditorProps) {
 				{/*out:fly={{ y: 100, duration: 300, delay: 0 }}*/}
 				<div
 					ref={(el) => setBottomCodePanel(el)}
-					class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} z-10 bg-black bottom-0 w-screen transition-all ease-in duration-300`}
+					class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} z-10 ${setThemeClass(
+						'bg-white border-t border-gray-300',
+						'bg-black border-t border-muted',
+						themePreference(),
+					)} bottom-0 w-screen transition-all ease-in duration-300`}
 					id="bottom-code-panel"
 				>
 					<CodeEditor
@@ -1070,7 +1114,11 @@ function Editor(props: EditorProps) {
 					></CodeEditor>
 				</div>
 			</Show>
-			<div class="hidden shadow rounded py-3" id="context-menu"></div>
+			<div class={`hidden shadow rounded py-3 ${setThemeClass(
+				'bg-white border border-gray-300',
+				'bg-primary-bg-darkmode border border-muted',
+				themePreference(),
+			)}`} id="context-menu"></div>
 			<div
 				style="width:74.5%; left:3%;"
 				class={`${cssPosition() == "fixed" ? "fixed" : "absolute"} bottom-0 z-[9] transition-all duration-[200ms] pl-1 pr-[14px]`}
@@ -1078,14 +1126,18 @@ function Editor(props: EditorProps) {
 			>
 				<div
 					class={`flex ${setThemeClass(
-						'bg-white text-black',
-						'bg-primary-bg-darkmode text-white',
+						`bg-white ${editorTheme.primaryTextColor.light}`,
+						`bg-primary-bg-darkmode ${editorTheme.primaryTextColor.dark}`,
 						themePreference(),
 					)}`}
 					id="breadcrumbs"
 				></div>
 			</div>
-			<div id="toastyContainer"></div>
+			<div id="toastyContainer" class={setThemeClass(
+				editorTheme.primaryTextColor.light,
+				editorTheme.primaryTextColor.dark,
+				themePreference(),
+			)}></div>
 		</section>
 
 	);

@@ -104,6 +104,10 @@ export const configureEditor = async (config: editorConfig) => {
 			multiUpload: false,
 			autoAdd: true
 		},
+		// Pass theme preference to all components that need it
+		// themePreference: config.themePreference,
+		// theme: config.theme,
+		telemetry: false,
 		blockManager: {
 			appendTo: '#content-blocks',
 			blocks: []
@@ -167,6 +171,7 @@ export const configureEditor = async (config: editorConfig) => {
 			hidable: true,
 		},
 		panels: {
+
 			defaults: defaultPanels({
 				itemTitle: config.itemTitle,
 				themePreference: config.themePreference,
@@ -191,7 +196,11 @@ export const configureEditor = async (config: editorConfig) => {
 				{ name: 'placeholder-shown', label: 'Placholder Visible' }
 			],
 			//TODO: redo this
-			render: defaultSelectorTemplate
+			render: (config) => defaultSelectorTemplate({
+				...config,
+				themePreference: config.themePreference ?? 'light',
+				theme: config.theme
+			})
 		},
 		showOffsets: true,
 		showOffsetsSelected: true,

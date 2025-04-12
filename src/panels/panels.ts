@@ -312,6 +312,7 @@ const utilitiesPanel = {
 			id: 'show-traits',
 			attributes: { title: 'Options' },
 			active: false,
+
 			label: /*html*/ `
             <svg title="Options" class="h-6 w-6 dark:text-white text-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M15 9H17V7H21V5H17V3H15V9ZM7 9V11H3V13H7V15H9V9H7ZM13 19V21H11V15H13V17H21V19H13ZM3 19V17H9V19H3ZM21 11V13H11V11H21ZM13 5H3V6.99H13V5Z"/>
@@ -323,7 +324,7 @@ const utilitiesPanel = {
 			// Once activated disable the possibility to turn it off
 			togglable: true
 		},
-		aiPanel,
+		// aiPanel,
 		/*{
 			id:'show-component-css',
 			attributes:{title:'CSS'},
