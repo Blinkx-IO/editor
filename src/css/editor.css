@@ -4593,9 +4593,10 @@ span.CodeMirror-selectedtext {
   color: #ddd;
 }
 
-.blink-two-color {
-  color: var(--primary-icon-color);
-}
+/**NOTE: These were removed to allow parent divs to set color**/
+/* .blink-two-color { */
+/*   color: var(--primary-icon-color); */
+/* } */
 
 /* Tertiary color for the background */
 

@@ -943,7 +943,13 @@ function Editor(props: EditorProps) {
 					</div>
 					{/**--End Editor Canvas-*/}
 					{/*Right Panel*/}
-					<div data-toggled-state="off" class="panel__right flex">
+					<div data-toggled-state="off" class={`panel__right flex
+${setThemeClass(
+						`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryTextColor.light} ${editorTheme.primaryBackgroundColor.light}`,
+						`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
+						themePreference(),
+					)}
+						`}>
 						<div
 							style="transform: translateX(20vw);"
 							class={`right_tab_left ${setThemeClass(
