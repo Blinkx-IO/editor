@@ -5633,24 +5633,24 @@ body {
     font-weight: 500;
   }
 
-  .blink-layer-name,
-  .blink-layer__icon,
-  .blink-layer-vis,
-  .blink-layer-caret,
-  .blink-layer-move,
-  .blink-layer-count,
-  .blink-pn-btn,
-  .blink-pn-btn>svg,
-  .blink-block-label,
-  .blink-caret-icon,
-  .blink-title {
-    color: var(--dark-mode-default-font-color);
-  }
-
-  .blink-block-label>svg {
-    color: var(--dark-mode-default-font-color);
-    fill: var(--dark-mode-default-font-color);
-  }
+  /* .blink-layer-name, */
+  /* .blink-layer__icon, */
+  /* .blink-layer-vis, */
+  /* .blink-layer-caret, */
+  /* .blink-layer-move, */
+  /* .blink-layer-count, */
+  /* .blink-pn-btn, */
+  /* .blink-pn-btn>svg, */
+  /* .blink-block-label, */
+  /* .blink-caret-icon, */
+  /* .blink-title { */
+  /*   color: var(--dark-mode-default-font-color); */
+  /* } */
+  /**/
+  /* .blink-block-label>svg { */
+  /*   color: var(--dark-mode-default-font-color); */
+  /*   fill: var(--dark-mode-default-font-color); */
+  /* } */
 
   .blink-sm-icon.blink-radio-item-label,
   .blink-sm-field>#blink-sm-add,
@@ -5729,13 +5729,13 @@ body {
     background-color: rgb(85, 85, 85);
   }
 
-  .blink-selected>.blink-layer-children>.blink-layers>.blink-layer>.blink-layer-vis {
-    color: var(--dark-mode-default-font-color);
-  }
-
-  .blink-selected>.blink-layer-children>.blink-layers>.blink-layer>.blink-layer-move {
-    color: var(--dark-mode-default-font-color);
-  }
+  /* .blink-selected>.blink-layer-children>.blink-layers>.blink-layer>.blink-layer-vis { */
+  /*   color: var(--dark-mode-default-font-color); */
+  /* } */
+  /**/
+  /* .blink-selected>.blink-layer-children>.blink-layers>.blink-layer>.blink-layer-move { */
+  /*   color: var(--dark-mode-default-font-color); */
+  /* } */
 
 
 
