@@ -275,7 +275,12 @@ export interface BlinkEditorConfig
 export type PanelCommands = CommandNames[keyof CommandNames];
 
 export type PanelIdNames = PanelIds[keyof PanelIds];
-
+export type CssModeTheming = { dark: string, light: string };
+export type EditorTheme = {
+	primaryBackgroundColor: CssModeTheming
+	primaryBorderColor: CssModeTheming
+	primaryTextColor: CssModeTheming
+}
 
 declare global {
 	type themePreference = 'light' | 'dark' | 'system';
@@ -285,11 +290,19 @@ declare global {
 		JSXComponents: JSX.Element[];
 		BlinkJS: typeof BlinkJS;
 		editor: VisualEditor.BlinkEditor;
+		editorThemeConfig?: EditorTheme;
+
 		dataLayer: any;
 
 
 	}
-
+	// declare global {
+	// 	interface Window {
+	// 		editorThemeConfig?: EditorTheme;
+	// 		editor?: VisualEditor.BlinkEditor;
+	// 		BlinkJS?: any;
+	// 	}
+	// }
 
 	namespace VisualEditor {
 		type ProjectData = {

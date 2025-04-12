@@ -1,6 +1,13 @@
 import type { Plugin } from "grapesjs";
 import { defaultStyles } from './design/styles/styles';
 import { defaultPanels } from './panels/panels';
+// declare global {
+// 	interface Window {
+// 		editorThemeConfig?: EditorTheme;
+// 		editor?: VisualEditor.BlinkEditor;
+// 		BlinkJS?: any;
+// 	}
+// }
 import { setCommands } from './commands/commands';
 import { setEvents } from './events/events';
 import { setTraits } from './traits/traits';
@@ -60,12 +67,17 @@ type CategoryBackBoneType = {
 }
 
 export const configureEditor = async (config: editorConfig) => {
-	const { projectData, itemId, projectId, serverRoutes, storageStrategy } = config;
+	const { projectData, itemId, projectId, serverRoutes, storageStrategy, theme } = config;
 	let storageStrategyValue = storageStrategy ?? "local";
 	let dev = config.dev ?? false;
 	let browser = config.browser ?? true;
 	let defaultProjectData: Record<string, unknown>;
 	const { assetManagerUrl, storageManager } = serverRoutes ?? {};
+
+	// Make theme available to imported components
+	if (browser && theme) {
+		window.editorThemeConfig = theme;
+	}
 	if (projectData) {
 		defaultProjectData = projectData;
 		//TODO: check proj data to set these
@@ -157,7 +169,8 @@ export const configureEditor = async (config: editorConfig) => {
 		panels: {
 			defaults: defaultPanels({
 				itemTitle: config.itemTitle,
-				themePreference: config.themePreference
+				themePreference: config.themePreference,
+				theme: config.theme
 			}),
 
 		},
