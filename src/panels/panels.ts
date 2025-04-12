@@ -15,7 +15,7 @@ const undoManagerPanel = {
 			togglable: false,
 			label: /*html*/ ` 
             <svg 
-            class="hover:text-gray-400 active:text-gray-100 dark:text-white text-black"
+            class="hover:text-gray-400 active:text-gray-100"
             title="Undo"
             width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.5 8C9.85 8 7.45 8.99 5.6 10.6L2 7V16H11L7.38 12.38C8.77 11.22 10.54 10.5 12.5 10.5C16.04 10.5 19.05 12.81 20.1 16L22.47 15.22C21.08 11.03 17.15 8 12.5 8Z" />
@@ -31,7 +31,7 @@ const undoManagerPanel = {
 			attributes: { title: 'Redo' },
 			label: /*html*/ `
             <svg 
-            class="hover:text-gray-400 active:text-gray-100 dark:text-white text-black"
+            class="hover:text-gray-400 active:text-gray-100"
             title="Redo"
             height="24"
             width="24"
@@ -94,9 +94,9 @@ const basicAction = (title: string, themePreference: themePreference): VisualEdi
 		id: 'basic-actions' as const,
 		el: '.panel__basic-actions',
 		// Apply theme-specific classes
-		attributes: {
-			class: themePreference === 'dark' ? 'text-white' : 'text-black'
-		}
+		// attributes: {
+		// 	class: themePreference === 'dark' ? 'text-white' : 'text-black'
+		// }
 	};
 };
 
@@ -122,7 +122,7 @@ const devicePanel = {
 			attributes: { title: 'Desktop' },
 			id: 'device-desktop',
 			label:
-				'<svg xmlns="http://www.w3.org/2000/svg" class="dark:text-white text-black" viewBox="0 0 24 24"><path d="M21 14H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4a2 2 0 0 0-2-2z"></path></svg>',
+				'<svg xmlns="http://www.w3.org/2000/svg" class="" viewBox="0 0 24 24"><path d="M21 14H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4a2 2 0 0 0-2-2z"></path></svg>',
 			command: 'set-device-desktop',
 			active: true,
 			togglable: false
@@ -130,7 +130,7 @@ const devicePanel = {
 		{
 			attributes: { title: 'Tablet' },
 			id: 'device-tablet',
-			label: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 tablet dark:text-white text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			label: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 tablet  fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
         </svg>`,
 			command: 'set-device-tablet',
@@ -140,7 +140,7 @@ const devicePanel = {
 			attributes: { title: 'Mobile' },
 			id: 'device-mobile',
 			label:
-				'<svg xmlns="http://www.w3.org/2000/svg" class="dark:text-white text-black" viewBox="0 0 24 24"><path d="M16 18H7V4h9m-4.5 18c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5m4-21h-8A2.5 2.5 0 0 0 5 3.5v17A2.5 2.5 0 0 0 7.5 23h8a2.5 2.5 0 0 0 2.5-2.5v-17A2.5 2.5 0 0 0 15.5 1z"></path></svg>',
+				'<svg xmlns="http://www.w3.org/2000/svg" class="" viewBox="0 0 24 24"><path d="M16 18H7V4h9m-4.5 18c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5m4-21h-8A2.5 2.5 0 0 0 5 3.5v17A2.5 2.5 0 0 0 7.5 23h8a2.5 2.5 0 0 0 2.5-2.5v-17A2.5 2.5 0 0 0 15.5 1z"></path></svg>',
 			command: 'set-device-mobile',
 			togglable: false
 		}
@@ -172,7 +172,7 @@ const leftPanelGroup = {
 			active: false,
 			attributes: { title: 'Add Blocks' },
 			label: /*html*/ `
-            <svg title="Add Blocks" class="dark:text-white text-black" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg title="Add Blocks" class="" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect />
             <path d="M28,14H18V4c0-1.104-0.896-2-2-2s-2,0.896-2,2v10H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h10v10c0,1.104,0.896,2,2,2  s2-0.896,2-2V18h10c1.104,0,2-0.896,2-2S29.104,14,28,14z"/>
             </svg>
@@ -185,7 +185,7 @@ const leftPanelGroup = {
 			active: false,
 			attributes: { title: 'Layers' },
 			label: /*html*/ `
-            <svg title="Layers" class="dark:text-white text-black" style="enable-background:new 0 0 30 30;" version="1.1" viewBox="0 0 30 30" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg title="Layers" class="" style="enable-background:new 0 0 30 30;" version="1.1" viewBox="0 0 30 30" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g>
                 <g>
                 <path d="M26,9c0-0.419-0.259-0.776-0.625-0.924l-9.459-4.854h-0.018C15.627,3.085,15.325,3,15,3s-0.627,0.085-0.898,0.222h-0.018    L4.625,8.076C4.259,8.224,4,8.581,4,9c0,0.416,0.255,0.772,0.617,0.923v0.02l9.474,4.838l0.009-0.004    C14.372,14.915,14.674,15,15,15s0.628-0.085,0.9-0.223l0.009,0.004l9.474-4.838v-0.02C25.745,9.772,26,9.416,26,9z"/>
@@ -204,7 +204,7 @@ const leftPanelGroup = {
 			active: false,
 			attributes: { title: 'Page Settings' },
 			label: /*html*/ `
-            <svg title="Page Settings" class="dark:text-white text-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg title="Page Settings" class=" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <title/>
             <path d="M14,10a2,2,0,0,1-2-2V2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10Z" fill="currentColor"/>
             <path d="M14,7a1,1,0,0,0,1,1h5a1,1,0,0,0-.29-.71l-5-5A1,1,0,0,0,14,2Z" fill="currentColor"/>
@@ -263,7 +263,7 @@ const rightPanelGroup = {
 			id: 'preview',
 			className: 'btn-preview',
 			label: /*html*/ ` 
-                <button title="Preview" class="bg-transparent shadow-sm text-sm text-secondary-accent-blue hover:text-secondary-accent-blue-500 hover:bg-transparent border py-1 px-2 rounded-md border-secondary-accent-blue hover:border-secondary-accent-blue-500 dark:text-white dark:border-white">Preview</button>
+                <button title="Preview" class="bg-transparent shadow-sm text-sm text-secondary-accent-blue hover:text-secondary-accent-blue-500 hover:bg-transparent border py-1 px-2 rounded-md border-secondary-accent-blue hover:border-secondary-accent-blue-500 ">Preview</button>
             `,
 			command: 'preview',
 			context: 'preview' // For grouping context of buttons from the same panel
@@ -277,10 +277,10 @@ const aiPanel =
 		active: false,
 		togglable: true,
 		command: 'show-ai',
-		label: /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 dark:text-white text-black">
+		label: /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ">
   <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
 </svg>
-<span class="text-[13px] dark:text-white text-black">AI</span>
+<span class="text-[13px] ">AI</span>
 `
 	} as const
 //Panel on the right
@@ -300,10 +300,10 @@ const utilitiesPanel = {
 			attributes: { title: 'Style' },
 			active: false,
 			label: /*html*/ `
-            <svg title="Style" class="h-6 w-6 dark:text-white text-black" viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+            <svg title="Style" class="h-6 w-6 " viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M19.37 3.29L20.71 4.63C21.1 5.02 21.1 5.65 20.71 6.04L11.75 15L9 12.25L17.96 3.29C18.35 2.9 18.98 2.9 19.37 3.29ZM4 17C4 15.34 5.34 14 7 14C8.66 14 10 15.34 10 17C10 19.21 8.21 21 6 21C4.49 21 2.92 20.22 2 19C2.84 19 4 18.31 4 17Z"/>
             </svg>
-            <span class="text-[11px] dark:text-white text-black">Design</span>
+            <span class="text-[11px] ">Design</span>
             `,
 			command: 'show-styles',
 			togglable: true
@@ -314,11 +314,11 @@ const utilitiesPanel = {
 			active: false,
 
 			label: /*html*/ `
-            <svg title="Options" class="h-6 w-6 dark:text-white text-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg title="Options" class="h-6 w-6 " viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M15 9H17V7H21V5H17V3H15V9ZM7 9V11H3V13H7V15H9V9H7ZM13 19V21H11V15H13V17H21V19H13ZM3 19V17H9V19H3ZM21 11V13H11V11H21ZM13 5H3V6.99H13V5Z"/>
             </svg>
 
-            <span class="text-[11px] dark:text-white text-black">Options</span>
+            <span class="text-[11px] ">Options</span>
             `,
 			command: 'show-traits',
 			// Once activated disable the possibility to turn it off
@@ -344,9 +344,9 @@ const utilitiesPanel = {
  */
 export const defaultPanels = (config: { itemTitle: string; themePreference: themePreference; theme?: EditorTheme }) => {
 	// Apply theme to panels if provided
-	if (config.theme) {
-		applyThemeToPanels(config.theme, config.themePreference);
-	}
+	// if (config.theme) {
+	// 	applyThemeToPanels(config.theme, config.themePreference);
+	// }
 
 	return [
 		undoManagerPanel,

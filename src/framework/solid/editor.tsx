@@ -318,8 +318,8 @@ function Editor(props: EditorProps) {
 							// style="width: 2.5%;"
 							class={`panel__left
 					${setThemeClass(
-								`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryBackgroundColor.light}`,
-								`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark}`,
+								`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryTextColor.light} ${editorTheme.primaryBackgroundColor.light}`,
+								`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 								themePreference(),
 							)}
 					 ${cssPosition() == "fixed" ? "fixed" : "absolute"} h-screen z-10 left-0`}
