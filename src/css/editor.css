@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
 :root {
   --primary-background-color: #edf0f5;
   --primary-icon-color: #212C3E;
@@ -5604,14 +5602,18 @@ body {
 
 @media (prefers-color-scheme: dark) {
 
-  .optionsPanel,
-  /* .blink-one-bg, */
-  /*Block Cat title Background*/
-  .blink-block-category>.blink-title,
-  #left-panel {
-    background: var(--nav-darkmode);
 
-  }
+  /* .optionsPanel, */
+  /* /* .blink-one-bg, */
+  */
+  /* /*Block Cat title Background*/
+  */
+  /* .blink-block-category>.blink-title, */
+  /* #left-panel { */
+  /*   /* background: var(--nav-darkmode); */
+  */
+  /**/
+  /* } */
 
   /* .blink-sm-sector .blink-sm-title, */
   /* .blink-block-category .blink-title, */

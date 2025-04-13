@@ -313,7 +313,7 @@ function Editor(props: EditorProps) {
 					class=" editor-row flex flex-row relative no-scrollbar"
 				>
 					{/*Left Panel border-r border-t*/}
-					<div id="left-panel">
+					<div class='w-full' id="left-panel">
 						<div
 							// style="width: 2.5%;"
 							class={`panel__left
@@ -335,8 +335,9 @@ function Editor(props: EditorProps) {
 							)}  z-10 h-screen ${cssPosition() == "fixed" ? "fixed" : "absolute"} flex`}
 							id="leftSlideOutMenu"
 						>
+							{/*TODO: Determin if this is needed*/}
 							<div
-								class={`h-screen pl-1 ${setThemeClass(
+								class={`hidden h-screen pl-1 ${setThemeClass(
 									`${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
 									`${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
 									themePreference(),
