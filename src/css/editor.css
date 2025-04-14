@@ -3465,7 +3465,7 @@ span.CodeMirror-selectedtext {
 }
 
 .blink-clm-sels-info {
-  margin: 7px 0;
+  /* margin: 7px 0; */
   text-align: left;
 }
 
@@ -4510,7 +4510,7 @@ span.CodeMirror-selectedtext {
 }
 
 .panel__top {
-  padding: 0;
+  /* padding: 0; */
   width: 100%;
   display: flex;
   /*position: initial;*/

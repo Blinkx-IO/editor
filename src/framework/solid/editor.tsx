@@ -245,7 +245,7 @@ function Editor(props: EditorProps) {
 				</div>
 				<div
 					id="top-panel"
-					class={`panel__top min-h-[60px] border-b ${setThemeClass(
+					class={`panel__top px-2.5 min-h-[60px] border-b ${setThemeClass(
 						`border-gray-300 ${editorTheme.primaryBackgroundColor.light}`,
 						`border-muted ${editorTheme.primaryBackgroundColor.dark}`,
 						themePreference(),
@@ -313,10 +313,10 @@ function Editor(props: EditorProps) {
 					class=" editor-row flex flex-row relative no-scrollbar"
 				>
 					{/*Left Panel border-r border-t*/}
-					<div class='w-full' id="left-panel">
+					<div id="left-panel">
 						<div
 							// style="width: 2.5%;"
-							class={`panel__left
+							class={`panel__left px-1.5
 					${setThemeClass(
 								`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryTextColor.light} ${editorTheme.primaryBackgroundColor.light}`,
 								`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`,
@@ -348,7 +348,7 @@ function Editor(props: EditorProps) {
 								data-current-panel="blocks"
 								data-toggled-state="off"
 								data-pinned-state="false"
-								class={`hidden h-screen border-l ${setThemeClass(
+								class={`hidden ml-2.5 h-screen border-l ${setThemeClass(
 									`${editorTheme.primaryBorderColor.light} ${editorTheme.primaryBackgroundColor.light} ${editorTheme.primaryTextColor.light}`,
 									`${editorTheme.primaryBorderColor.dark} ${editorTheme.primaryBackgroundColor.dark} ${editorTheme.primaryTextColor.dark}`, themePreference(),
 								)}`}
